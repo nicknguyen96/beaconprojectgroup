@@ -4,6 +4,7 @@
     * password : string
     * middleName : string ?
     * preferName : string
+    * isAdmin : boolean
     * profilePicture : string
     * currentAddress : string
     * cellPhone : string
@@ -17,9 +18,9 @@
     * reference : obj {}
     * emergencyContact : obj {}
     * applicationStatus: string ( only Admin change this)
-    * isAdmin : boolean
     * report : Report[]
     * registrationToken : string
+    * files : string[]
 ## Report
     * author : ref User
     * title : string
@@ -37,3 +38,30 @@
     * tables : number
     * chairs : number
     * timestamp: Date
+
+
+## Routes
+
+* /auth:
+  * POST /login: 
+  * POST /signup:
+  * POST /logout:
+  * GET /:registrationtoken : verify the registration token, if valid then continue the signup or else just display 403 page (Unauthorization Page)
+* /user ( HR )
+  * POST /sendInvitation: send the invitation to new employee
+  * GET /users : get all the users
+  * GET /users/search 
+  * GET /user/:userid : get user detail for the userid
+  * PUT /user/:userid : edit user detail ( like pending status ,...);
+  * 
+* /house:
+  * POST /create : create new house from
+  * DELETE /delete/:houseid : delete the house
+  * PUT /edit/:houseid update the report
+  * GET / : get all house
+
+* /report:
+  * GET / : get all report
+  * DELETE /delete/:reportid : delete report
+  * POST /create : create new report
+  * PUT /edit/:reportid : update the report
