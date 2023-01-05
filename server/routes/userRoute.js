@@ -1,8 +1,9 @@
 const userRouter = require('express').Router();
 const userController = require('../controllers/userController');
 
-const verifyUser = require('../middlewares/verifyUser');
+const isAdmin = require('../middlewares/isAdmin');
 
-userRouter.post('/sendInvitation', verifyUser, userController.sendInvitation);
+// send an invitation to a specified user
+userRouter.post('/sendInvitation', isAdmin, userController.sendInvitation);
 
 module.exports = userRouter;
