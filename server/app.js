@@ -24,12 +24,12 @@ app.use('/', router);
 
 
 // home page
-router.get('/', (req, res) => {
-    res.json({status: 200, message: {
-        email: process.env.email,
-        password: process.env.password
-    }});
-})
+// router.get('/', (req, res) => {
+//     res.json({status: 200, message: {
+//         email: process.env.email,
+//         password: process.env.password
+//     }});
+// })
 
 
 module.exports = app
