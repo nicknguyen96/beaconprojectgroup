@@ -11,7 +11,7 @@ const date = () => {
 const reportSchema = new Schema({
   author: {
     type: Schema.Type.ObjectId,
-    ref: 'employee'
+    ref: "employee",
   },
 
   title: {
@@ -23,12 +23,15 @@ const reportSchema = new Schema({
     type: String,
     required: true,
   },
-  
+
   status: {
     type: String,
     required: true,
   },
-  timeStamp: {},
+  timeStamp: {
+    type: String,
+    default: date(),
+  },
 });
 
 const Report = model("report", reportSchema);
