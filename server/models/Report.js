@@ -8,6 +8,7 @@ const date = () => {
   return dateFormat;
 };
 
+// sub schema
 const commentsSchema = new Schema({
   description: {
     type: String,
@@ -25,7 +26,7 @@ const commentsSchema = new Schema({
 
 const reportSchema = new Schema({
   author: {
-    type: Schema.Type.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "employee",
   },
 

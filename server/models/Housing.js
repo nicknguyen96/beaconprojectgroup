@@ -7,6 +7,7 @@ const date = () => {
   return dateFormat;
 };
 
+// sub schema
 const landLordSchema = new Schema({
   fullName: {
     type: String,
@@ -22,6 +23,7 @@ const landLordSchema = new Schema({
   },
 });
 
+// sub schema
 const furnitureSchema = new Schema({
   beds: {
     type: Number,
@@ -41,6 +43,7 @@ const furnitureSchema = new Schema({
   },
 });
 
+// sub schema
 const summarySchema = new Schema({
   furniture: {
     type: furnitureSchema,
@@ -56,6 +59,7 @@ const summarySchema = new Schema({
   },
 });
 
+// sub schema
 const housingSchema = new Schema({
   address: {
     type: String,

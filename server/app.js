@@ -1,9 +1,13 @@
 require("dotenv").config();
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
+const methodOverride = require("method-override");
+const express = require("express");
 const facilityRoute = require('./routes/facilityRoute');
 
 const router = express.Router();
+
+const app = express();
 
 // parse incoming JSON requests
 app.use(express.json());
