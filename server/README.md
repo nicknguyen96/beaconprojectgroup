@@ -1,25 +1,48 @@
 ## User
-    * firstName: string
-    * lastname : string
-    * password : string
-    * middleName : string ?
+    * firstName: string , required
+    * lastname : string, required
+    * password : string , required
+    * middleName : string
     * preferName : string
     * isAdmin : boolean
     * profilePicture : string
-    * currentAddress : string
-    * cellPhone : string
+    * currentAddress : string , required
+    * cellPhone : string, required
     * car: obj { make : string, color :string , model : string }
-    * email: string
-    * ssn : string
-    * DOB : string
+    * email: string ( receive from the invitation email and cannot be editted)
+    * ssn : string, required
+    * DOB : string, required
     * gender : string ( could be male, female, I do not wish to answer)
-    * workStatus : obj { }
-    * driverLicense : obj { licenseNum : string, expiration: string, upload: string }
-    * reference : obj {}
-    * emergencyContact : obj {}
+    * workStatus : {
+                      type: string, it should be "green card", "citizen", "h1-b", "l2", "f1(cpt/opt)", "other" , required
+                      other: string, could use this one if type is not specified
+                      dateStart: Date,
+                      dateEnd: Date,
+                      file: string
+                    }
+    * driverLicense : {
+                        licenseNum : string,
+                        expiration: string,
+                        file: string 
+                      }
+    * reference :     {
+                          firstName: string, required
+                          lastName: string, required
+                          middleName: string
+                          phone: string, required
+                          email: string, required
+                          relationship: string, required
+                      }
+    * emergencyContact : {
+                            firstName: string, required,
+                            lastName: string, required,
+                            middleName: string,
+                            phone: string, required
+                            email: string, required
+                            relationship: string, required
+                          }
     * applicationStatus: string ( only Admin change this)
     * report : Report[]
-    * registrationToken : string
     * files : string[]
 ## Report
     * author : ref User
