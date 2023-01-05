@@ -28,12 +28,13 @@
     * title : string
     * description : string
     * status : string
+    * comments: 'ref User'
     * timeStamp : could be automated add with mongoose
 
 ## Housing
 
     * address : string
-    * roomate : User[]
+    * tenants : User[]
     * landlord : obj {}
     * email : string
     * beds: number

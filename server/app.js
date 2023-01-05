@@ -1,5 +1,6 @@
 require("dotenv").config();
 const userRouter = require("./routes/userRoute");
+const authRouter = require("./routes/authRoute");
 
 const router = express.Router();
 
@@ -13,14 +14,11 @@ app.use("/auth", authRouter);
 app.use("/", router);
 
 // home page
-router.get("/", (req, res) => {
-  res.json({
-    status: 200,
-    message: {
-      email: process.env.email,
-      password: process.env.password,
-    },
-  });
-});
+// router.get('/', (req, res) => {
+//     res.json({status: 200, message: {
+//         email: process.env.email,
+//         password: process.env.password
+//     }});
+// })
 
 module.exports = app;

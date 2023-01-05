@@ -8,6 +8,21 @@ const date = () => {
   return dateFormat;
 };
 
+const commentsSchema = new Schema({
+  description: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "Employee",
+  },
+  timeStamp: {
+    type: String,
+    default: date(),
+  },
+});
+
 const reportSchema = new Schema({
   author: {
     type: Schema.Type.ObjectId,
@@ -24,6 +39,11 @@ const reportSchema = new Schema({
     required: true,
   },
 
+  comments: {
+    type: commentsSchema,
+    required: false,
+  },
+
   status: {
     type: String,
     required: true,
@@ -34,6 +54,6 @@ const reportSchema = new Schema({
   },
 });
 
-const Report = model("report", reportSchema);
+const Report = model("Report", reportSchema);
 
 module.exports = Report;
