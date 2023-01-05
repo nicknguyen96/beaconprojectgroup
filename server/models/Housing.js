@@ -71,7 +71,7 @@ const housingSchema = new Schema({
   },
   tenants: {
     type: [Schema.Types.ObjectId],
-    ref: "Employee",
+    ref: "User",
   },
   summary: {
     type: summarySchema,

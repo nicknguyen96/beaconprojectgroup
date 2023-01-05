@@ -27,7 +27,7 @@ const commentsSchema = new Schema({
 const reportSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId,
-    ref: "employee",
+    ref: "User",
   },
 
   title: {
