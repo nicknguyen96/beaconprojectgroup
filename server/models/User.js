@@ -109,6 +109,11 @@ const userSchema = new Schema({
   driversLicense: {
     type: licenseSchema,
   },
+  reports: {
+    required: false,
+    type: [Schema.Types.ObjectId],
+    ref: "Report",
+  },
 });
 
 const User = model("User", userSchema);
