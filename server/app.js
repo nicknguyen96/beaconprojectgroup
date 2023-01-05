@@ -1,6 +1,7 @@
 require("dotenv").config();
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
+const facilityRoute = require('./routes/facilityRoute');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ app.use(methodOverride("_method"));
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
 app.use("/", router);
+app.use('/report', facilityRoute);
 
 // home page
 // router.get('/', (req, res) => {
