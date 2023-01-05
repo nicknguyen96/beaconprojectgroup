@@ -26,8 +26,8 @@ const commentsSchema = new Schema({
 
 const reportSchema = new Schema({
   author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
+    required: true,
   },
 
   title: {
@@ -41,7 +41,7 @@ const reportSchema = new Schema({
   },
 
   comments: {
-    type: commentsSchema,
+    type: [commentsSchema],
     required: false,
   },
 
@@ -49,6 +49,7 @@ const reportSchema = new Schema({
     type: String,
     required: true,
   },
+
   timeStamp: {
     type: String,
     default: date(),

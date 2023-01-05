@@ -1,6 +1,6 @@
 const db = require("./config");
 
-const { User } = require("../models");
+const { User, Housing, Report } = require("../models");
 
 db.once("open", async () => {
   await User.deleteMany();
@@ -34,6 +34,7 @@ db.once("open", async () => {
         expiration: "01-09-2111",
         picture: "required",
       },
+      reports: [{ _id: "63b74582f642d6e6d82c2b40" }],
     },
     {
       firstName: "Prince",
@@ -182,6 +183,39 @@ db.once("open", async () => {
     },
   ]);
 
+  await Report.deleteMany();
+
+  await Report.insertMany([
+    {
+      author: "John",
+      title: "Sink does not work",
+      description: "The sink does not work properly",
+      comments: [],
+      status: "In Progress",
+    },
+  ]);
+
+  await Housing.deleteMany();
+
+  await Housing.create({
+    address: "1234 Fake Address St. Fake Address, CA 92530",
+    landlord: {
+      fullName: "Landlord Doe",
+      phoneNumber: "2145239999",
+      email: "landlorddoe@gmail.com",
+    },
+    tenants: [{ _id: "63b72305bfb09d434a91b281" }, { _id: "63b72305bfb09d434a91b286" }],
+    summary: {
+      furniture: {
+        beds: 2,
+        matresses: 2,
+        tables: 1,
+        chairs: 2,
+      },
+      reports: [{ _id: "63b7465c3ce8382e1cd248c6" }],
+      employeeInfo: [{ _id: "63b72305bfb09d434a91b281" }, { _id: "63b72305bfb09d434a91b286" }],
+    },
+  });
   console.log("Seeded");
   process.exit();
 });
