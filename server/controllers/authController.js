@@ -32,7 +32,7 @@ class AuthController {
     }
 
     async logout(req, res) {
-        const { token } = req.body;
+        const token = req.headers.Authorization;
         try {
             await
                 Black_List.create({ token }).then(() => {
