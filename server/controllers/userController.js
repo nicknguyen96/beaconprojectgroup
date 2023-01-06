@@ -62,6 +62,7 @@ class UserController {
             return res.json({ status: 401, message: "You do not have permission to perform this function" });
         }
     }
+
     async uploadFile(req, res) {
         // we will distingush which property of user info base on this one.
         const filename = req.file.originalname;
@@ -101,6 +102,42 @@ class UserController {
             return res.json({ status: 400, message: error.message })
         }
     }
+
+    // first time user submits all their details
+    async submitUserDetails(req, res) {
+        try {
+            const newUser = new User(req.body.data);
+            await newUser.save();
+            res.status(200).json({
+                message: 'User details have been submitted!'
+            });
+        }
+        catch (e) {
+            res.status(400).json({ 
+                message: "ERROR: Something unexpected happened on the backend when attemping to submit user info.",
+                error: e
+            }); 
+        }
+    }
+
+    async updateUserDetails(req, res) {
+        try {
+            // get the user id
+            const { id } = req.body.uid;
+            const user = await User.findByIdAndUpdate(id, { ...req.body.data });
+            await user.save();
+            res.status(200).json({
+                message: 'User details have been updated!'
+            });
+        }
+        catch (e) {
+            res.status(400).json({ 
+                message: "ERROR: Something unexpected happened on the backend when attemping to update user info.",
+                error: e
+            }); 
+        }
+    }
+
     //sending sorted users
     async sendSortedUsers(req, res) {
         try {
