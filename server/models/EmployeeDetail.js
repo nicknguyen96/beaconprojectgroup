@@ -100,10 +100,6 @@ const employeeDetailSchema = new Schema({
     type: carSchema,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-  },
   SSN: {
     type: String,
     required: true,
@@ -121,6 +117,11 @@ const employeeDetailSchema = new Schema({
   },
   driversLicense: {
     type: licenseSchema,
+  },
+  onboardingStatus: {
+    type: String,
+    required: true,
+    default: "Pending",
   },
   reports: {
     required: false,
