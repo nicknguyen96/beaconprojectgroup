@@ -41,7 +41,8 @@ const reportSchema = new Schema({
   },
 
   comments: {
-    type: [commentsSchema],
+    type: [Schema.Types.ObjectId],
+    ref: "Comments",
     required: false,
   },
 
@@ -57,5 +58,5 @@ const reportSchema = new Schema({
 });
 
 const Report = model("Report", reportSchema);
-
-module.exports = Report;
+const Comments = model('Comments', commentsSchema)
+module.exports = {Report, Comments};
