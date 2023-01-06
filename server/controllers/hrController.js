@@ -91,20 +91,19 @@ class HrController {
   async updateOnBoardingStatus(req, res) {
     const { updatedStatus, employeeId } = req.body;
 
-    // if (updatedStatus != "Pending" || updatedStatus != "Approved" || updatedStatus != "Rejected") {
-    //   return res.json({ status: 422, message: "Invalid input was recieved" });
-    // }
-
     // checking if the id is valid first before we start updating the status
     const employee = await Employee.findById(employeeId);
 
     if (!employee) {
       return res.json({ status: 404, message: "No employee found" });
     }
-    try {
-      const userDetails = await Employee.findById(employeeId);
 
+    try {
+      const userDetails = await Employee.findByIdAndUpdate(employeeId);
+
+      //finding the employee detail schema and updating the sub schema
       const newEmployeeDetail = await EmployeeDetail.findByIdAndUpdate(
+        //finding the user details and
         userDetails.user._id,
         { $set: { onboardingStatus: updatedStatus } },
         { new: true }
@@ -114,7 +113,7 @@ class HrController {
       if (!userDetails.user) {
         return res.json({ status: 422, message: "User has not started the onboarding process yet" });
       }
-      res.json({ status: 200, message: "Successfully updated employee onboarding status" });
+      res.json({ status: 200, message: "Successfully updated employee onboarding status", data: newEmployeeDetail });
     } catch (err) {
       return res.json({ status: 500, message: "Sorry something went wrong" });
     }
