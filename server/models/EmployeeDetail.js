@@ -20,21 +20,21 @@ const carSchema = new Schema({
 
 // sub schema
 const workStatusSchema = new Schema({
-  status: {
-    type: String,
-    required: true,
-  },
   visaTitle: {
-    required: false,
+    required: true,
     type: String,
   },
   issuedDate: {
     type: String,
-    required: false,
+    required: true,
   },
   expirationDate: {
     type: String,
-    required: false,
+    required: true,
+  },
+  fileUpload: {
+    type: String,
+    required: true,
   },
 });
 
