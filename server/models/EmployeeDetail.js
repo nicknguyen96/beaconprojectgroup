@@ -24,6 +24,18 @@ const workStatusSchema = new Schema({
     type: String,
     required: true,
   },
+  visaTitle: {
+    required: false,
+    type: String,
+  },
+  issuedDate: {
+    type: String,
+    required: false,
+  },
+  expirationDate: {
+    type: String,
+    required: false,
+  },
 });
 
 // work status schema
@@ -34,6 +46,7 @@ const legalStatus = new Schema({
   },
   workStatus: {
     type: workStatusSchema,
+    required: false,
   },
 });
 
@@ -54,7 +67,7 @@ const licenseSchema = new Schema({
   },
 });
 
-const userSchema = new Schema({
+const employeeDetailSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -116,6 +129,6 @@ const userSchema = new Schema({
   },
 });
 
-const User = model("User", userSchema);
+const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
 
-module.exports = User;
+module.exports = EmployeeDetail;
