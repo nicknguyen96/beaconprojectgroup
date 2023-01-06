@@ -5,6 +5,7 @@ const checkRegToken = require("../middlewares/checkRegToken");
 
 // register an employee
 authRouter.post("/register", checkRegToken, AuthController.registerUser);
+// authRouter.post("/register", AuthController.registerUser);
 
 // login an employee
 authRouter.post("/login", AuthController.loginUser);

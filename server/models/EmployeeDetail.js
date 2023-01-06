@@ -4,15 +4,15 @@ const { Schema, model } = require("mongoose");
 const carSchema = new Schema({
   make: {
     type: String,
-    required: true,
+    required: false,
   },
   model: {
     type: String,
-    required: true,
+    required: false,
   },
   color: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -22,25 +22,36 @@ const carSchema = new Schema({
 const workStatusSchema = new Schema({
   visaTitle: {
     type: String,
+    default: 'visa title',
     required: true,
   },
   issuedDate: {
     type: String,
+    default: 'issued date',
     required: true,
   },
   expirationDate: {
     type: String,
+    default: 'expiration date',
     required: true,
   },
   fileUpload: {
     type: String,
-    requried: true,
+    required: true,
   },
+  message: {
+    type: String,
+    required: false,
+  }
 });
 
 // work status schema
 // sub schema
 const legalStatus = new Schema({
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: String,
   },
@@ -54,14 +65,17 @@ const legalStatus = new Schema({
 const licenseSchema = new Schema({
   number: {
     type: String,
+    default: 'enter your driver licence number here',
     required: true,
   },
   expiration: {
     type: String,
+    default: 'enter your expiration date',
     required: true,
   },
   picture: {
     type: String,
+    default: 'enter your driver licence here',
     required: true,
   },
 });
@@ -69,10 +83,12 @@ const licenseSchema = new Schema({
 const employeeDetailSchema = new Schema({
   firstName: {
     type: String,
+    default: 'Enter your first name here',
     required: true,
   },
   lastName: {
     type: String,
+    default: 'Enter your last name here',
     required: true,
   },
   middleName: {
@@ -89,37 +105,40 @@ const employeeDetailSchema = new Schema({
   },
   currentAddress: {
     type: String,
+    default: 'Enter your email here',
     required: true,
   },
   phoneNumber: {
     type: String,
+    default: 'Enter your phone number here',
     required: true,
   },
   car: {
     type: carSchema,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
+    required: false,
   },
   SSN: {
     type: String,
+    default: 'Enter your SSN',
     required: true,
   },
   DOB: {
     type: String,
+    default: Date.now,
     required: true,
   },
   gender: {
     type: String,
-    required: false,
+    default: 'male',
+    required: true,
   },
   legalStatus: {
     type: legalStatus,
+    required: false,
   },
   driversLicense: {
     type: licenseSchema,
+    required: false,
   },
   reports: {
     required: false,

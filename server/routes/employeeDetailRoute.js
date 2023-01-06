@@ -5,11 +5,6 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const isHR = require("../middlewares/isHR");
-
-// send an invitation to a specified user
-employeeDetailRouter.post("/sendInvitation", isHR, employeeDetailController.sendInvitation);
-
 employeeDetailRouter.put("/uploadFile", upload.single("image"), employeeDetailController.uploadFile);
 
 employeeDetailRouter.post("/submitDetails", employeeDetailController.submitUserDetails);
@@ -17,9 +12,5 @@ employeeDetailRouter.post("/submitDetails", employeeDetailController.submitUserD
 employeeDetailRouter.put("/updateDetails", employeeDetailController.updateUserDetails);
 
 // employeeDetailRouter.get('/getFile/:filename', employeeDetailController.getFile);
-
-module.exports = employeeDetailRouter;
-// sending all the users to an admin
-employeeDetailRouter.get("/sortUser", isHR, employeeDetailController.sendSortedUsers);
 
 module.exports = employeeDetailRouter;
