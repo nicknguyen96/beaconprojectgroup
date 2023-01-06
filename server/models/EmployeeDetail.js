@@ -153,5 +153,7 @@ const employeeDetailSchema = new Schema({
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
+const LegalStatus = model("LegalStatus", legalStatus);
+const WorkStatus = model("WorkStatus", workStatusSchema);
 
-module.exports = EmployeeDetail;
+module.exports = {EmployeeDetail, LegalStatus, WorkStatus};

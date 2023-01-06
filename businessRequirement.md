@@ -34,7 +34,7 @@
   7. Housing
         1. address ( read only )
         2. roommates list ( list, read only )
-        3. facility reports:
+        (Done) 3. facility reports: 
             1. create report 
                   1. Title
                   2. Description

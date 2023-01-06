@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const Employee = require('../models/Employee');
+const EmployeeDetail = require('../models/EmployeeDetail');
 
 class HrController {
     async sendInvitation(req, res) {
@@ -84,6 +86,28 @@ class HrController {
             res.status(200).json(sorted);
         } catch (err) {
             res.status(500).json({ message: "Sorry something went wrong" });
+        }
+    }
+
+    // approve certain file
+    async approveFile(req, res) {
+        try {
+            const { employeeId } = req.body;
+            const employee = await 
+                Employee
+                .findOne({'_id': employeeId})
+                .populate({
+                    path: 'EmployeeDetail',
+                    model: 'EmployeeDetail'
+                })
+                .select('-password');
+            if(!employee) {
+                res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
+            } else {
+                // valid employee
+            }
+        } catch(error) {
+            res.json({ status: 500, msg: error.message });
         }
     }
 }
