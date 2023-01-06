@@ -20,9 +20,21 @@ const carSchema = new Schema({
 
 // sub schema
 const workStatusSchema = new Schema({
-  status: {
+  visaTitle: {
     type: String,
     required: true,
+  },
+  issuedDate: {
+    type: String,
+    required: true,
+  },
+  expirationDate: {
+    type: String,
+    required: true,
+  },
+  fileUpload: {
+    type: String,
+    requried: true,
   },
 });
 
@@ -54,7 +66,7 @@ const licenseSchema = new Schema({
   },
 });
 
-const userSchema = new Schema({
+const employeeDetailSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -114,8 +126,13 @@ const userSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "Report",
   },
+  onboardingStatus: {
+    type: String,
+    required: true,
+    default: "In Progress",
+  },
 });
 
-const User = model("User", userSchema);
+const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
 
-module.exports = User;
+module.exports = EmployeeDetail;
