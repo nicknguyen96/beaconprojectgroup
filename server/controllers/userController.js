@@ -1,5 +1,10 @@
+const User = require('../models/User');
+
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+
+const {uploadFile, getFile} = require('../utils/uploadFile');
+// const getFile = require('../utils/getFile');
 
 class UserController {
     async sendInvitation(req, res) {
@@ -52,9 +57,70 @@ class UserController {
                 }
             })
         } else {
-            return res.json({status : 401, message: 'You do not have permission to perform this function'})
+            return res.json({ status: 401, message: 'You do not have permission to perform this function' })
         }
     }
+
+    async uploadFile(req, res) {
+        // we will distingush which property of user info base on this one.
+        const filename = req.file.originalname;
+        // we will use middleware to append userid from the token
+        const { userid } = req.headers;
+        try {
+            
+            const validType = ['profilePicture', 'driverLicence', 'workAuthorization', 'other'];
+            const fileType = filename && filename.split('-')[0];
+            const email = filename && filename.split('-')[1];
+            if (!validType.includes(fileType)) {
+                return res.json({status: 400, message: 'file type name should include one of the following: profilePicture, driverLicence, workAuthorization, other'})
+            }
+
+            // This codes bellow will check if the email in the file name is the same with the user.email or not
+            const user = await User.findById(userid);
+            // if (!user || user.email != email){
+            //     return res.json({status: 400, message: 'the email should be the same with your email'});
+            // }
+            const response = await uploadFile(req.file);
+            if (response.status == 200) {
+                console.log(response)
+
+                
+                // save the file name into the database;
+                // user[fileType] = filename;
+                // await user.save();
+
+                return res.json({ status: 200, message: 'hello world', data: response })
+            } else {
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            if (error.message == 'Access Denied') {
+                return res.json({status: 403, message: error.message})
+            }
+            return res.json({ status: 400, message: error.message })
+        }
+    }
+
+    // async getFile(req, res) {
+    //     const { filename } = req.params;
+    //     const { userid } = req.headers;
+
+        
+    //     try {
+    //         const response = await getFile(filename);
+    //         if (response.status != 200) {
+    //             throw new Error(response.message);
+    //         } else {
+                
+    //             return res.json({status: 200, message:"get the data successfully", data: response.data})
+    //         }
+    //     } catch (error){
+    //         if (error.message == 'Access Denied') {
+    //             return res.json({status: 403, message: error.message})
+    //         }
+    //         return res.json({status: 400, message: error.message});
+    //     }
+    // }
 }
 
 module.exports = new UserController();

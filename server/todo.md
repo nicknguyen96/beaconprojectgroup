@@ -76,7 +76,8 @@
   * GET /users/search 
   * GET /user/:userid : get user detail for the userid
   * PUT /user/:userid : edit user detail ( like pending status ,...);
-  * 
+  * PUT /user/addFile/ : add files to user base on the namefile
+  * GET /user/getFile/:filename : get the url image from s3 bucket base on the file name
 * /house:
   * POST /create : create new house from
   * DELETE /delete/:houseid : delete the house
