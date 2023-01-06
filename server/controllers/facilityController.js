@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const EmployeeDetail = require('../models/EmployeeDetail');
 const Employee = require('../models/Employee');
 const {Report, Comments} = require('../models/Report');
 const ObjectId = require('mongoose').Types.ObjectId;
@@ -21,8 +21,8 @@ exports.createReport = async (req, res) => {
     // the user here is the actual user model Id
     const { user } = await Employee.findOne({"_id": userid});
     const newReport = await Report.create(report);
-    const userUpdate = await User.updateOne({'_id': user}, {$push: {'reports': newReport._id}});
-    res.json({ status: 201, msg: 'Report Created', data: userUpdate});
+    const userUpdate = await EmployeeDetail.updateOne({'_id': user}, {$push: {'reports': newReport._id}});
+    res.json({ status: 201, msg: 'Report Created', data: {userUpdate, reportId: newReport._id}});
   } catch(error) {
     res.json({ status: 500, msg: 'Server Error'});
   }
@@ -33,11 +33,10 @@ exports.getReportsAndComments = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     // the userid here is actually employee model id
     const { userid } = jwt.decode(token, JWT_SECRET);
-
     // the user here is the actual user model Id
     const { user } = await Employee.findOne({"_id": userid});
     const result = await 
-      User
+    EmployeeDetail
       .findOne({_id: user})
       .select({ "reports": 1})
       .populate({
@@ -47,7 +46,6 @@ exports.getReportsAndComments = async (req, res) => {
           path: 'comments',
           model: 'Comments'
         }});
-
     res.json({ status: 200, msg: 'Successfully Get All Reports', data: result})
   } catch(error) {
     res.json({ status: 500, msg: error.message});
