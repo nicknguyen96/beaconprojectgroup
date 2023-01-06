@@ -1,15 +1,15 @@
-const authRouter = require('express').Router();
-const AuthController = require('../controllers/authController');
+const authRouter = require("express").Router();
+const AuthController = require("../controllers/authController");
 
-const checkRegToken = require('../middlewares/checkRegToken');
+const checkRegToken = require("../middlewares/checkRegToken");
 
 // register an employee
-authRouter.post('/register', AuthController.registerUser);
+authRouter.post("/register", checkRegToken, AuthController.registerUser);
 
 // login an employee
-authRouter.post('/login', AuthController.loginUser);
+authRouter.post("/login", AuthController.loginUser);
 
-// log out 
-authRouter.post('/logout', AuthController.logout);
+// log out
+authRouter.post("/logout", AuthController.logout);
 
 module.exports = authRouter;

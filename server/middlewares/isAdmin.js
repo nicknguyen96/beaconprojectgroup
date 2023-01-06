@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-
-module.exports = function isAdmin (req, res, next) {
-    req.headers['isAdmin'] = 'true';
-    return next();
-}
+module.exports = function isAdmin(req, res, next) {
+  req.headers["isAdmin"] = "true";
+  return next();
+};

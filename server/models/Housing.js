@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+const Report = require("./Report");
 //function to get the current time
 const date = () => {
   const d = new Date(),
@@ -7,6 +7,7 @@ const date = () => {
   return dateFormat;
 };
 
+// sub schema
 const landLordSchema = new Schema({
   fullName: {
     type: String,
@@ -22,6 +23,7 @@ const landLordSchema = new Schema({
   },
 });
 
+// sub schema
 const furnitureSchema = new Schema({
   beds: {
     type: Number,
@@ -41,21 +43,19 @@ const furnitureSchema = new Schema({
   },
 });
 
+// sub schema
 const summarySchema = new Schema({
   furniture: {
     type: furnitureSchema,
     required: true,
   },
   reports: {
-    type: [Schema.Types.ObjectId],
+    type: [Report.schema],
     ref: "Report",
-  },
-  employeeInfo: {
-    type: [Schema.Types.ObjectId],
-    ref: "User",
   },
 });
 
+// sub schema
 const housingSchema = new Schema({
   address: {
     type: String,
@@ -67,7 +67,7 @@ const housingSchema = new Schema({
   },
   tenants: {
     type: [Schema.Types.ObjectId],
-    ref: "Employee",
+    ref: "User",
   },
   summary: {
     type: summarySchema,

@@ -36,8 +36,13 @@
         2. roommates list ( list, read only )
         3. facility reports:
             1. create report 
-            2. view own existing reports
+                  1. Title
+                  2. Description
+            2. view own existing reports (users can only see the reports that they’ve submitted)
+                  1. Fields: Title | Description | Created By | Timestamp | Status(Open, In Progress, Closed)
             3. comments
+                  1. Add new comments to current report comment thread
+                  2. Each Comment should have: Description | Created By | Timestamp
 ## HR
   1. Login page 
         1. exactly the same as employee's login page. System detect their role

@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-// car schema
-
+// sub schema
 const carSchema = new Schema({
   make: {
     type: String,
@@ -18,6 +17,8 @@ const carSchema = new Schema({
 });
 
 // if no legal status then work authorization
+
+// sub schema
 const workStatusSchema = new Schema({
   status: {
     type: String,
@@ -26,6 +27,7 @@ const workStatusSchema = new Schema({
 });
 
 // work status schema
+// sub schema
 const legalStatus = new Schema({
   status: {
     type: String,
@@ -36,7 +38,7 @@ const legalStatus = new Schema({
 });
 
 // drivers license schema
-
+// sub schema
 const licenseSchema = new Schema({
   number: {
     type: String,
@@ -106,6 +108,11 @@ const userSchema = new Schema({
   },
   driversLicense: {
     type: licenseSchema,
+  },
+  reports: {
+    required: false,
+    type: [Schema.Types.ObjectId],
+    ref: "Report",
   },
 });
 
