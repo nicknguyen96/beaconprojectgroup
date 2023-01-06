@@ -5,16 +5,12 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage : storage })
 
-const isAdmin = require('../middlewares/isAdmin');
+const isAdmin = require('../middlewares/isHR');
 
 // send an invitation to a specified user
 userRouter.post("/sendInvitation", isAdmin, userController.sendInvitation);
 
 userRouter.put('/uploadFile', upload.single('image'), userController.uploadFile);
-
-userRouter.post('/submitDetails', userController.submitUserDetails);
-
-userRouter.put('/updateDetails', userController.updateUserDetails);
 
 // userRouter.get('/getFile/:filename', userController.getFile);
 

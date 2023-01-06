@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
 
 require("dotenv").config();
-const userRouter = require("./routes/userRoute");
+const userRouter = require("./routes/employeeDetailRoute");
 const authRouter = require("./routes/authRoute");
 const housingRouter = require("./routes/housingRoute");
 const facilityRoute = require('./routes/facilityRoute');
