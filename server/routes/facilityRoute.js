@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { createReport, getReports, createComment, getComments } = require('../controllers/facilityController');
+const { createReport, getReportsAndComments, createComment, closeReport } = require('../controllers/facilityController');
 
 router.post('/create', createReport);
-router.get('/reports', getReports);
-// router.post('/comment', createComment);
-router.get('/comments', getComments);
+router.get('/reportsAndcomments', getReportsAndComments);
+router.post('/comment', createComment);
+router.post('/close', closeReport);
 module.exports = router;
