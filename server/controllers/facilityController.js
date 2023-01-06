@@ -1,27 +1,24 @@
 const User = require('../models/User');
 const Report = require('../models/Report');
-const ObjectId = require('mongoose').Schema.ObjectId;
+const ObjectId = require('mongoose').Types.ObjectId;
 const jwt = require('jsonwebtoken');
-
-const parseJWT = (token) => {
-  return JSON.parse(Buffer.from(token.split('.'[1], 'base64').toString()));
-};
+const { JWT_SECRET } = process.env;
 
 exports.createReport = async (req, res) => {
   const { title, description } = req.body;
-  const { userId } = parseJWT(req.headers.Authorization);
+  const token = req.headers.authorization.split(" ")[1];
+  const { userId } = jwt.decode(token, JWT_SECRET);
   try {
     const report = {
       author: ObjectId(userId),
       title,
       description,
       comments: [],
-      status: 'Open',
-      timeStamp
+      status: 'Open'
     };
     const newReport = await Report.create(report);
-    const user = await User.update({'_id': userId}, {$push: {'reports': ObjectId(newReport.id)}});
-    res.status(201).json({success: true, msg: 'Report Created', data: newReport});
+    const user = await User.update({'_id': userId}, {$push: {'reports': ObjectId(newReport._id)}});
+    res.status(201).json({success: true, msg: 'Report Created', data: user});
     // send back report for testing purpose
   } catch(error) {
     res.status(500).json({ success: false, msg: 'Server Error'});
@@ -61,7 +58,7 @@ exports.getReports = async (req, res) => {
 //   }
 // };
 
-exports.getComments = async (res, res) => {
+exports.getComments = async (req, res) => {
   const { userId } = parseJWT(req.headers.Authorization);
 
   try {

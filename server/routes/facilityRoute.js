@@ -3,6 +3,6 @@ const { createReport, getReports, createComment, getComments } = require('../con
 
 router.post('/create', createReport);
 router.get('/reports', getReports);
-router.post('/comment', createComment);
+// router.post('/comment', createComment);
 router.get('/comments', getComments);
 module.exports = router;
