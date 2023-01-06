@@ -1,6 +1,6 @@
-const hrRouter = require('express').Router();
+const hrRouter = require("express").Router();
 
-const hrController = require('../controllers/hrController');
+const hrController = require("../controllers/hrController");
 
 // send an invitation to a specified user
 hrRouter.post("/sendInvitation", hrController.sendInvitation);
@@ -12,5 +12,8 @@ hrRouter.get("/sortUser", hrController.sendSortedUsers);
 hrRouter.post("/inprogress", hrController.approveFile);
 
 // when HR reject certain file
+
+module.exports = hrRouter;
+hrRouter.put("/update-boarding-status", hrController.updateOnBoardingStatus);
 
 module.exports = hrRouter;
