@@ -17,7 +17,7 @@ class UserController {
         // create reg token and link
         const token = jwt.sign(
             {
-                message: "This token is for invitation purpose",
+                "email": email,
             },
             process.env.JWT_SECRET_INVITATION,
             {
@@ -53,9 +53,9 @@ class UserController {
             transporter.sendMail(options, function (error, info) {
                 if (error) {
                     console.log(error);
-                    res.json({ status: 400, message: error.message });
+                    return res.json({ status: 400, message: error.message });
                 } else {
-                    return res.json({ status: 401, message: 'You do not have permission to perform this function' })
+                    res.json({ status: 200, message: info })
                 }
             });
         } else {

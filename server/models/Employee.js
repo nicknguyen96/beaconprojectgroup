@@ -9,10 +9,15 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
   },
-  isAdmin: {
+  isHR: {
     type: Boolean,
     required: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: false,
+  }
 });
 
 const Employee = model("Employee", employeeSchema);
