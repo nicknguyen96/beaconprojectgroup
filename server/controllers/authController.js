@@ -1,4 +1,5 @@
 const Employee = require('../models/Employee');
+const EmployeeDetail = require('../models/EmployeeDetail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
@@ -13,7 +14,7 @@ class AuthController {
         if (!(email && email.toLowerCase() == req.body.email.toLowerCase())) {
             return res.json({ status: 401, message: "Email doesn't match with the email in the invitation link" });
         }
-        
+
         try {
             const employee = await Employee.findOne({ email });
 
@@ -40,6 +41,11 @@ class AuthController {
             const salt = await bcrypt.genSalt();
             const hashedPassword = await bcrypt.hash(newEmployee.password, salt);
             newEmployee.password = hashedPassword;
+
+            const employeeDetail = new EmployeeDetail();
+            await employeeDetail.save();
+
+            newEmployee.user = employeeDetail._id;
 
             await newEmployee.save();
 

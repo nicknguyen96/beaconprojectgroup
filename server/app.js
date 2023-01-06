@@ -3,16 +3,16 @@ const express = require("express");
 const app = express();
 
 require("dotenv").config();
-const userRouter = require("./routes/employeeDetailRoute");
-const authRouter = require("./routes/authRoute");
-const housingRouter = require("./routes/housingRoute");
+const {employeeDetailRouter, authRouter, housingRouter, hrRouter} = require("./routes/index");
+const isHR = require('./middlewares/isHR');
 
 // parse incoming JSON requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/user", userRouter);
+app.use("/user", employeeDetailRouter);
 app.use("/auth", authRouter);
 app.use("/housing", housingRouter);
+app.use("/hr", isHR,hrRouter);
 
 module.exports = app;
