@@ -12,7 +12,7 @@ class UserController {
     if (!email) {
       return res.json({ status: 400, message: "Email is required" });
     }
-    const { isAdmin } = req.headers;
+    const { isHR } = req.headers;
 
     // create reg token and link
     const token = jwt.sign(
@@ -28,7 +28,7 @@ class UserController {
     const link = `${process.env.FRONTEND_URL}?token=${token}`;
     console.log(link);
 
-    if (isAdmin) {
+    if (isHR) {
       const options = {
         from: process.env.email,
         to: email,
