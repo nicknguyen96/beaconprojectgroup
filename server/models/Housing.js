@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+const Report = require("./Report");
 //function to get the current time
 const date = () => {
   const d = new Date(),
@@ -50,12 +50,8 @@ const summarySchema = new Schema({
     required: true,
   },
   reports: {
-    type: [Schema.Types.ObjectId],
+    type: [Report.schema],
     ref: "Report",
-  },
-  employeeInfo: {
-    type: [Schema.Types.ObjectId],
-    ref: "User",
   },
 });
 
