@@ -15,7 +15,7 @@ const employeeSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'EmployeeDetail',
     required: false,
   }
 });
