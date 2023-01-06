@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {
         const regToken = req.headers.authorization.split(" ")[1];
-        jwt.verify(regToken, process.env.JWT_SECRET_INVITATION);
+        jwt.verify(regToken, process.env.JWT_SECRET);
         console.log('token succes');
         next();
     }
