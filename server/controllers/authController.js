@@ -11,8 +11,9 @@ class AuthController {
         const { email } = req.headers;
         const { password } = req.body;
         if (!(email && email.toLowerCase() == req.body.email.toLowerCase())) {
-            return res.json({ status: 401, message: "Email doesn't match with the email in the invitation link" })
+            return res.json({ status: 401, message: "Email doesn't match with the email in the invitation link" });
         }
+        
         try {
             const employee = await Employee.findOne({ email });
 
@@ -95,7 +96,7 @@ class AuthController {
             res.status(200).json({
                 token: accessToken,
                 isHR: employee.isHR,
-                id: employee._id
+                userid: employee._id
             });
         } catch (error) {
             console.log(error.message);

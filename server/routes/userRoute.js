@@ -12,6 +12,10 @@ userRouter.post("/sendInvitation", isAdmin, userController.sendInvitation);
 
 userRouter.put('/uploadFile', upload.single('image'), userController.uploadFile);
 
+userRouter.post('/submitDetails', userController.submitUserDetails);
+
+userRouter.put('/updateDetails', userController.updateUserDetails);
+
 // userRouter.get('/getFile/:filename', userController.getFile);
 
 module.exports = userRouter;
