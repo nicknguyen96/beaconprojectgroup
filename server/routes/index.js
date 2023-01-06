@@ -1,9 +1,9 @@
 const authRouter = require("./authRoute");
-const userRouter = require("./userRoute");
+const employeeDetailRouter = require("./employeeDetailRoute");
 const housingRouter = require("./housingRoute");
 
 module.exports = {
   authRouter,
-  userRouter,
+  employeeDetailRouter,
   housingRouter,
 };
