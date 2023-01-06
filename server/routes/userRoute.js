@@ -1,21 +1,20 @@
-const userRouter = require("express").Router();
-const userController = require("../controllers/userController");
+const employeeDetailRouter = require("express").Router();
+const employeeDetailController = require("../controllers/employeeDetailController");
 
-const multer = require('multer');
+const multer = require("multer");
 const storage = multer.memoryStorage();
-const upload = multer({ storage : storage })
+const upload = multer({ storage: storage });
 
-const isAdmin = require('../middlewares/isAdmin');
+const isAdmin = require("../middlewares/isAdmin");
 
 // send an invitation to a specified user
-userRouter.post("/sendInvitation", isAdmin, userController.sendInvitation);
+employeeDetailRouter.post("/sendInvitation", isAdmin, employeeDetailController.sendInvitation);
 
-userRouter.put('/uploadFile', upload.single('image'), userController.uploadFile);
+employeeDetailRouter.put("/uploadFile", upload.single("image"), employeeDetailController.uploadFile);
 
-// userRouter.get('/getFile/:filename', userController.getFile);
+// employeeDetailRouter.get('/getFile/:filename', employeeDetailController.getFile);
 
-module.exports = userRouter;
 // sending all the users to an admin
-userRouter.get("/sortUser", isAdmin, userController.sendSortedUsers);
+employeeDetailRouter.get("/sortUser", isAdmin, employeeDetailController.sendSortedUsers);
 
-module.exports = userRouter;
+module.exports = employeeDetailRouter;

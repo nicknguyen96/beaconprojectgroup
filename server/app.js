@@ -1,4 +1,4 @@
-const express = require('express'); //
+const express = require("express"); //
 
 const app = express();
 
@@ -11,7 +11,7 @@ const housingRouter = require("./routes/housingRoute");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/user", userRouter);
+app.use("/employee", userRouter);
 app.use("/auth", authRouter);
 app.use("/housing", housingRouter);
 

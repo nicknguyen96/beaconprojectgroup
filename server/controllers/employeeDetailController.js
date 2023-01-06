@@ -111,7 +111,7 @@ class UserController {
       }
 
       // function to sort all the users by last name
-      const sorted = users.sort((a, b) => {
+      const sortedUsers = users.sort((a, b) => {
         const lastNameA = a.lastName;
         const lastNameB = b.lastName;
 
@@ -124,7 +124,7 @@ class UserController {
         return 0;
       });
 
-      res.status(200).json(sorted);
+      return res.json({ status: 200, message: "sorted Users", data: sortedUsers });
     } catch (err) {
       res.status(500).json({ message: "Sorry something went wrong" });
     }

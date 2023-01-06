@@ -16,12 +16,12 @@ class HousingController {
       const allHousing = await Housing.find().populate("User");
 
       if (allHousing.length <= 0) {
-        return res.status(200).json("No houses have been added");
+        return res.json({ status: 200, message: "No houses have been added" });
       }
 
-      res.status(200).json(allHousing);
+      return res.json({ status: 200, message: "Housing Details", data: allHousing });
     } catch (error) {
-      return res.status(500).json("Sorry, unable to get housing details");
+      return res.json({ status: 500, message: "Sorry, unable to get housing details" });
     }
   }
 
@@ -29,7 +29,7 @@ class HousingController {
     const { houseInfo } = req.body;
 
     if (!houseInfo) {
-      return res.status(403).json("Not all inputs have been filed");
+      return res.json({ status: 500, message: "Not all inputs have been filed" });
     }
 
     try {
@@ -38,9 +38,9 @@ class HousingController {
 
       console.log(newHouse);
 
-      return res.status(200).json(newHouse, { message: "House has been added" });
+      return res.json({ status: 200, message: "House has been added", data: newHouse });
     } catch (error) {
-      res.status(500).json("Sorry something went wrong");
+      return res.status(500).json("Sorry something went wrong");
     }
   }
 
@@ -48,16 +48,16 @@ class HousingController {
     const { id } = req.body;
 
     if (!id) {
-      return res.status(403).json("No house provided");
+      return res.json({ status: 404, message: "No house found" });
     }
     try {
       const deletedHouse = await Housing.findByIdAndDelete(id);
 
       console.log(deletedHouse);
 
-      res.status(200).json("House has been deleted");
+      return res.json({ status: 200, message: "House has been deleted", data: deletedHouse });
     } catch (err) {
-      return res.status(500).json("Sorry, something went wrong");
+      return res.json({ status: 500, message: "Sorry, something went wrong" });
     }
   }
 }
