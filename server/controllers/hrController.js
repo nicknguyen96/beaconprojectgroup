@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const { Employee, EmployeeDetail } = require("../models");
+const { Employee } = require("../models");
+const { EmployeeDetail, LegalStatus, WorkStatus, FileUpload } = require('../models/EmployeeDetail');
 
 class HrController {
   async sendInvitation(req, res) {
@@ -122,20 +123,92 @@ class HrController {
     // approve certain file
     async approveFile(req, res) {
         try {
-            const { employeeId } = req.body;
+            const { employeeId, fileId } = req.body;
             const employee = await 
                 Employee
                 .findOne({'_id': employeeId})
-                .populate({
-                    path: 'EmployeeDetail',
-                    model: 'EmployeeDetail'
-                })
+                .populate({path: 'EmployeeDetail', model: 'EmployeeDetail'})
                 .select('-password');
             if(!employee) {
                 res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
             } else {
-                // valid employee
+                const result = await
+                EmployeeDetail.updateOne(
+                    {"_id": employee.user},
+                    {$set: {'legalStatus.workStatus.fileUpload.$[file].status': 'Approved'}},
+                    {arrayFilters: [{'file._id': fileId}]});
+                res.json({ status: 201, msg: 'File approved', data: result});
             }
+        } catch(error) {
+            res.json({ status: 500, msg: error.message });
+        }
+    };
+
+    // when hr reject certain file
+    async rejectFile(req, res) {
+        try {
+            const { employeeId, fileId, message } = req.body;
+            const employee = await 
+                Employee
+                .findOne({'_id': employeeId})
+                .populate({path: 'EmployeeDetail', model: 'EmployeeDetail'})
+                .select('-password');
+            if(!employee) {
+                res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
+            } else {
+                const result = await
+                EmployeeDetail.updateOne(
+                    {"_id": employee.user},
+                    {$set: {
+                        'legalStatus.workStatus.fileUpload.$[file].status': 'Rejected',
+                        'legalStatus.workStatus.fileUpload.$[file].message': message
+                    }},
+                    {arrayFilters: [{'file._id': fileId}]});
+                res.json({ status: 200, msg: 'File Rejected', data: result});
+            }
+        } catch(error) {
+            res.json({ status: 500, msg: error.message });
+        }
+    };
+    // when hr send notification to user
+    async sendNotification(req, res) {
+        try {
+            // get email
+            const { email } = req.body;
+            if (!email) {
+                return res.json({ status: 400, message: "Email is required" });
+            }
+
+            // set ups for email notification
+            const options = {
+                from: process.env.email,
+                to: email,
+                subject: "Sending email with nodejs",
+                html: `
+                                <header>
+                                    Hello ${email}! This is a remainder for missing file
+                                </header>
+                                <main>
+                                    <p>Please login Portal and upload the required file</p>
+                                    <p>Thank you for your corporation.</p>
+                                </main>
+                            `,
+            };
+            const transporter = nodemailer.createTransport({
+                service: "hotmail",
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password,
+                }
+            });
+            transporter.sendMail(options, function (error, info) {
+                if (error) {
+                  console.log(error);
+                  return res.json({ status: 400, message: error.message });
+                } else {
+                  res.json({ status: 200, message: info });
+                }
+              });
         } catch(error) {
             res.json({ status: 500, msg: error.message });
         }

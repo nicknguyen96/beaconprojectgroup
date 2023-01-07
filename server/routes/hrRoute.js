@@ -9,9 +9,13 @@ hrRouter.post("/sendInvitation", hrController.sendInvitation);
 hrRouter.get("/sortUser", hrController.sendSortedUsers);
 
 // when HR approves certain file
-hrRouter.post("/inprogress", hrController.approveFile);
+hrRouter.post("/approvefile", hrController.approveFile);
 
 // when HR reject certain file
+hrRouter.post("/rejectFile", hrController.rejectFile);
+
+// when HR send notification for certain file
+hrRouter.post("/notification", hrController.sendNotification);
 
 module.exports = hrRouter;
 hrRouter.put("/update-boarding-status", hrController.updateOnBoardingStatus);
