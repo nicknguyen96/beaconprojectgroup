@@ -1,6 +1,6 @@
 const housingRouter = require("express").Router();
 const HousingController = require("../controllers/housingController");
-const isAdmin = require("../middlewares/isAdmin");
+const isHR = require("../middlewares/isHR");
 
 housingRouter.get("/", HousingController.getAllHousing);
 housingRouter.post("/create-house", HousingController.addingHousing);

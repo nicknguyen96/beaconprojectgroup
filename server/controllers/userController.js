@@ -123,8 +123,13 @@ class UserController {
     async updateUserDetails(req, res) {
         try {
             // get the user id
-            const { id } = req.body.uid;
-            const user = await User.findByIdAndUpdate(id, { ...req.body.data });
+            const user = await User.findById(req.body.uid);
+            if (req.body.data.profilePicture) user.profilePicture = req.body.data.profilePicture;
+            if (req.body.data.currentAddress) user.currentAddress = req.body.data.currentAddress;
+            if (req.body.data.phoneNumber) user.phoneNumber = req.body.data.phoneNumber;
+            if (req.body.data.carSchema) user.carSchema = req.body.data.carSchema;
+            if (req.body.data.driversLicense) user.driversLicense = req.body.data.driversLicense;
+
             await user.save();
             res.status(200).json({
                 message: 'User details have been updated!'
