@@ -64,7 +64,9 @@ class HrController {
   //sending sorted users
   async sendSortedUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await Employee.find({ isHR: false }).populate({
+        path: 'user'
+      });
       if (users.length <= 0) {
         return res.status(200).json("User list is empty");
       }
@@ -90,33 +92,62 @@ class HrController {
   }
 
   async updateOnBoardingStatus(req, res) {
-    const { updatedStatus, employeeId } = req.body;
-
-    // checking if the id is valid first before we start updating the status
-    const employee = await Employee.findById(employeeId);
-
-    if (!employee) {
-      return res.json({ status: 404, message: "No employee found" });
-    }
+    const { onboardingStatus, employeeId, message } = req.body;
 
     try {
-      const userDetails = await Employee.findByIdAndUpdate(employeeId);
+
+      // checking if the id is valid first before we start updating the status
+      if (!employeeId) {
+        throw new Error("employeeId must be provided.")
+      }
+
+      const employee = await Employee.findById(employeeId).populate('user');
+
+      if (!employee) {
+        return res.json({ status: 404, message: "No employee found" });
+      }
 
       //finding the employee detail schema and updating the sub schema
       const newEmployeeDetail = await EmployeeDetail.findByIdAndUpdate(
-        //finding the user details and
-        userDetails.user._id,
-        { $set: { onboardingStatus: updatedStatus } },
+        //finding the user details and update it
+        employee.user.id,
+        { $set: { onboardingStatus } },
         { new: true }
       );
 
-      /* Returning the user details of the employee. */
-      if (!userDetails.user) {
-        return res.json({ status: 422, message: "User has not started the onboarding process yet" });
-      }
+      // send email to employee to notify them the changes
+      const options = {
+        from: process.env.email,
+        to: employee.email,
+        subject: "Changes from onboarding application status",
+        html: `
+                        <header>
+                            Hello ${employee.email}! There is a message for you.
+                        </header>
+                        <main>
+                            <p>${message}<p>
+                            <p>Login <a href=${process.env.BACKEND_URL}>into</a> your account now to see the changes.</p>
+                        </main>
+                    `,
+      };
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: process.env.email,
+          pass: process.env.password,
+        },
+      });
+      transporter.sendMail(options, function (error, info) {
+        if (error) {
+          console.log(error);
+          throw new Error('Cannot send email. Please try again')
+        }
+      });
+
       res.json({ status: 200, message: "Successfully updated employee onboarding status", data: newEmployeeDetail });
     } catch (err) {
-      return res.json({ status: 500, message: "Sorry something went wrong" });
+      console.log(err);
+      return res.json({ status: 400, message: err.message });
     }
   }
 
