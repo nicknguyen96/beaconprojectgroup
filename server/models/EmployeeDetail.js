@@ -19,7 +19,6 @@ const carSchema = new Schema({
 const fileUploadSchema = new Schema({
   fileUrl: {
     type: String,
-<<<<<<< HEAD
     default: "visa title",
     required: true,
   },
@@ -34,11 +33,10 @@ const fileUploadSchema = new Schema({
     required: true,
   },
   fileUpload: {
-=======
+    type: String,
     required: true,
   },
   status: {
->>>>>>> 6ff800c14ffa3f2cdb569cbcc1c2a80fcb921a92
     type: String,
     required: true,
   },
@@ -46,8 +44,6 @@ const fileUploadSchema = new Schema({
     type: String,
     required: false,
   },
-<<<<<<< HEAD
-=======
 });
 
 // if no legal status then work authorization
@@ -77,7 +73,6 @@ const workStatusSchema = new Schema({
     type: String,
     required: false,
   },
->>>>>>> 6ff800c14ffa3f2cdb569cbcc1c2a80fcb921a92
 });
 
 // work status schema
