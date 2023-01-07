@@ -13,15 +13,19 @@ class HousingController {
   async getAllHousing(req, res) {
     try {
       // getting all the houses and filling in the tenant information
-      const allHousing = await Housing.find().populate("User");
+      const allHousing = await Housing.find().populate({
+        path: 'tenants',
+        populate: 'user'
+      });
 
       if (allHousing.length <= 0) {
-        return res.status(200).json("No houses have been added");
+        return res.status(200).json({ status: 200, message: "No houses have been added" });
       }
 
-      res.status(200).json(allHousing);
+      res.status(200).json({ status: 200, message: "get allHousing", data: allHousing });
     } catch (error) {
-      return res.status(500).json("Sorry, unable to get housing details");
+      console.log(error);
+      return res.json({ status: 200, message: error.message });
     }
   }
 
@@ -29,7 +33,7 @@ class HousingController {
     const { houseInfo } = req.body;
 
     if (!houseInfo) {
-      return res.status(403).json("Not all inputs have been filed");
+      throw new Error("Not all inputs have been filed");
     }
 
     try {
@@ -38,9 +42,10 @@ class HousingController {
 
       console.log(newHouse);
 
-      return res.status(200).json(newHouse, { message: "House has been added" });
+      return res.json({ status: 200, data: newHouse, message: "House has been added" });
     } catch (error) {
-      res.status(500).json("Sorry something went wrong");
+      console.log(error);
+      res.json({ status: 400, message: error.message });
     }
   }
 
@@ -48,16 +53,17 @@ class HousingController {
     const { id } = req.body;
 
     if (!id) {
-      return res.status(403).json("No house provided");
+      return res.json({ status: 403, message: "No houseid was provided" });
     }
     try {
       const deletedHouse = await Housing.findByIdAndDelete(id);
 
       console.log(deletedHouse);
 
-      res.status(200).json("House has been deleted");
-    } catch (err) {
-      return res.status(500).json("Sorry, something went wrong");
+      res.status(200).json({ status: 200, message: "House has been deleted" });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ status: 400, message: error.message });
     }
   }
 }

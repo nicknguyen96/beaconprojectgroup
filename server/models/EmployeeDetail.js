@@ -160,6 +160,11 @@ const employeeDetailSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "Report",
   },
+  housing: {
+    required: true,
+    type : Schema.Types.ObjectId,
+    ref: "Housing",
+  },
   onboardingStatus: {
     type: String,
     required: true,
