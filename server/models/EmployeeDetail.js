@@ -16,6 +16,40 @@ const carSchema = new Schema({
   },
 });
 
+const fileUploadSchema = new Schema({
+  fileUrl: {
+    type: String,
+<<<<<<< HEAD
+    default: "visa title",
+    required: true,
+  },
+  issuedDate: {
+    type: String,
+    default: "issued date",
+    required: true,
+  },
+  expirationDate: {
+    type: String,
+    default: "expiration date",
+    required: true,
+  },
+  fileUpload: {
+=======
+    required: true,
+  },
+  status: {
+>>>>>>> 6ff800c14ffa3f2cdb569cbcc1c2a80fcb921a92
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: false,
+  },
+<<<<<<< HEAD
+=======
+});
+
 // if no legal status then work authorization
 
 // sub schema
@@ -36,13 +70,14 @@ const workStatusSchema = new Schema({
     required: true,
   },
   fileUpload: {
-    type: String,
+    type: [fileUploadSchema],
     required: true,
   },
   message: {
     type: String,
     required: false,
   },
+>>>>>>> 6ff800c14ffa3f2cdb569cbcc1c2a80fcb921a92
 });
 
 // work status schema

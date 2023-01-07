@@ -19,6 +19,6 @@ app.use(cors(corsOptions));
 app.use("/user", employeeDetailRouter);
 app.use("/auth", authRouter);
 app.use("/housing", housingRouter);
-app.use("/hr", hrRouter);
+app.use("/hr", isHR, hrRouter);
 
 module.exports = app;

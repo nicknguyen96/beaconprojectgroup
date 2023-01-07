@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError } from 'rxjs';
 import { BACKEND_URL } from '../utils/utils';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../store/user/auth.actions';
@@ -18,5 +18,7 @@ export class AuthService {
         const stringfiedEmployee: string = JSON.stringify(response.employee)
         localStorage.setItem('token', stringifiedToken)
         localStorage.setItem('employee', stringfiedEmployee)
-        this.store.dispatch(AuthActions.loginSuccess(response))}))}
+        this.store.dispatch(AuthActions.loginSuccess(response)), catchError(response => 
+        response.status)
+      }))}
 }

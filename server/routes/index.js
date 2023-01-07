@@ -8,5 +8,4 @@ module.exports = {
   employeeDetailRouter,
   housingRouter,
   hrRouter,
-  employeeDetailRouter,
 };
