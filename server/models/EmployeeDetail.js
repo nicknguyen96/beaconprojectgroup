@@ -75,11 +75,6 @@ const workStatusSchema = new Schema({
     default : [],
     required: true,
   },
-  message: {
-    type: String,
-    default: "message for this file",
-    required: false,
-  },
 });
 
 // work status schema
@@ -198,5 +193,8 @@ const employeeDetailSchema = new Schema({
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
+const LegalStatus = model("LegalStatus", legalStatus);
+const WorkStatus = model("WorkStatus", workStatusSchema);
+const FileUpload = model('FileUpload', fileUploadSchema)
 
-module.exports = EmployeeDetail;
+module.exports = {EmployeeDetail, LegalStatus, WorkStatus, FileUpload};
