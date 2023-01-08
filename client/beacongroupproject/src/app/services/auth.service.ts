@@ -13,12 +13,13 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post(`${BACKEND_URL}/auth/login`, {email, password}).pipe(
-      tap((response: any) => {
-        const stringifiedToken: string = JSON.stringify(response.token)
-        const stringfiedEmployee: string = JSON.stringify(response.employee)
+      tap((data: any) => {
+        // 
+        const stringifiedToken: string = JSON.stringify(data.token)
+        const stringfiedEmployee: string = JSON.stringify(data.employee)
         localStorage.setItem('token', stringifiedToken)
         localStorage.setItem('employee', stringfiedEmployee)
-        this.store.dispatch(AuthActions.loginSuccess(response)), catchError(response => 
-        response.status)
+        this.store.dispatch(AuthActions.loginSuccess(data)), catchError(data => 
+        data.status)
       }))}
 }
