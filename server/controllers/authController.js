@@ -1,8 +1,10 @@
-const Employee = require("../models/Employee");
-const EmployeeDetail = require("../models/EmployeeDetail");
+const { Housing, Employee, EmployeeDetail } = require("../models/")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
+
+// maximum of tenents in the house
+const MAX_COMPACITY = 4;
 
 class AuthController {
   async registerUser(req, res) {
@@ -40,8 +42,33 @@ class AuthController {
       const hashedPassword = await bcrypt.hash(newEmployee.password, salt);
       newEmployee.password = hashedPassword;
 
-      const employeeDetail = new EmployeeDetail();
-      await employeeDetail.save();
+      const legalStatus = {
+        isCompleted: false,
+        status: 'Greencard | Citizen | Other | OPT',
+        workStatus: {
+          visaTitle: "visa title",
+          issuedDate: Date(),
+          expirationDate: Date(),
+          fileUpload: [],
+          message: "some messages",
+        }
+      }
+
+      const employeeDetail = new EmployeeDetail({ legalStatus });
+
+
+
+      // assign employee to the available house
+      const availableHouse = await Housing.find();
+      for (let i = 0; i < availableHouse.length; i++) {
+        if (availableHouse[i].tenants.length < MAX_COMPACITY) {
+          employeeDetail.housing = availableHouse[i]._id;
+          availableHouse[i].tenants.push(newEmployee._id);
+          await employeeDetail.save();
+          await availableHouse[i].save();
+          break;
+        }
+      }
 
       newEmployee.user = employeeDetail._id;
 
@@ -50,7 +77,7 @@ class AuthController {
       const payload = { userid: newEmployee._id, isHR: false };
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
 
-      return res.json({ status: 200, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
+      return res.json({ status: 201, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
     } catch (error) {
       console.log(error.message);
       return res.json({ status: 400, message: "Something wrong while creating new employee. Please contact your HR or try again." });

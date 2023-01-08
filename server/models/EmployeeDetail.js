@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const { Schema, model } = require("mongoose");
 
 // sub schema
@@ -17,6 +18,10 @@ const carSchema = new Schema({
 });
 
 const fileUploadSchema = new Schema({
+  fileName: {
+    type: String,
+    required: true,
+  },
   fileUrl: {
     type: String,
     required: true,
@@ -52,10 +57,12 @@ const workStatusSchema = new Schema({
   },
   fileUpload: {
     type: [fileUploadSchema],
+    default : [],
     required: true,
   },
   message: {
     type: String,
+    default: "message for this file",
     required: false,
   },
 });
@@ -69,9 +76,12 @@ const legalStatus = new Schema({
   },
   status: {
     type: String,
+    default: 'Greencard | Citizen | Other | OPT',
+    required: true,
   },
   workStatus: {
     type: workStatusSchema,
+    required: false,
   },
 });
 
@@ -149,7 +159,7 @@ const employeeDetailSchema = new Schema({
   },
   legalStatus: {
     type: legalStatus,
-    required: false,
+    required: true,
   },
   driversLicense: {
     type: licenseSchema,
@@ -162,7 +172,7 @@ const employeeDetailSchema = new Schema({
   },
   housing: {
     required: true,
-    type : Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Housing",
   },
   onboardingStatus: {
