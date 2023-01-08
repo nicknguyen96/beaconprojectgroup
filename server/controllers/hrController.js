@@ -153,21 +153,22 @@ class HrController {
     // approve certain file
     async approveFile(req, res) {
         try {
-            const { employeeId, fileId } = req.body;
+            const { employeeId, fileName } = req.body;
             const employee = await 
                 Employee
                 .findOne({'_id': employeeId})
-                .populate({path: 'EmployeeDetail', model: 'EmployeeDetail'})
                 .select('-password');
             if(!employee) {
                 res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
             } else {
-                const result = await
-                EmployeeDetail.updateOne(
+                await EmployeeDetail.findOneAndUpdate(
                     {"_id": employee.user},
-                    {$set: {'legalStatus.workStatus.fileUpload.$[file].status': 'Approved'}},
-                    {arrayFilters: [{'file._id': fileId}]});
-                res.json({ status: 201, msg: 'File approved', data: result});
+                    {$set: {
+                      'legalStatus.workStatus.fileUpload.$[file].status': 'Approved',
+                      'legalStatus.workStatus.fileUpload.$[file].message': 'Approved',
+                    }},
+                    {arrayFilters: [{'file.fileName': fileName}]});
+                res.json({ status: 201, msg: 'File approved' });
             }
         } catch(error) {
             res.json({ status: 500, msg: error.message });
@@ -176,29 +177,27 @@ class HrController {
 
     // when hr reject certain file
     async rejectFile(req, res) {
-        try {
-            const { employeeId, fileId, message } = req.body;
-            const employee = await 
-                Employee
-                .findOne({'_id': employeeId})
-                .populate({path: 'EmployeeDetail', model: 'EmployeeDetail'})
-                .select('-password');
-            if(!employee) {
-                res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
-            } else {
-                const result = await
-                EmployeeDetail.updateOne(
-                    {"_id": employee.user},
-                    {$set: {
-                        'legalStatus.workStatus.fileUpload.$[file].status': 'Rejected',
-                        'legalStatus.workStatus.fileUpload.$[file].message': message
-                    }},
-                    {arrayFilters: [{'file._id': fileId}]});
-                res.json({ status: 200, msg: 'File Rejected', data: result});
-            }
-        } catch(error) {
-            res.json({ status: 500, msg: error.message });
+      try {
+        const { employeeId, fileName, message } = req.body;
+        const employee = await 
+            Employee
+            .findOne({'_id': employeeId})
+            .select('-password');
+        if(!employee) {
+            res.json({ status: 404, msg: 'Employee Doesn\'t Exist'});
+        } else {
+            await EmployeeDetail.findOneAndUpdate(
+                {"_id": employee.user},
+                {$set: {
+                  'legalStatus.workStatus.fileUpload.$[file].status': 'Rejected',
+                  'legalStatus.workStatus.fileUpload.$[file].message': message,
+                }},
+                {arrayFilters: [{'file.fileName': fileName}]});
+            res.json({ status: 201, msg: 'File Rejected' });
         }
+      } catch(error) {
+        res.json({ status: 500, msg: error.message });
+      }
     };
     // when hr send notification to user
     async sendNotification(req, res) {

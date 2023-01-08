@@ -9,7 +9,7 @@ hrRouter.post("/sendInvitation", hrController.sendInvitation);
 hrRouter.get("/sortUser", hrController.sendSortedUsers);
 
 // when HR approves certain file
-hrRouter.post("/approvefile", hrController.approveFile);
+hrRouter.post("/approveFile", hrController.approveFile);
 
 // when HR reject certain file
 hrRouter.post("/rejectFile", hrController.rejectFile);
