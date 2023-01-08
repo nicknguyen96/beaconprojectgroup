@@ -24,6 +24,21 @@ const fileUploadSchema = new Schema({
   },
   fileUrl: {
     type: String,
+    default: "visa title",
+    required: true,
+  },
+  issuedDate: {
+    type: String,
+    default: "issued date",
+    required: true,
+  },
+  expirationDate: {
+    type: String,
+    default: "expiration date",
+    required: true,
+  },
+  fileUpload: {
+    type: String,
     required: true,
   },
   status: {

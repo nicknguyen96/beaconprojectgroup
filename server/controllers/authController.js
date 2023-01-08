@@ -2,6 +2,7 @@ const { Housing, Employee, EmployeeDetail } = require("../models/")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
+const { BlackListToken, Employee, EmployeeDetail } = require("../models");
 
 // maximum of tenents in the house
 const MAX_COMPACITY = 4;
@@ -87,7 +88,7 @@ class AuthController {
   async logout(req, res) {
     const token = req.headers.Authorization;
     try {
-      await Black_List.create({ token })
+      await BlackListToken.create({ token })
         .then(() => {
           res.status(200).json({ success: true, msg: "Logged out" });
         })
@@ -110,7 +111,7 @@ class AuthController {
         return res.json({ status: 422, message: validate.error.message });
       }
 
-      const employee = await Employee.findOne({ email: email.toLowerCase() });
+      const employee = await Employee.findOne({ email: email.toLowerCase() }).populate("user");
       if (!employee) return res.status(404).send({ message: "User not found!" });
       // check if user credentials are correct
       const comparePassword = await bcrypt.compare(password, employee.password);
@@ -121,10 +122,10 @@ class AuthController {
         isHR: employee.isHR,
       };
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
-      res.status(200).json({
+      res.json({
         token: accessToken,
         isHR: employee.isHR,
-        userid: employee._id,
+        employee: employee,
       });
     } catch (error) {
       console.log(error.message);
