@@ -1,8 +1,7 @@
-const { Housing, Employee, EmployeeDetail } = require("../models/")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const { BlackListToken, Employee, EmployeeDetail } = require("../models");
+const { BlackListToken, Employee, EmployeeDetail, Housing } = require("../models");
 
 // maximum of tenents in the house
 const MAX_COMPACITY = 4;
