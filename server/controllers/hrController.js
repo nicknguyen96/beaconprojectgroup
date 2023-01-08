@@ -65,7 +65,7 @@ class HrController {
   async sendSortedUsers(req, res) {
     try {
       const users = await Employee.find({ isHR: false }).populate({
-        path: 'user'
+        path: "user",
       });
       if (users.length <= 0) {
         return res.status(200).json("User list is empty");
@@ -95,13 +95,12 @@ class HrController {
     const { onboardingStatus, employeeId, message } = req.body;
 
     try {
-
       // checking if the id is valid first before we start updating the status
       if (!employeeId) {
-        throw new Error("employeeId must be provided.")
+        throw new Error("employeeId must be provided.");
       }
 
-      const employee = await Employee.findById(employeeId).populate('user');
+      const employee = await Employee.findById(employeeId).populate("user");
 
       if (!employee) {
         return res.json({ status: 404, message: "No employee found" });
@@ -140,7 +139,7 @@ class HrController {
       transporter.sendMail(options, function (error, info) {
         if (error) {
           console.log(error);
-          throw new Error('Cannot send email. Please try again')
+          throw new Error("Cannot send email. Please try again");
         }
       });
 
