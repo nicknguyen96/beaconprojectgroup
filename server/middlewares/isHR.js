@@ -13,6 +13,7 @@ module.exports = async function isHR(req, res, next) {
   if (user.isHR && (Date.now()/1000 < user.exp) && !inBlackList) {
     req.headers["isHR"] = "true";
     req.headers["userid"] = user.userid;
+    req.headers["email"] = user.email;
   } else if ((Date.now()/1000 > user.exp) || inBlackList) {
     return res.json({ status: 403, message: "Invalid Token"})
   }
