@@ -13,13 +13,24 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post(`${BACKEND_URL}/auth/login`, {email, password}).pipe(
-      tap((data: any) => {
-        // 
-        const stringifiedToken: string = JSON.stringify(data.token)
-        const stringfiedEmployee: string = JSON.stringify(data.employee)
-        localStorage.setItem('token', stringifiedToken)
-        localStorage.setItem('employee', stringfiedEmployee)
-        this.store.dispatch(AuthActions.loginSuccess(data)), catchError(data => 
-        data.status)
-      }))}
+      tap((data) => {
+        this.store.dispatch(AuthActions.login({email, password}));
+      })
+    )
+  } 
+
+  getEmployee() {
+    let token = localStorage.getItem('token')
+    let employee =  JSON.parse(localStorage.getItem('employee'))
+    let isHR = localStorage.getItem('isHR')
+
+    console.log(employee.email)
+
+
+
+    const data = {
+      token, employee, isHR
+    }
+    this.store.dispatch(AuthActions.getEmployee({data}))
+  }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +12,7 @@ export class RegisterComponent implements OnInit {
   public regToken: string;
   
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, public service: AuthService) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

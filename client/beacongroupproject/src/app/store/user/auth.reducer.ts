@@ -1,42 +1,52 @@
 import {createReducer, on} from '@ngrx/store'
 import { AuthActions } from './auth.actions' 
 
-interface User {
-  token: string | null 
+export interface Employee {
+  token: string | boolean
   isHR: boolean,
-  employee: object
+  employee: any,
   loginError?: string
 }
 
 
-export const initialState: User = {
-  token: null,
+export const initialState: Employee = {
+  token: false,
   isHR: false,
-  employee: {},
+  employee: false,
   loginError: '',
 }
 
 const AuthReducer = createReducer(
   initialState,
-  on(AuthActions.loginSuccess, (state, { Response }): any => {
+  on(AuthActions.loginSuccess, (state, { response }): Employee => {
     return {
       ...state,
-      token: Response.token,
-      isHr: Response.isHR,
-      userid: Response.userid
+      token: response.token,
+      isHR: response.isHR,
+      employee: response.employee
     }
   }),
-  on(AuthActions.loginFailure, (state, {error}): any => {
+  on(AuthActions.loginFailure, (state, {error}): Employee => {
     return {
       ...state,
       loginError: error,
-      token: null,
-      userid: null,
+      token: false,
       isHR: false,
+      employee: false,
+    }
+  }),
+  on(AuthActions.getEmployee, (state, { data }): Employee => {
+    return {
+      ...state, 
+      token: data.token,
+      isHR: data.isHR,
+      employee: data.employee
+      
     }
   })
+
 )
 
-export const authReducer = (state: User, action) => {
+export const authReducer = (state: Employee, action) => {
   return AuthReducer(state, action)
 }

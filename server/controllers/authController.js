@@ -95,8 +95,8 @@ class AuthController {
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
       res.json({
         token: accessToken,
-        isHR: employee.isHR,
         employee: employee,
+        isHR: employee.isHR,
       });
     } catch (error) {
       console.log(error.message);
