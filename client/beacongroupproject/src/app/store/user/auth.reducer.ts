@@ -43,7 +43,15 @@ const AuthReducer = createReducer(
       employee: data.employee
       
     }
-  })
+  }),
+  on(AuthActions.logout, (state, { response }): Employee => {
+    return {
+      ...state,
+      token: response.state,
+      isHR: response.state,
+      employee: response.state
+    }
+    })
 
 )
 
