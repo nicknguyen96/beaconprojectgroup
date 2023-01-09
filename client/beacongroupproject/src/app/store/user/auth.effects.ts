@@ -48,27 +48,24 @@ export class AuthEffects {
     { dispatch: false }
   )
 
-
-  
-  logout$ = createEffect((): any => {
+  logout$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.logout),
-      exhaustMap((action) : any => {
-        this.authService.logOut()
-        .pipe(
+      exhaustMap((action) => {
+        return this.authService.logOut().pipe(
           map((data: any) => {
-            if(data.status === 200) {
-            return  AuthActions.logoutSuccess(data)
-            }
-            else  {
-            return AuthActions.logoutFailure(data)
+            console.log(data);
+            if (data?.status == 200) {
+              this.deleteLocal();
+              return AuthActions.logoutSuccess({ response: "something right" });
+            } else {
+              return AuthActions.logoutFailure({ error: "something wrong" });
             }
           })
         )
-      }
-    ))
+      })
+    )
   })
-
 
   deleteLocal() {
     localStorage.removeItem('employee')
@@ -82,4 +79,3 @@ export class AuthEffects {
     private router: Router
   ) { }
 }
-
