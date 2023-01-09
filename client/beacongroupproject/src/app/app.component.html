@@ -17,7 +17,7 @@
         <button type="button" class="btn nav-link btn-link">{{(employee$ | async)?.email}}</button>
         </li>
         <li class="nav-item">
-        <button type="button" class="btn nav-link btn-link">Logout</button>
+        <button (click)="logout()" type="button" class="btn nav-link btn-link" *ngIf="(employee$ | async)">Logout</button>
       </li>
     </ul>
   </div>

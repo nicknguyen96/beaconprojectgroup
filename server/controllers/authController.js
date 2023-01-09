@@ -44,19 +44,17 @@ class AuthController {
 
       const legalStatus = {
         isCompleted: false,
-        status: 'Greencard | Citizen | Other | OPT',
+        status: "Greencard | Citizen | Other | OPT",
         workStatus: {
           visaTitle: "visa title",
           issuedDate: Date(),
           expirationDate: Date(),
           fileUpload: [],
           message: "some messages",
-        }
-      }
+        },
+      };
 
       const employeeDetail = new EmployeeDetail({ legalStatus });
-
-
 
       // assign employee to the available house
       const availableHouse = await Housing.find();
