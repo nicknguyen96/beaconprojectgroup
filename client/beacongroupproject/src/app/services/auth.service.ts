@@ -43,10 +43,7 @@ export class AuthService {
   }
 
   logOut(): any {
-    const response: any = {
-      state: false
-    }
-    this.store.dispatch(AuthActions.logout({response}))
+    return this.http.post(`${BACKEND_URL}/auth/logout`,  {})
   }
   
 }

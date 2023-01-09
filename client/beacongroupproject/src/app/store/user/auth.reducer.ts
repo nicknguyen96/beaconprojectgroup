@@ -44,7 +44,7 @@ const AuthReducer = createReducer(
       
     }
   }),
-  on(AuthActions.logout, (state, { response }): Employee => {
+  on(AuthActions.logoutSuccess, (state, { response }): Employee => {
     return {
       ...state, 
       token: response.state,

@@ -52,23 +52,31 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthActions.logout),
       exhaustMap((action) : any => {
-        return this.authService.logOut()
+        this.authService.logOut()
         .pipe(
           map((data: any) => {
             if(data.status === 200) {
-              this.deleteLocal()
-              return AuthActions.logoutSuccess(data)
+            return  AuthActions.logoutSuccess(data)
             }
             else  {
-              return AuthActions.logoutFailure(data)
+            return AuthActions.logoutFailure(data)
             }
           })
         )
       }
     ))
-  } 
+  })
 
+  logoutSuccess$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(AuthActions.logoutSuccess),
+    tap(({response}) =>  {
+    console.log(response)
+    this.deleteLocal()
+  }
+    )
   )
+)
 
   deleteLocal() {
     localStorage.removeItem('employee')

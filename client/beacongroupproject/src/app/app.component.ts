@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     const response: any = {
       state: false
     }
-    this.store.dispatch(AuthActions.logout({response}))
+    this.store.dispatch(AuthActions.logout(response))
   }
 
   ngOnInit() {
