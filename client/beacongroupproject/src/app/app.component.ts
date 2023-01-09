@@ -1,10 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AuthService } from './services/auth.service';
+import { selectEmployee, selectToken } from './store/user/user.selector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private authService: AuthService, private store: Store) {}
   title = 'beacongroupproject';
+
+  employee$ = this.store.select(selectEmployee)
+
+
+  ngOnInit() {
+    this.authService.getEmployee()
+  }
 }
