@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "concurrently \"cd server && npm run dev \" \"cd client/beacongroupproject && npm run start"
+    "start": "concurrently \"cd server && npm run dev \" \"cd client/beacongroupproject && npm run start",
+    "install": "cd server && npm i && cd ../client/beacongroupproject && npm i"
   },
   "dependencies": {
     "concurrently": "^7.6.0"
