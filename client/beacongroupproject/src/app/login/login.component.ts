@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from '../store/user/auth.actions';
-import { selectToken } from '../store/user/user.selector';
+import { selectEmployee, selectToken } from '../store/user/user.selector';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +47,5 @@ export class LoginComponent implements OnInit {
       alert('already logged in')
       this.router.navigateByUrl('/')
     }
-
-  
+  }
 }

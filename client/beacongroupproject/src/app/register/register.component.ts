@@ -21,16 +21,6 @@ export class RegisterComponent implements OnInit {
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
 
-
-  ngOnInit() {
-    // get the reg token from query string
-    this.route.queryParams.subscribe(params => {
-        this.regToken = params['token'];
-        console.log("Your register token:");
-        console.log(this.regToken);
-    });
-  }
-
   // initialize formgroup
   public regForm: FormGroup = this.fb.group({
     email: this.email,
