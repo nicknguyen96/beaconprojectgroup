@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -69,7 +69,8 @@ export class RegisterComponent implements OnInit {
         console.log("Your register token:");
         console.log(this.regToken);
     });
-    const isLog: any = this.authService.userIsLoggedIn()
+    const isLog: any = this.authService.userIsLoggedIn();
+    console.log(isLog);
     if(isLog) {
       alert('already logged in')
       this.router.navigateByUrl('/')
