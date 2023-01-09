@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
-
   // initialize formgroup
   public regForm: FormGroup = this.fb.group({
     email: this.email,

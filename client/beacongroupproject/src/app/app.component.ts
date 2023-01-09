@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from './services/auth.service';
+import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
 import { selectEmployee, selectToken } from './store/user/user.selector';
 
@@ -17,8 +18,10 @@ export class AppComponent implements OnInit {
   employee$ = this.store.select(selectEmployee)
 
   logout() {
-
-    this.authService.logOut().subscribe()
+    const response: any = {
+      state: false
+    }
+    this.store.dispatch(AuthActions.logout(response))
   }
 
   ngOnInit() {

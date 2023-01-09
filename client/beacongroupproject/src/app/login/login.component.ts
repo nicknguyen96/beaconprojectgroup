@@ -32,11 +32,7 @@ export class LoginComponent implements OnInit {
     }
     else {
       const {email, password} = this.loginForm.getRawValue();
-      this.authService.login(email, password).subscribe(data => {
-        console.log(data);
-      }, err => {
-        console.log(err);
-      });
+      this.authService.login(email, password).subscribe()
     }
 
   }
