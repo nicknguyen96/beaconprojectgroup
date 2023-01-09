@@ -56,9 +56,7 @@ class AuthController {
 
       const employeeDetail = new EmployeeDetail({ legalStatus });
 
-
-
-      // assign employee to the available house
+      // // assign employee to the available house
       const availableHouse = await Housing.find();
       for (let i = 0; i < availableHouse.length; i++) {
         if (availableHouse[i].tenants.length < MAX_COMPACITY) {
@@ -74,7 +72,7 @@ class AuthController {
 
       await newEmployee.save();
 
-      const payload = { userid: newEmployee._id, isHR: false };
+      const payload = { userid: newEmployee._id, isHR: false, employee: newEmployee };
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
 
       return res.json({ status: 201, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
