@@ -28,9 +28,9 @@ export class AuthEffects {
       ofType(AuthActions.loginSuccess),
       tap(({ response }) => {
         // saving the user in local storage
-        localStorage.setItem('token', JSON.stringify(response.token))
+        localStorage.setItem('token', response.token)
         localStorage.setItem('employee', JSON.stringify(response.employee))
-        localStorage.setItem('isHR', JSON.stringify(response.isHR))
+        localStorage.setItem('isHR', response.isHR)
         alert('Successfully logged in' + response.employee.email)
         this.router.navigateByUrl('/')
       })
