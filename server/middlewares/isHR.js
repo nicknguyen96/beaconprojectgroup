@@ -1,7 +1,20 @@
 const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
+const { BlackListToken } = require('../models/index');
 
-module.exports = function isHR(req, res, next) {
-  
-  req.headers["isHR"] = "true";
+module.exports = async function isHR(req, res, next) {
+
+  const token = req.rawHeaders[1].split(' ')[1];
+  const user = jwt.decode(token, JWT_SECRET);
+  const inBlackList = await BlackListToken.findOne({token});
+  if (user.isHR && (Date.now()/1000 < user.exp) && !inBlackList) {
+    req.headers["isHR"] = "true";
+    req.headers["userid"] = user.userid;
+  } else if ((Date.now()/1000 > user.exp) || inBlackList) {
+    return res.json({ status: 403, message: "Invalid Token"})
+  } else if (!user.isHR){
+    return res.json({ status: 403, message: "Unauthorized Employee"})
+  } 
+
   return next();
 };

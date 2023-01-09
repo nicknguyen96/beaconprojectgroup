@@ -20,7 +20,7 @@ app.use(cors(corsOptions));
 
 app.use("/user", employeeDetailRouter);
 app.use("/auth", authRouter);
-app.use("/housing", housingRouter);
+app.use("/housing", isHR, housingRouter);
 app.use("/hr", isHR, hrRouter);
 
 module.exports = app;

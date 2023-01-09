@@ -1,10 +1,13 @@
 const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = process.env;
+const { BlackListToken } = require('../models/index');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         const regToken = req.headers.authorization.split(" ")[1];
         const decodedToken = jwt.verify(regToken, process.env.JWT_SECRET_INVITATION);
-        if (Date.now()/1000 > decodedToken.exp){
+        const inBlackList = await BlackListToken.findOne({token});
+        if (Date.now()/1000 > decodedToken.exp || inBlackList){
             return res.json({status: 403, message: 'Your jwt is expired. Please login again'});
         } else {
             const { email } = decodedToken;
