@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -12,15 +13,10 @@ export class RegisterComponent implements OnInit {
   public regToken: string;
   
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-        this.regToken = params['token'];
-        console.log("Your register token:");
-        console.log(this.regToken);
-    });
-  }
+
+
 
   public form = this.fb.group({
     email: '',
@@ -65,4 +61,20 @@ export class RegisterComponent implements OnInit {
     console.log(this.form.getRawValue());
     return true;
   }
+
+  
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        this.regToken = params['token'];
+        console.log("Your register token:");
+        console.log(this.regToken);
+    });
+    const isLog: any = this.authService.userIsLoggedIn()
+    if(isLog) {
+      alert('already logged in')
+      this.router.navigateByUrl('/')
+    } 
+    
+  }
+
 }
