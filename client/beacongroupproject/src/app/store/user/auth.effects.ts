@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import {Actions, createEffect, ofType} from '@ngrx/effects'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 
 import { catchError, of, exhaustMap, map, tap, switchMap, Observable, mergeMap, EMPTY } from 'rxjs'
 
@@ -16,67 +16,56 @@ export class AuthEffects {
       exhaustMap(action =>
         this.authService.login(action.email, action.password)
           .pipe(
-          map((response: any) => AuthActions.loginSuccess({response}),
-          catchError(error => of(AuthActions.loginFailure({error})))
-        )
-      )
-    ))
+            map((response: any) => AuthActions.loginSuccess({ response }),
+              catchError(error => of(AuthActions.loginFailure({ error })))
+            )
+          )
+      ))
   );
 
   loginSuccess$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(AuthActions.loginSuccess),
-    tap(({response}) => {
-      // saving the user in local storage
-      localStorage.setItem('token', JSON.stringify(response.token))
-      localStorage.setItem('employee', JSON.stringify(response.employee))
-      localStorage.setItem('isHR', JSON.stringify(response.isHR))
-      alert('Successfully logged in' + response.employee.email)
-      this.router.navigateByUrl('/')
-    })
-    ), {dispatch: false}
+    this.actions$.pipe(
+      ofType(AuthActions.loginSuccess),
+      tap(({ response }) => {
+        // saving the user in local storage
+        localStorage.setItem('token', JSON.stringify(response.token))
+        localStorage.setItem('employee', JSON.stringify(response.employee))
+        localStorage.setItem('isHR', JSON.stringify(response.isHR))
+        alert('Successfully logged in' + response.employee.email)
+        this.router.navigateByUrl('/')
+      })
+    ), { dispatch: false }
   )
-  
 
-  loginFailure$ = createEffect(() => 
+
+  loginFailure$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginFailure),
-      tap(({error}) => {
+      tap(({ error }) => {
         alert('Couldnt sign in' + error)
       })
     ),
-    {dispatch: false}
+    { dispatch: false }
   )
-  
-  logout$ = createEffect((): any => {
+
+  logout$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.logout),
-      exhaustMap((action) : any => {
-        this.authService.logOut()
-        .pipe(
+      exhaustMap((action) => {
+        return this.authService.logOut().pipe(
           map((data: any) => {
-            if(data.status === 200) {
-            return  AuthActions.logoutSuccess(data)
-            }
-            else  {
-            return AuthActions.logoutFailure(data)
+            console.log(data);
+            if (data?.status == 200) {
+              this.deleteLocal();
+              return AuthActions.logoutSuccess({ response: "something right" });
+            } else {
+              return AuthActions.logoutFailure({ error: "something wrong" });
             }
           })
         )
-      }
-    ))
-  })
-
-  logoutSuccess$ = createEffect(() => 
-  this.actions$.pipe(
-    ofType(AuthActions.logoutSuccess),
-    tap(({response}) =>  {
-    console.log(response)
-    this.deleteLocal()
-  }
+      })
     )
-  )
-)
+  })
 
   deleteLocal() {
     localStorage.removeItem('employee')
@@ -88,6 +77,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 }
 
