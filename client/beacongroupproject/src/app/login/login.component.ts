@@ -20,15 +20,27 @@ export class LoginComponent implements OnInit {
   });
 
 
-  employee$ = this.store.select(selectEmployee)
-  onSubmit() {
-    const {email, password} = this.loginForm.getRawValue();
-    this.authService.login(email, password).subscribe(data => {
-      console.log(data);
-    })
+  employee$ = this.store.select(selectEmployee);
+
+  onSubmit(): void {
+    var form = document.getElementsByClassName('needs-validation')[0] as HTMLFormElement;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      form.classList.add('was-validated');
+    }
+    else {
+      const {email, password} = this.loginForm.getRawValue();
+      this.authService.login(email, password).subscribe(data => {
+        console.log(data);
+      }, err => {
+        console.log(err);
+      });
+    }
+
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     
   }
 }

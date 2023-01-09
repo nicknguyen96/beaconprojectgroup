@@ -2,11 +2,20 @@
     <div class="card shadow" style="width:60rem;">
         <div class="card-body">
             <h1 class="text-center">Debug Menu</h1>
+
+            <h3>Quick Access</h3>
             <ul>
-                <li><a href="/employeeForm">employee form</a></li>
+                <li><a href="/employee">employee home</a></li>
                 <li><a href="/register">register form</a></li>
                 <li><a href="/login">login form</a></li>
             </ul>
+
+            <h3>Test Backend Functionality (does not work yet)</h3>
+            <form class="form" [formGroup]="emailInviteForm">
+                <label class="form-label" for="emailInvite">Invite a User (requires admin account)</label> 
+                <input class="form-control" type="text" formControlName="email" placeholder="Enter email here...">
+                <button (click)="onInvite()" class="btn btn-primary">Send Invitation</button>
+            </form>
         </div>
     </div>
 </div>
