@@ -44,19 +44,19 @@ class AuthController {
 
       const legalStatus = {
         isCompleted: false,
-        status: 'Greencard | Citizen | Other | OPT',
+        status: "Greencard | Citizen | Other | OPT",
         workStatus: {
           visaTitle: "visa title",
           issuedDate: Date(),
           expirationDate: Date(),
           fileUpload: [],
           message: "some messages",
-        }
-      }
+        },
+      };
 
       const employeeDetail = new EmployeeDetail({ legalStatus });
 
-      // // assign employee to the available house
+      // assign employee to the available house
       const availableHouse = await Housing.find();
       for (let i = 0; i < availableHouse.length; i++) {
         if (availableHouse[i].tenants.length < MAX_COMPACITY) {
@@ -72,7 +72,7 @@ class AuthController {
 
       await newEmployee.save();
 
-      const payload = { userid: newEmployee._id, isHR: false, employee: newEmployee };
+      const payload = { userid: newEmployee._id, isHR: false };
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
 
       return res.json({ status: 201, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
@@ -83,13 +83,15 @@ class AuthController {
   }
 
   async logout(req, res) {
-    const token = req.headers.authorization.split(' ')[1];
-    res.setHeader('Authorization', '');
+    const token = req.headers.Authorization;
     try {
       await BlackListToken.create({ token })
-      res.json({ status: 200, message: "Logged out" });
+        .then(() => {
+          res.status(200).json({ success: true, msg: "Logged out" });
+        })
+        .catch((error) => new Error(error));
     } catch (error) {
-      res.json({ status: 500, message: error.message });
+      req.status(500).json({ success: true, msg: "Server Error, Please try again" });
     }
   }
 

@@ -31,7 +31,7 @@ export class AuthEffects {
       localStorage.setItem('token', JSON.stringify(response.token))
       localStorage.setItem('employee', JSON.stringify(response.employee))
       localStorage.setItem('isHR', JSON.stringify(response.isHR))
-      alert('Successfully logged in' + response.employee.fistName)
+      alert('Successfully logged in' + response.employee.email)
       this.router.navigateByUrl('/')
     })
     ), {dispatch: false}
@@ -47,30 +47,43 @@ export class AuthEffects {
     ),
     {dispatch: false}
   )
-
-  // getEmployee$ = createEffect(() =>
-  //     this.actions$.pipe(
-  //       ofType(AuthActions.getEmployee),
-  //       exhaustMap(async (response) => this.authService.getEmployee(response)))
-  //       .pipe(
-  //         map((response: any) => AuthActions.getEmployeeSuccess({response})),
-  //         catchError((error) => of(AuthActions.getEmployeeFailure(error)))
-  //       )
-  // )
-
-
-  // // // we want to get the local storage first before we can began
-  // getEmployeeSuccess$ = createEffect(() =>
-  //         this.actions$.pipe(
-  //           ofType(AuthActions.getEmployeeSuccess),
-  //           tap(() => {
-  //             this.router.navigateByUrl('/')
-  //           })
-  //      ), {
-  //       dispatch: false
-  //      }
-  // )
   
+  logout$ = createEffect((): any => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      exhaustMap((action) : any => {
+        this.authService.logOut()
+        .pipe(
+          map((data: any) => {
+            if(data.status === 200) {
+            return  AuthActions.logoutSuccess(data)
+            }
+            else  {
+            return AuthActions.logoutFailure(data)
+            }
+          })
+        )
+      }
+    ))
+  })
+
+  logoutSuccess$ = createEffect(() => 
+  this.actions$.pipe(
+    ofType(AuthActions.logoutSuccess),
+    tap(({response}) =>  {
+    console.log(response)
+    this.deleteLocal()
+  }
+    )
+  )
+)
+
+  deleteLocal() {
+    localStorage.removeItem('employee')
+    localStorage.removeItem('isHR')
+    localStorage.removeItem('token')
+    this.router.navigateByUrl('/login')
+  }
   constructor(
     private actions$: Actions,
     private authService: AuthService,

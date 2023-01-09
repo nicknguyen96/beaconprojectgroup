@@ -4,12 +4,15 @@ import { Observable, tap, catchError } from 'rxjs';
 import { BACKEND_URL } from '../utils/utils';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../store/user/auth.actions';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private store: Store) { }
+  constructor(private http: HttpClient, private store: Store, private router: Router) { }
+
+
 
   login(email: string, password: string) {
     return this.http.post(`${BACKEND_URL}/auth/login`, {email, password}).pipe(
@@ -26,6 +29,21 @@ export class AuthService {
     const data = {
       token, employee, isHR
     }
-    this.store.dispatch(AuthActions.getEmployee({data}))
+    this.store.dispatch(AuthActions.getEmployee({ data }))
   }
+
+  userIsLoggedIn() {
+    const token = localStorage.getItem('token')
+    if(!token) {
+      this.router.navigateByUrl('/login')
+    }
+     else {
+      return true
+     }
+  }
+
+  logOut(): any {
+    return this.http.post(`${BACKEND_URL}/auth/logout`,  {})
+  }
+  
 }
