@@ -50,7 +50,7 @@ const summarySchema = new Schema({
     required: true,
   },
   reports: {
-    type: [Report.schema],
+    type: [Schema.Types.ObjectId],
     ref: "Report",
   },
 });
@@ -67,13 +67,13 @@ const housingSchema = new Schema({
   },
   tenants: {
     type: [Schema.Types.ObjectId],
-    ref: "User",
+    ref: "Employee",
   },
   summary: {
     type: summarySchema,
     required: true,
   },
-});
+}, { timestamps: true });
 
 const Housing = model("Housing", housingSchema);
 

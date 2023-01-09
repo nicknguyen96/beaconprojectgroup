@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const { Schema, model } = require("mongoose");
 
 // sub schema
@@ -17,6 +18,10 @@ const carSchema = new Schema({
 });
 
 const fileUploadSchema = new Schema({
+  fileName: {
+    type: String,
+    required: true,
+  },
   fileUrl: {
     type: String,
     default: "visa title",
@@ -67,11 +72,8 @@ const workStatusSchema = new Schema({
   },
   fileUpload: {
     type: [fileUploadSchema],
+    default : [],
     required: true,
-  },
-  message: {
-    type: String,
-    required: false,
   },
 });
 
@@ -84,9 +86,12 @@ const legalStatus = new Schema({
   },
   status: {
     type: String,
+    default: 'Greencard | Citizen | Other | OPT',
+    required: true,
   },
   workStatus: {
     type: workStatusSchema,
+    required: false,
   },
 });
 
@@ -164,7 +169,7 @@ const employeeDetailSchema = new Schema({
   },
   legalStatus: {
     type: legalStatus,
-    required: false,
+    required: true,
   },
   driversLicense: {
     type: licenseSchema,
@@ -175,6 +180,11 @@ const employeeDetailSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "Report",
   },
+  housing: {
+    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "Housing",
+  },
   onboardingStatus: {
     type: String,
     required: true,
@@ -183,5 +193,8 @@ const employeeDetailSchema = new Schema({
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
+const LegalStatus = model("LegalStatus", legalStatus);
+const WorkStatus = model("WorkStatus", workStatusSchema);
+const FileUpload = model('FileUpload', fileUploadSchema)
 
-module.exports = EmployeeDetail;
+module.exports = {EmployeeDetail, LegalStatus, WorkStatus, FileUpload};

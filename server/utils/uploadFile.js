@@ -1,6 +1,6 @@
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3')
 const sharp = require('sharp');
-const { v4 : uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const s3 = new S3Client({
     credentials: {
@@ -13,8 +13,14 @@ const s3 = new S3Client({
 // get files from UserController
 async function uploadFile(file) {
     try {
-        // resize image
-        const buffer = await sharp(file.buffer).resize({ height: 1920, width: 1080, fit: 'contain' }).toBuffer();
+        console.log(file.mimetype);
+        let buffer;
+        if (file.mimetype = 'application/pdf') {
+            buffer = file.buffer;
+        } else {
+            // resize image
+            buffer = await sharp(file.buffer).resize({ height: 1920, width: 1080, fit: 'contain' }).toBuffer();
+        }
 
         const randomName = `${uuidv4()}${file.originalname}`
 
@@ -32,7 +38,7 @@ async function uploadFile(file) {
             url: `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${randomName}`
         };
     } catch (error) {
-        console.log(error);
+        console.log("error ", error);
         return { status: 400 }
     }
 }
