@@ -4,7 +4,6 @@ import { Observable, tap, catchError } from 'rxjs';
 import { BACKEND_URL } from '../utils/utils';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../store/user/auth.actions';
-import { selectToken } from '../store/user/user.selector';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,7 @@ export class AuthService {
      }
   }
 
-  logOut() {
+  logOut(): any {
     const response: any = {
       state: false
     }

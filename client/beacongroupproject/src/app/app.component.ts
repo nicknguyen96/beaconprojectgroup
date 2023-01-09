@@ -17,7 +17,10 @@ export class AppComponent implements OnInit {
   employee$ = this.store.select(selectEmployee)
 
   logout() {
-    this.authService.logOut()
+    const response: any = {
+      state: false
+    }
+    this.store.dispatch(AuthActions.logout({response}))
   }
 
   ngOnInit() {

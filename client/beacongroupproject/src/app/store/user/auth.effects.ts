@@ -48,18 +48,34 @@ export class AuthEffects {
     {dispatch: false}
   )
   
-  logout$ = createEffect(() => 
-      this.actions$.pipe(
-        ofType(AuthActions.logout),
-        tap((response) => {
-          localStorage.removeItem('employee')
-          localStorage.removeItem('isHR')
-          localStorage.removeItem('token')
-          this.router.navigateByUrl('/login')
-        })
-      ),
-      {dispatch: false}
+  logout$ = createEffect((): any => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      exhaustMap((action) : any => {
+        return this.authService.logOut()
+        .pipe(
+          map((data: any) => {
+            if(data.status === 200) {
+              this.deleteLocal()
+              return AuthActions.logoutSuccess(data)
+            }
+            else  {
+              return AuthActions.logoutFailure(data)
+            }
+          })
+        )
+      }
+    ))
+  } 
+
   )
+
+  deleteLocal() {
+    localStorage.removeItem('employee')
+    localStorage.removeItem('isHR')
+    localStorage.removeItem('token')
+    this.router.navigateByUrl('/login')
+  }
   constructor(
     private actions$: Actions,
     private authService: AuthService,
