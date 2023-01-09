@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './store/user/auth.effects';
 import { authReducer } from './store/user/auth.reducer';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
+import { CustomInterceptor } from './services/custom-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -28,10 +29,14 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({auth: authReducer}),
+    StoreModule.forRoot({ auth: authReducer }),
     EffectsModule.forRoot([AuthEffects])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

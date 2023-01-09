@@ -193,8 +193,9 @@ const employeeDetailSchema = new Schema({
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
-const LegalStatus = model("LegalStatus", legalStatus);
-const WorkStatus = model("WorkStatus", workStatusSchema);
-const FileUpload = model('FileUpload', fileUploadSchema)
+// const LegalStatus = model("LegalStatus", legalStatus);
+// const WorkStatus = model("WorkStatus", workStatusSchema);
+// const FileUpload = model('FileUpload', fileUploadSchema)
 
-module.exports = {EmployeeDetail, LegalStatus, WorkStatus, FileUpload};
+// module.exports = {EmployeeDetail, LegalStatus, WorkStatus, FileUpload};
+module.exports = EmployeeDetail;

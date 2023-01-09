@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,9 @@ export class RegisterComponent implements OnInit {
   public password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,16}')]);
   public confirm = new FormControl('');
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+
+
 
   ngOnInit() {
     // get the reg token from query string
@@ -60,4 +63,20 @@ export class RegisterComponent implements OnInit {
     }
 
   }
+
+  
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        this.regToken = params['token'];
+        console.log("Your register token:");
+        console.log(this.regToken);
+    });
+    const isLog: any = this.authService.userIsLoggedIn()
+    if(isLog) {
+      alert('already logged in')
+      this.router.navigateByUrl('/')
+    } 
+    
+  }
+
 }
