@@ -188,7 +188,7 @@ const employeeDetailSchema = new Schema({
   onboardingStatus: {
     type: String,
     required: true,
-    default: "In Progress",
+    default: "Pending",
   },
 });
 

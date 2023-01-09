@@ -1,0 +1,65 @@
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow" style="width:60rem;">
+        <div class="card-body">
+            <h1 class="text-center">{{tab == 'onboarding' ? "Onboarding Application Review" : "Send registration token"}}</h1>
+            <ul class="nav justify-content-center nav-tabs">
+                <li class="nav-item">
+                  <button class="btn nav-link" (click)="setTab('onboarding')">Review onBoarding Employee</button>
+                </li>
+                <li class="nav-item">
+                  <button class="btn nav-link" (click)="setTab('sendemail')">Send email to new Employee</button>
+                </li>
+            </ul>
+            
+            <div *ngIf="tab == 'sendemail'">
+                <form class="form" [formGroup]="emailInviteForm">
+                    <label class="form-label" for="emailInvite">Invite new employee: </label> 
+                    <input class="form-control mb-4" type="text" formControlName="email" placeholder="Enter email here...">
+                    <button (click)="onInvite()" class="btn btn-primary">Send Invitation</button>
+                </form>
+            </div>
+
+            <div *ngIf="tab == 'onboarding'" class="d-flex">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Pending')">Pending</button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Rejected')">Rejected</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Approved')">Approved</button>
+                    </li>
+                </ul>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Full name</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let employee of employeeListByCategory; let index = index">
+                                <td>
+                                    {{index + 1}}
+                                </td>
+                                <td>
+                                    {{employee?.user?.firstName}} {{employee?.user?.lastName}}
+                                </td>
+                                <td>
+                                    {{employee.email}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-secondary">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

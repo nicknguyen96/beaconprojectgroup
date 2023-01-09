@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../services/auth.service';
-import { AuthActions } from '../store/user/auth.actions';
-import { selectToken, selectEmployee } from '../store/user/user.selector';
+import { AuthService } from '../../services/auth.service';
+import { AuthActions } from '../../store/user/auth.actions';
+import { selectToken, selectEmployee } from '../../store/user/user.selector';
 
 @Component({
   selector: 'app-login',
@@ -42,12 +42,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const isLog = this.authService.userIsLoggedIn()
-    if (isLog) {
-      alert('already logged in')
-      this.router.navigateByUrl('/')
-    }
-
 
   }
 }

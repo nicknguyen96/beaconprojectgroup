@@ -75,9 +75,10 @@ class HrController {
         return 0;
       });
 
-      res.status(200).json(sorted);
-    } catch (err) {
-      res.status(500).json({ message: "Sorry something went wrong" });
+      return res.json({ status: 200, message: "successfully get all employees", data: sorted });
+    } catch (error) {
+      console.log(error);
+      return res.json({ status: 500, message: error.message });
     }
   }
 

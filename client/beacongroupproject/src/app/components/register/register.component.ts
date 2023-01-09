@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -25,14 +25,14 @@ export class RegisterComponent implements OnInit {
     email: this.email,
     password: this.password,
     confirm: this.confirm
-  },  { validator: this.confirmValidator('password', 'confirm')});
+  }, { validator: this.confirmValidator('password', 'confirm') });
 
   public confirmValidator(password: string, confirm: string) {
     return (formGroup: FormGroup) => {
       const pass = formGroup.controls[password];
       const confPass = formGroup.controls[confirm];
       if (confPass.errors && !confPass.errors.confirmedValidator) return;
-    
+
       if (pass.value !== confPass.value) confPass.setErrors({ confirmedValidator: true });
       else confPass.setErrors(null);
     };
@@ -53,19 +53,8 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-        this.regToken = params['token'];
-        console.log("Your register token:");
-        console.log(this.regToken);
-    });
-    const isLog: any = this.authService.userIsLoggedIn()
-    if(isLog) {
-      alert('already logged in')
-      this.router.navigateByUrl('/')
-    } 
-    
   }
 
 }
