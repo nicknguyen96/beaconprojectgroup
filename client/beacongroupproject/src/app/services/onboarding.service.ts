@@ -20,13 +20,12 @@ export class OnboardingService {
         alert('Please login before entering this page')
         return this.router.navigateByUrl('/')
       }
-      if(!employee.info || employee.info.onboardingStatus == "In Progress" || employee.info.onboardingStatus == "Never Submitted"
-      || employee.info.onboardingStatus == "Pending" || employee.info.onboardingStatus == "Rejected") {
+      if(!employee.info || employee.info.onboardingStatus !== "Aprroved") {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         return this.router.navigateByUrl('/employee/boardingPage')
       }
     })
   }
-
+s
 
 }
