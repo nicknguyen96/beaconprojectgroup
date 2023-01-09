@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from '../store/user/auth.actions';
-import { selectToken } from '../store/user/user.selector';
+import { selectToken, selectEmployee } from '../store/user/user.selector';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +12,8 @@ import { selectToken } from '../store/user/user.selector';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
-  constructor(private store: Store, private authService: AuthService, private router: Router) {}
+
+  constructor(private store: Store, private authService: AuthService, private router: Router) { }
 
   loginForm = new FormBuilder().group({
     email: '',
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       form.classList.add('was-validated');
     }
     else {
-      const {email, password} = this.loginForm.getRawValue();
+      const { email, password } = this.loginForm.getRawValue();
       this.authService.login(email, password).subscribe(data => {
         console.log(data);
       }, err => {
@@ -43,10 +43,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     const isLog = this.authService.userIsLoggedIn()
-    if(isLog) {
+    if (isLog) {
       alert('already logged in')
       this.router.navigateByUrl('/')
     }
 
-  
+
+  }
 }
