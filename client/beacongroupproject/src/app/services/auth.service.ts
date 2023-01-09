@@ -23,11 +23,6 @@ export class AuthService {
     let token = localStorage.getItem('token')
     let employee =  JSON.parse(localStorage.getItem('employee'))
     let isHR = localStorage.getItem('isHR')
-
-    console.log(employee.email)
-
-
-
     const data = {
       token, employee, isHR
     }
