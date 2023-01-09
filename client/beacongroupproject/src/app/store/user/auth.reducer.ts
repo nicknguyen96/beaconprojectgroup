@@ -44,7 +44,6 @@ const AuthReducer = createReducer(
 
     }
   }),
-
   on(AuthActions.logoutSuccess, (state: any, action: any): Employee => {
     console.log(action.type);
     return {

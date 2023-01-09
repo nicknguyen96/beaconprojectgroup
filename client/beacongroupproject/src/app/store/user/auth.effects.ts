@@ -48,56 +48,28 @@ export class AuthEffects {
     { dispatch: false }
   )
 
+
   
-  // logout$ = createEffect((): any => {
-  //   return this.actions$.pipe(
-  //     ofType(AuthActions.logout),
-  //     exhaustMap((action) : any => {
-  //       this.authService.logOut()
-  //       .pipe(
-  //         map((data: any) => {
-  //           if(data.status === 200) {
-  //           return  AuthActions.logoutSuccess(data)
-  //           }
-  //           else  {
-  //           return AuthActions.logoutFailure(data)
-  //           }
-  //         })
-  //       )
-  //     }
-  //   ))
-  // })
-
-
-  logout$ = createEffect(() => {
+  logout$ = createEffect((): any => {
     return this.actions$.pipe(
-      ofType(AuthActions.logoutSuccess),
-      exhaustMap((action) => {
-        return this.authService.logOut().pipe(
+      ofType(AuthActions.logout),
+      exhaustMap((action) : any => {
+        this.authService.logOut()
+        .pipe(
           map((data: any) => {
-            console.log(data);
-            if (data?.status == 200) {
-              this.deleteLocal();
-              return AuthActions.logoutSuccess({ response: "something right" });
-            } else {
-              return AuthActions.logoutFailure({ error: "something wrong" });
+            if(data.status === 200) {
+            return  AuthActions.logoutSuccess(data)
+            }
+            else  {
+            return AuthActions.logoutFailure(data)
             }
           })
         )
-      })
-    )
+      }
+    ))
   })
 
-//   logoutSuccess$ = createEffect(() => 
-//   this.actions$.pipe(
-//     ofType(AuthActions.logoutSuccess),
-//     tap(({response}) =>  {
-//     console.log(response)
-//     this.deleteLocal()
-//   }
-//     )
-//   )
-// )
+
   deleteLocal() {
     localStorage.removeItem('employee')
     localStorage.removeItem('isHR')
