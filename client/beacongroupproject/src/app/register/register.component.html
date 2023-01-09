@@ -1,42 +1,51 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
-            <div class="card shadow" style="width:30rem;">
-                <div class="card-body">
-                    <h3 class="card-title text-center"><b>Register</b></h3>
-                    <b>
-                        Welcome to BeaconFire! Please create an account first
-                        to begin your onboarding process. 
-                    </b>
-                    <br><br>
-                    Password Requirements:
-                    <ul>
-                        <li>A lowercase character</li>
-                        <li>An uppercase character</li>
-                        <li>An alphabet character</li>
-                        <li>A numeric character</li>
-                        <li>A special character</li>
-                        <li>At least 8 characters</li>
-                        <li>No more than 16 characters</li>
-                    </ul>
-                    <form class="form" (submit)="registerUser()" class="form" [formGroup]="form">
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Email</label>
-                            <input class="form-control" type="email" formControlName="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Password</label>
-                            <input class="form-control" type="password" formControlName="password" required>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="confirm">Confirm Password</label>
-                            <input class="form-control" type="password" formControlName="confirm" required>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success mb-3" style="width:100%">Register</button>
-                            <p class="mb-3">Already have an account? <a href="/login" style="text-decoration:none">Sign In</a></p>
-                            <p><a href="javascript:void(0)" style="text-decoration:none">Forgot Password?</a></p>
-                        </div>
-                    </form>
-
+    <div class="card shadow" style="width:30rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center"><b>Register</b></h3>
+            <b>
+                Welcome to BeaconFire! Please create an account first
+                to begin your onboarding process. 
+            </b>
+            <br><br>
+            Password Requirements:
+            <ul>
+                <li>A lowercase character</li>
+                <li>An uppercase character</li>
+                <li>An alphabet character</li>
+                <li>A numeric character</li>
+                <li>A special character</li>
+                <li>At least 8 characters</li>
+                <li>No more than 16 characters</li>
+            </ul>
+            <form class="form" (submit)="registerUser()" class="form" [formGroup]="regForm">
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" formControlName="email" id="email" required>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" style="color:red">
+                        Please enter a valid email.
+                    </div>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" formControlName="password" required>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched) && password.errors?.['pattern']" style="color:red">
+                        Passwords must be 8-16 characters long, contain 1 uppercase, 1 lowercase, 1 number, and 1 special symbol.
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="confirm">Confirm Password</label>
+                    <input class="form-control" type="password" formControlName="confirm" required>
+                    <div *ngIf="confirm.errors?.['confirmedValidator']" style="color:red">
+                        Passwords must match.
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success mb-3" style="width:100%">Register</button>
+                    <p class="mb-3">Already have an account? <a href="/login" style="text-decoration:none">Sign In</a></p>
+                    <p><a href="javascript:void(0)" style="text-decoration:none">Forgot Password?</a></p>
+                </div>
+            </form>
+        </div>
+        
+    </div>
 </div>
