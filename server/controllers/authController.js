@@ -83,15 +83,13 @@ class AuthController {
   }
 
   async logout(req, res) {
-    const token = req.headers.Authorization;
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) return res.json({ status: 400, message: "invalid token" });
     try {
       await BlackListToken.create({ token })
-        .then(() => {
-          res.status(200).json({ success: true, msg: "Logged out" });
-        })
-        .catch((error) => new Error(error));
+      res.json({ status: 200, messag: "Logout successfully" });
     } catch (error) {
-      req.status(500).json({ success: true, msg: "Server Error, Please try again" });
+      res.json({ status: 500, message: error.message });
     }
   }
 

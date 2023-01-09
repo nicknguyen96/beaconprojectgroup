@@ -1,5 +1,5 @@
-import {createReducer, on} from '@ngrx/store'
-import { AuthActions } from './auth.actions' 
+import { createReducer, on } from '@ngrx/store'
+import { AuthActions } from './auth.actions'
 
 export interface Employee {
   token: string | boolean
@@ -26,7 +26,7 @@ const AuthReducer = createReducer(
       employee: response.employee
     }
   }),
-  on(AuthActions.loginFailure, (state, {error}): Employee => {
+  on(AuthActions.loginFailure, (state, { error }): Employee => {
     return {
       ...state,
       loginError: error,
@@ -37,26 +37,23 @@ const AuthReducer = createReducer(
   }),
   on(AuthActions.getEmployee, (state, { data }): Employee => {
     return {
-      ...state, 
+      ...state,
       token: data.token,
       isHR: data.isHR,
       employee: data.employee
-      
+
     }
   }),
-  on(AuthActions.logout, (state, { response }): Employee => {
+
+  on(AuthActions.logoutSuccess, (state: any, action: any): Employee => {
+    console.log(action.type);
     return {
       ...state,
+      token: false,
+      isHR: false,
+      employee: null
     }
-  }),
-  // on(AuthActions.logoutSuccess, (state, { response }): Employee => {
-  //   return {
-  //     ...state, 
-  //     token: response.state,
-  //     isHR: response.state,
-  //     employee: response.state
-  //   }
-  //   })
+  })
 
 )
 
