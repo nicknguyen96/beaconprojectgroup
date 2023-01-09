@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from './services/auth.service';
+import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
 import { selectEmployee, selectToken } from './store/user/user.selector';
 

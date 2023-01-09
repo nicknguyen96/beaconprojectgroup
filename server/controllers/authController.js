@@ -83,10 +83,10 @@ class AuthController {
   }
 
   async logout(req, res) {
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization.split(" ")[1];
     if (!token) return res.json({ status: 400, message: "invalid token" });
     try {
-      await BlackListToken.create({ token })
+      await BlackListToken.create({ token });
       res.json({ status: 200, messag: "Logout successfully" });
     } catch (error) {
       res.json({ status: 500, message: error.message });
@@ -119,7 +119,11 @@ class AuthController {
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
       res.json({
         token: accessToken,
-        employee: employee,
+        employee: {
+          id: employee._id,
+          email: employee.email,
+          details: employee.user,
+        },
         isHR: employee.isHR,
       });
     } catch (error) {

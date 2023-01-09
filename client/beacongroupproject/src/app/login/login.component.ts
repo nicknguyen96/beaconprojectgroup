@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthActions } from '../store/user/auth.actions';
 import { selectToken, selectEmployee } from '../store/user/user.selector';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
       form.classList.add('was-validated');
     }
     else {
+
       const { email, password } = this.loginForm.getRawValue();
       this.authService.login(email, password).subscribe(data => {
         console.log(data);
@@ -47,7 +49,5 @@ export class LoginComponent implements OnInit {
       alert('already logged in')
       this.router.navigateByUrl('/')
     }
-
-
   }
 }
