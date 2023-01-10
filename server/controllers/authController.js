@@ -54,7 +54,15 @@ class AuthController {
         },
       };
 
-      const employeeDetail = new EmployeeDetail({ legalStatus });
+      const emergencyContact = {
+        firstName: 'firstName',
+        lastName: 'lastName',
+        phone: 'xxxxxxxxxx',
+        email: 'email',
+        relationship: 'Family',
+      };
+
+      const employeeDetail = new EmployeeDetail({ legalStatus, emergencyContact });
 
       // assign employee to the available house
       const availableHouse = await Housing.find();

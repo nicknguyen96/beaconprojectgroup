@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { EmployeeService } from './services/employee.service';
 import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
-import { selectEmployee, selectToken } from './store/user/user.selector';
+import { selectAuthState, selectEmployee, selectToken } from './store/user/user.selector';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,15 @@ import { selectEmployee, selectToken } from './store/user/user.selector';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService, private store: Store, private employeeService: EmployeeService) {}
+  constructor(private authService: AuthService, private store: Store, private employeeService: EmployeeService) { }
   title = 'beacongroupproject';
 
-  employee$ = this.store.select(selectEmployee)
+  employee : any;
+
+  employee$ = this.store.select(selectAuthState).subscribe((data) => {
+    console.log(data);
+    this.employee = data;
+  });
 
   logout() {
     const response: any = {

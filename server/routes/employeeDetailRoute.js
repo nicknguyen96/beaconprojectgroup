@@ -11,6 +11,6 @@ employeeDetailRouter.post("/submitDetails", employeeDetailController.submitUserD
 
 employeeDetailRouter.put("/updateDetails", employeeDetailController.updateUserDetails);
 
-// employeeDetailRouter.get('/getFile/:filename', employeeDetailController.getFile);
+employeeDetailRouter.get('/getFile/:filename', employeeDetailController.getFile);
 
 module.exports = employeeDetailRouter;

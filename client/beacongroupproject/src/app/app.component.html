@@ -1,29 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">BeaconFire Solutions</a>
-
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngIf="!(employee$ | async)">
-          <a class="nav-link" href="/register">Register</a>
+        
+        <li class="nav-item" *ngIf="(employee.employee && !employee.isHR)">
+          <a class="nav-link" routerLink="/employee">Personal Information</a>
         </li>
-        <li class="nav-item" *ngIf="!(employee$ | async)">
-          <a class="nav-link" href="/login">Login</a>
+        <li class="nav-item" *ngIf="(employee.employee && !employee.isHR)">
+          <a class="nav-link" routerLink="/">Visa Status</a>
         </li>
-      <li class="nav-item" *ngIf="(employee$ | async)">
-        <a class="nav-link">My Profile</a>
+        <li class="nav-item" *ngIf="(employee.employee && !employee.isHR)">
+          <a class="nav-link" routerLink="/">Housing</a>
         </li>
+        <li class="nav-item" *ngIf="(employee.employee && employee.isHR)">
+          <a class="nav-link" routerLink="/">Visa Status</a>
+        </li>
+        <li class="nav-item" *ngIf="(employee.employee && employee.isHR)">
+          <a class="nav-link" routerLink="/">Housing Management</a>
+        </li>
+        <li class="nav-item" *ngIf="(employee.employee && employee.isHR)">
+          <a class="nav-link" routerLink="/hr/hiringManagement">Hiring Management</a>
+        </li>
+
         <li class="nav-item">
-        <button (click)="logout()" type="button" class="btn nav-link btn-link" *ngIf="(employee$ | async)">Logout</button>
-      </li>
+          <button (click)="logout()" type="button" class="btn nav-link btn-link" *ngIf="(employee.employee)">Logout</button>
+        </li>
     </ul>
   </div>
 </nav>
-
-<!-- For testing purpose, delete when done -->
-<a href="" routerLink="/hr/hiringManagement">Hiring</a>
 
 <router-outlet></router-outlet>

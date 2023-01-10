@@ -106,25 +106,25 @@ class UserController {
     }
   }
 
-  // async getFile(req, res) {
-  //     const { filename } = req.params;
-  //     const { userid } = req.headers;
+  async getFile(req, res) {
+      const { filename } = req.params;
+      const { userid } = req.headers;
 
-  //     try {
-  //         const response = await getFile(filename);
-  //         if (response.status != 200) {
-  //             throw new Error(response.message);
-  //         } else {
+      try {
+          const response = await getFile(filename);
+          if (response.status != 200) {
+              throw new Error(response.message);
+          } else {
 
-  //             return res.json({status: 200, message:"get the data successfully", data: response.data})
-  //         }
-  //     } catch (error){
-  //         if (error.message == 'Access Denied') {
-  //             return res.json({status: 403, message: error.message})
-  //         }
-  //         return res.json({status: 400, message: error.message});
-  //     }
-  // }
+              return res.json({status: 200, message:"get the data successfully", data: response.data})
+          }
+      } catch (error){
+          if (error.message == 'Access Denied') {
+              return res.json({status: 403, message: error.message})
+          }
+          return res.json({status: 400, message: error.message});
+      }
+  }
 
 }
 
