@@ -47,4 +47,27 @@ export class HrEffects {
             })
         )
     })
+
+    updateOnBoardingStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateOnboardingStatus),
+            exhaustMap((action) => {
+                console.log(action);
+                const { onboardingStatus, employeeid, message } = action;
+                return this.hrService.updateOnBoardingStatus(onboardingStatus, employeeid, message).pipe(
+                    map((data: any) => {
+                        console.log(data);
+
+                        if (data.status == 200) {
+                            alert('update onboarding status successfully');
+                            return HrActions.updateOnboardingStatusSuccess({ response: { onboardingStatus, employeeid, message } });
+                        } else {
+                            alert('something wrong, please try again');
+                            return HrActions.updateOnboardingStatusFail({ response: data });
+                        }
+                    })
+                )
+            })
+        )
+    })
 }
