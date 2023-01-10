@@ -10,7 +10,7 @@ module.exports = async function isHR(req, res, next) {
     const user = jwt.decode(token, JWT_SECRET);
     console.log(user);
     const inBlackList = await BlackListToken.findOne({ token });
-    if (user.isHR && (Date.now() / 1000 < user.exp) && !inBlackList) {
+    if (user && user.isHR && (Date.now() / 1000 < user.exp) && !inBlackList) {
       req.headers["isHR"] = "true";
       req.headers["userid"] = user.userid;
     } else if ((Date.now() / 1000 > user.exp) || inBlackList) {
