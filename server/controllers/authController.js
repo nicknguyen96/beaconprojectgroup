@@ -55,11 +55,11 @@ class AuthController {
       };
 
       const emergencyContact = {
-        firstName: 'firstName',
-        lastName: 'lastName',
-        phone: 'xxxxxxxxxx',
-        email: 'email',
-        relationship: 'Family',
+        firstName: "firstName",
+        lastName: "lastName",
+        phone: "xxxxxxxxxx",
+        email: "email",
+        relationship: "Family",
       };
 
       const employeeDetail = new EmployeeDetail({ legalStatus, emergencyContact });
@@ -129,6 +129,7 @@ class AuthController {
         token: accessToken,
         employee: {
           id: employee._id,
+          isHR: employee.isHR,
           email: employee.email,
           details: employee.user,
         },
