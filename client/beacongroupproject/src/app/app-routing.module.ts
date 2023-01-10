@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'hiringManagement', component: HiringManagementComponent },
       { path: 'hiringManagement/:employeeid', component: OnboardingDetailPageComponent }
     ]
-  }
+  },
+  { path: 'forbidden', component: ForbiddenComponent}
 ]
 
 @NgModule({

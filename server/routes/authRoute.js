@@ -7,6 +7,9 @@ const checkRegToken = require("../middlewares/checkRegToken");
 authRouter.post("/register", checkRegToken, AuthController.registerUser);
 // authRouter.post("/register", AuthController.registerUser);
 
+// verify register token
+authRouter.get("/verifyRgToken", checkRegToken, AuthController.verifyRgToken);
+
 // login an employee
 authRouter.post("/login", AuthController.loginUser);
 

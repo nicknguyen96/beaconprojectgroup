@@ -1,12 +1,28 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
+const { JWT_SECRET } = require('../.env'); 
 const { BlackListToken, Employee, EmployeeDetail, Housing } = require("../models");
 
 // maximum of tenents in the house
 const MAX_COMPACITY = 4;
 
 class AuthController {
+
+  async verifyRgToken(req, res) {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const email = jwt.decode(token, JWT_SECRET);
+      if (!token || !email) {
+        return res.json({ status: 403, message: 'You are not allowed to access this link'});
+      } else {
+        return res.json({ status: 200, message: 'Valid Token'});
+      }
+    } catch(error) {
+      return res.json({ status: 500, message: 'You are not allowed to access this link'});
+    }
+  };
+
   async registerUser(req, res) {
     // check the token from the invitation link is match with the email or not
     // extract email from the headers that we done in the middleware
