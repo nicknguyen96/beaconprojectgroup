@@ -14,7 +14,7 @@
           <a class="nav-link" href="/login">Login</a>
         </li>
       <li class="nav-item" *ngIf="(employee$ | async)">
-        <a class="nav-link">My Profile</a>
+        <a class="nav-link" routerLink="/employee">Dashboard</a>
         </li>
         <li class="nav-item">
         <button (click)="logout()" type="button" class="btn nav-link btn-link" *ngIf="(employee$ | async)">Logout</button>
@@ -22,8 +22,5 @@
     </ul>
   </div>
 </nav>
-
-<!-- For testing purpose, delete when done -->
-<a href="" routerLink="/hr/hiringManagement">Hiring</a>
 
 <router-outlet></router-outlet>

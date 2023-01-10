@@ -17,7 +17,7 @@
                 <li>At least 8 characters</li>
                 <li>No more than 16 characters</li>
             </ul>
-            <form class="form" (submit)="registerUser()" class="form" [formGroup]="regForm">
+            <form class="form" (submit)="registerUser()" [formGroup]="regForm">
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
                     <input class="form-control" type="email" formControlName="email" id="email" required>
