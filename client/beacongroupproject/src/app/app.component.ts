@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private store: Store, private employeeService: EmployeeService) {}
   title = 'beacongroupproject';
 
-  employee$ = this.store.select(selectEmployee)
+  employee$ = this.store.select(selectEmployee);
 
   logout() {
     const response: any = {
@@ -27,6 +27,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getEmployee()
-    this.authService.userIsLoggedIn()
+    // this.authService.userIsLoggedIn()
   }
 }
