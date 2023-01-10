@@ -15,7 +15,7 @@ export class HiringManagementComponent implements OnInit {
 
   employeeList$ = this.store.select(employeeList);
 
-  employeeListByCategory : any[] = [];
+  employeeListByCategory: any[] = [];
 
   tab = 'onboarding';
 
@@ -27,7 +27,7 @@ export class HiringManagementComponent implements OnInit {
     email: ['']
   });
 
-  onSelectOnboardingApplicationList(status: string){
+  onSelectOnboardingApplicationList(status: string) {
     console.log(status);
     this.employeeList$.subscribe(employeeList => {
       this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == status);
