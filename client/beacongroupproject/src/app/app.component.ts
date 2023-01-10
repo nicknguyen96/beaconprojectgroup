@@ -32,6 +32,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getEmployee()
-    this.authService.userIsLoggedIn()
+    // this.authService.userIsLoggedIn()
   }
 }
