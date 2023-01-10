@@ -17,6 +17,7 @@ import { CustomInterceptor } from './services/custom-interceptor.service';
 import { HiringManagementComponent } from './components/hiring-management/hiring-management.component';
 import { hrReducer } from './store/hr/hr.reducer';
 import { HrEffects } from './store/hr/hr.effects';
+import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { BoardingComponent } from './components/boarding/boarding.component';
     HomeComponent,
     EmployeeHomeComponent,
     HiringManagementComponent,
+    OnboardingDetailPageComponent,
     BoardingComponent,
   ],
   imports: [

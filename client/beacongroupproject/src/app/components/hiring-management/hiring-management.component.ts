@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { HrService } from 'src/app/services/hr.service';
+import { BACKEND_URL } from 'src/app/utils/utils';
 import { HrActions } from '../../store/hr/hr.actions';
 import { employeeList } from '../../store/hr/hr.selector';
 
@@ -11,11 +13,13 @@ import { employeeList } from '../../store/hr/hr.selector';
   styleUrls: ['./hiring-management.component.scss']
 })
 export class HiringManagementComponent implements OnInit {
-  constructor(private fb: FormBuilder, private store: Store<any>, private hrService: HrService) { }
+  constructor(private fb: FormBuilder, private store: Store<any>) { }
 
   employeeList$ = this.store.select(employeeList);
 
   employeeListByCategory : any[] = [];
+
+  fileURL : string = '';
 
   tab = 'onboarding';
 

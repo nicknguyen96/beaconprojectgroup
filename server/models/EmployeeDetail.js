@@ -115,6 +115,38 @@ const licenseSchema = new Schema({
   },
 });
 
+const contactInfoSchema = new Schema({
+  firstName: {
+    type: String,
+    default: 'firstName',
+    required: true
+  },
+  lastName: {
+    type: String,
+    default: 'lastName',
+    required: true,
+  },
+  middleName: {
+    type: String,
+    required: false,
+  },
+  phone: {
+    type: String,
+    default: 'xxxxxxxxxx',
+    required: true
+  },
+  email :{
+    type: String,
+    default: 'email',
+    required: true
+  },
+  relationship: {
+    type: String,
+    default: 'Family',
+    required: true
+  }
+})
+
 const employeeDetailSchema = new Schema({
   firstName: {
     type: String,
@@ -188,14 +220,17 @@ const employeeDetailSchema = new Schema({
   onboardingStatus: {
     type: String,
     required: true,
-    default: "Pending",
+    default: "Never submitted",
   },
+  emergencyContact: {
+    type: contactInfoSchema,
+    required: true,
+  },
+  referenceContact: {
+    type: contactInfoSchema,
+    required: false,
+  }
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);
-// const LegalStatus = model("LegalStatus", legalStatus);
-// const WorkStatus = model("WorkStatus", workStatusSchema);
-// const FileUpload = model('FileUpload', fileUploadSchema)
-
-// module.exports = {EmployeeDetail, LegalStatus, WorkStatus, FileUpload};
 module.exports = EmployeeDetail;

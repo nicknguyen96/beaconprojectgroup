@@ -5,19 +5,25 @@ import { EmployeeHomeComponent } from './components/employee-home/employee-home.
 import { HiringManagementComponent } from './components/hiring-management/hiring-management.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'employee', children: [
-    { path: '', component: EmployeeHomeComponent},
-    { path: 'boarding', component: BoardingComponent}
-  ]},
-  { path: 'hr', children: [
-    { path: 'hiringManagement', component: HiringManagementComponent }
-  ]}
+  {
+    path: 'employee', children: [
+      { path: '', component: EmployeeHomeComponent },
+      { path: 'boarding', component: BoardingComponent }
+    ]
+  },
+  {
+    path: 'hr', children: [
+      { path: 'hiringManagement', component: HiringManagementComponent },
+      { path: 'hiringManagement/:employeeid', component: OnboardingDetailPageComponent }
+    ]
+  }
 ]
 
 @NgModule({

@@ -1,0 +1,262 @@
+<div class="container mt-5" style="width:50%">
+
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
+            <h4 class="mb-3">Onboarding Application Status</h4>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="name-tab" data-bs-toggle="tab" data-bs-target="#name-tab-pane"
+                        type="button" role="tab" aria-controls="name-tab-pane" aria-selected="true">Name</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane"
+                        type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Address</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-info-tab" data-bs-toggle="tab"
+                        data-bs-target="#contact-info-tab-pane" type="button" role="tab"
+                        aria-controls="contact-info-tab-pane" aria-selected="false">Contact
+                        Info</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="employment-tab" data-bs-toggle="tab"
+                        data-bs-target="#employment-tab-pane" type="button" role="tab"
+                        aria-controls="employment-tab-pane" aria-selected="false">Employment</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="emergency-contact-tab" data-bs-toggle="tab"
+                        data-bs-target="#emergency-contact-tab-pane" type="button" role="tab"
+                        aria-controls="emergency-contact-tab-pane" aria-selected="false">Emergency
+                        Contact</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="document-tab" data-bs-toggle="tab" data-bs-target="#document-tab-pane"
+                        type="button" role="tab" aria-controls="document-tab-pane"
+                        aria-selected="false">Document</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="name-tab-pane" role="tabpanel" aria-labelledby="name-tab"
+                    tabindex="0">
+
+                    <!-- firstName LastName -->
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="firstName">First Name <b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.firstName}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="lastName">Last Name <b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.lastName}} readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- middleName preferredName -->
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="middleName">Middle Name<b style="color:red"></b></label>
+                                <input class="form-control" type="text" value={{employee?.user.middleName}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="preferredName">Preferred Name</label>
+                                <input class="form-control" type="text" value={{employee?.user.preferredName}} readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- car -->
+                    <div class="pt-2 pb-2" *ngIf="employee?.user.car">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="make">Car Make</label>
+                                <input class="form-control" type="text" value={{employee?.user.car.make}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="model">Car Model</label>
+                                <input class="form-control" type="text" value={{employee?.user.car.model}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="color">Car Color</label>
+                                <input class="form-control" type="text" value={{employee?.user.car.color}} readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email and phoneNumber -->
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="email">Email <b style="color:red">*</b></label>
+                                <input class="form-control noChange" type="text" readonly value={{employee?.email}}>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SSN , DOB, gender -->
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label">Social Security Number<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" readonly value={{employee?.user.SSN}}>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Date Of Birth<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.DOB}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Gender<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.gender}} readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  -->
+                </div>
+
+                <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab"
+                    tabindex="0">
+                    <!-- currentAddress -->
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="currentAddress">Current Address <b
+                                        style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.currentAddress}} readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="contact-info-tab-pane" role="tabpanel" aria-labelledby="contact-info-tab"
+                    tabindex="0">
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label" for="phoneNumber">Cell phone Number<b
+                                        style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.phoneNumber}} readonly>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Work phone Number</label>
+                                <input class="form-control" type="text" value='' readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="employment-tab-pane" role="tabpanel" aria-labelledby="employment-tab"
+                    tabindex="0">
+                    <div class="pt-2 pb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="form-label">Are you a citizen or permanent resident of the US?<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.legalStatus.status}} readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col"
+                                *ngIf="!(employee?.user.legalStatus.status == 'Greencard' ||
+                                employee?.user.legalStatus.status == 'Citizen')">
+                                <label class="form-label">What is your work authorization?<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.legalStatus.workStatus.visaTitle}} readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col"
+                                *ngIf="!(employee?.user.legalStatus.status == 'Greencard' ||
+                                employee?.user.legalStatus.status == 'Citizen')">
+                                <label class="form-label">Start Date<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.legalStatus.workStatus.issuedDate}} readonly>
+                            </div>
+                            <div class="col"
+                                *ngIf="!(employee?.user.legalStatus.status == 'Greencard' ||
+                                employee?.user.legalStatus.status == 'Citizen')">
+                                <label class="form-label">End Date<b style="color:red">*</b></label>
+                                <input class="form-control" type="text" value={{employee?.user.legalStatus.workStatus.expirationDate}} readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="emergency-contact-tab-pane" role="tabpanel"
+                    aria-labelledby="emergency-contact-tab" tabindex="0">
+                    <div class="form-row">
+                        <div class="col">
+                            <label class="form-label">First Name<b style="color:red">*</b></label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.firstName}} readonly>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Last Name<b style="color:red">*</b></label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.lastName}} readonly>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Middle Name</label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.middleName}} readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label class="form-label">Phone Number<b style="color:red">*</b></label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.phone}} readonly>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Email<b style="color:red">*</b></label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.email}} readonly>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Relationship</label>
+                            <input class="form-control" type="text" value={{employee?.user.emergencyContact?.relationship}} readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab"
+                tabindex="0">
+                    <div class="form-row" *ngIf="employee?.user?.profilePicture">
+                        <div class="col">
+                            <label class="form-label">Profile Picture</label>
+                            <button (click)="reviewFile(employee?.user.profilePicture)" class="btn btn-outline-secondary">Review File</button>
+                           
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="employee?.user?.driversLicense?.picture">
+                        <div class="col">
+                            <label class="form-label">Driver License</label>
+                            <button (click)="reviewFile(employee?.user.driversLicense.picture)" class="btn btn-outline-secondary">Review File</button>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="employee?.user.legalStatus.workStatus?.fileUpload.length > 0">
+                        <div class="col">
+                            <label class="form-label">Work Authorization</label>
+                            <button (click)="reviewFile(employee?.user.legalStatus.workStatus?.fileUpload[0])" class="btn btn-outline-secondary">Review File</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mt-5" *ngIf="employee?.user.onboardingStatus=='Pending'">
+        <div class="card-body">
+            <div>
+                <form [formGroup]="feedbackForm">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="message" class="form-label">Message <b style="color:red">*</b></label>
+                            <textarea class="form-control" name="message" id="message" cols="30" rows="3" style="width: 100%;" formControlName="message"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row m-4">
+                        <div class="col text-center">
+                            <button type="button" class="btn btn-danger" (click)="onSubmit('Rejected')">Reject</button>
+                        </div>
+                        <div class="col text-center">
+                            <button type="button" class="btn btn-primary" (click)="onSubmit('Approved')">Approve</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
