@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const { JWT_SECRET } = require('../.env'); 
+const { JWT_SECRET } = process.env; 
 const { BlackListToken, Employee, EmployeeDetail, Housing } = require("../models");
 
 // maximum of tenents in the house
