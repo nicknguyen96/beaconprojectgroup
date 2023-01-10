@@ -19,6 +19,7 @@ import { hrReducer } from './store/hr/hr.reducer';
 import { HrEffects } from './store/hr/hr.effects';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BoardingComponent } from './components/boarding/boarding.component';
     HiringManagementComponent,
     OnboardingDetailPageComponent,
     BoardingComponent,
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule,
