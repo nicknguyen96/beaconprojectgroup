@@ -16,7 +16,7 @@ export class EmployeeService {
     this.isHR$.subscribe(hr => {
       if(!hr) {
         alert('Not an admin')
-        // return this.router.navigateByUrl('/')
+        return this.router.navigateByUrl('/')
       }
     })
   }
@@ -27,7 +27,7 @@ export class EmployeeService {
       if(hr) {
          
         alert("Not for hr")
-        // return this.router.navigateByUrl('/')
+        return this.router.navigateByUrl('/')
       }
     })
   }
