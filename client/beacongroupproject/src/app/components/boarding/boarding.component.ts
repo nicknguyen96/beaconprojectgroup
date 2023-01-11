@@ -161,7 +161,7 @@ export class BoardingComponent {
 
   onSubmit(): any {
     if(this.boardForm.invalid) {
-    return alert("Form is not valid, please check if all fields are filled")
+    return alert("ERROR: There are still some required fields you have not filled out!");
     }
     
     const { firstName, lastName, middleName, preferredName, 
@@ -177,7 +177,7 @@ export class BoardingComponent {
     
 
     const joinedAddress = `${address}, ${buildNum}, ${city}, ${state} ${pcode}`
- 
+
     const employeeDetails = {
       firstName,
       lastName,

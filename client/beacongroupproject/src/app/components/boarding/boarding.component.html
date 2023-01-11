@@ -8,14 +8,19 @@
 
             <div class="container mt-4 mb-4" style="width:75%; padding-bottom: 100px;">
                 <form class="form" [formGroup]="boardForm">
-                    <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
-                    <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
+                    <div class="row">
+                        <div class="col text-left">
+                            <button [hidden]="currPage<=1" class="btn btn-success" (click)="goPage('prev')">Prev</button>
+                        </div>
+                        <div class="col text-right">
+                            <button [hidden]="currPage>=5" class="btn btn-success " (click)="goPage('next')">Next</button>
+                        </div>
+                    </div>
 
                     <h3 class="text-center">Page {{currPage}} of 5</h3> 
-                    <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
-                    <hr class="mb-3">
-
-                    <div *ngIf="currPage == 1">
+                    <div [hidden]="currPage!=1">
+                        <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
+                        <hr class="mb-3">
                         <h5>Profile Picture</h5>
                         <label class="hoverable mb-3" for="fileInput">
                             <img [src]="pfpUrl ? pfpUrl : '/assets/profileDefault.png'">
@@ -144,7 +149,9 @@
 
     
     
-                    <div *ngIf="currPage == 2">
+                    <div [hidden]="currPage!=2">
+                        <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
+                        <hr class="mb-3">
                         <h5>Work Authorization</h5>
                         <p>Are you a citizen or permanent resident of the United States? <b style="color:red">*</b></p>
                         <div class="form-check">
@@ -206,7 +213,9 @@
                         </div>
                     </div>
 
-                    <div *ngIf="currPage == 3">
+                    <div [hidden]="currPage!=3">
+                        <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
+                        <hr class="mb-3">
                         <h5>Driving Information</h5>
                         <p>Do you have a driver's license? <b style="color:red">*</b></p>
                         <div class="form-check">
@@ -239,8 +248,10 @@
                         </div>
                     </div>
 
-                    <div *ngIf="currPage == 4">
-                        <h5>References</h5>
+                    <div [hidden]="currPage!=4">
+                        <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
+                        <hr class="mb-3">
+                        <h5>Reference</h5>
                         <p>Who, if anyone, referred you to this company? (List only one person)</p>
 
                         <label class="form-label">First Name</label> 
@@ -264,6 +275,7 @@
                         <hr class="mb-3">
 
                         <h5>Emergency Contact <b style="color:red">*</b></h5>
+                        <p>Who is someone we can contact in case of an emergency? (List only one person)</p>
                         <label class="form-label">First Name</label> 
                         <input class="form-control mb-3" type="text" formControlName="emergencyFirstName" required>
 
@@ -283,14 +295,83 @@
                         <input class="form-control mb-3" type="text" formControlName="emergencyRelationship" required>
                     </div>
 
-                    <div *ngIf="currPage == 5">
+                    <div [hidden]="currPage!=5">
+                        
                         <h5>Summary</h5>
+
+                        <hr class="mb-3">
+                        <h5>Personal Info</h5>
+                        
+                        <p>Name: {{firstName.value}} {{middleName.value}} {{lastName.value}}</p>
+                        <p>Preferred Name: {{preferredName.value}} </p>
+                        <p>Email: {{email.value}}</p>
+                        <p>Cell Phone Number: {{cellphone.value}}</p>
+                        <p>Work Phone Number: {{workphone.value}}</p>
+                        <p>SSN: {{ssn.value}}</p>
+                        <p>Date of Birth: {{dob.value}}</p>
+                        <p>Gender: {{gender.value}}</p>
+                        <p>Address:</p> 
+                        <p>{{address.value}}</p>
+                        <p>{{buildNum.value}}</p>
+                        <p>{{city.value}} {{state.value}} {{pcode.value}}</p>
+
+                        <hr class="mb-3">
+                        <h5>Work Authorization</h5>
+
+                        <p>Is a U.S. citizen? {{isCitizen.value}}</p>
+                        <p *ngIf="isCitizen.value == 'Yes'">{{citizenStatus.value}}</p>
+                        <div *ngIf="isCitizen.value == 'No'">
+                            <p>Visa: {{notCitizenStatus.value}}</p>
+                            <p>Start Date: {{startDate.value}} | End Date: {{endDate.value}}</p>
+                        </div>
+                        
+                        <hr class="mb-3">
+                        <h5>Driving Information</h5>
+
+                        <p>Has a driver's license? {{dLicense.value}}</p>
+                        <div *ngIf="dLicense.value == 'Yes'">
+                            <p>License Number: {{licenseNum.value}}</p>
+                            <p>License Expiration: {{licenseExpiration.value}}</p>
+                            <p>Car Make: {{carMake.value}}</p>
+                            <p>Car Model: {{carModel.value}}</p>
+                            <p>Car Color: {{carColor.value}}</p>
+                        </div>
+
+                        <hr class="mb-3">
+                        <h5>Reference</h5>
+
+                        <p>Name: {{referFirstName.value}} {{referMiddleName.value}} {{referLastName.value}}</p>
+                        <p>Email: {{referEmail.value}}</p>
+                        <p>Phone: {{referPhone.value}}</p>
+                        <p>Relationship: {{referRelationship.value}}</p>
+
+                        <hr class="mb-3">
+                        <h5>Emergency Contact</h5>
+
+                        <p>Name: {{emergencyFirstName.value}} {{emergencyMiddleName.value}} {{emergencyLastName.value}}</p>
+                        <p>Email: {{emergencyEmail.value}}</p>
+                        <p>Phone: {{emergencyPhone.value}}</p>
+                        <p>Relationship: {{emergencyRelationship.value}}</p>
+
+                        <hr class="mb-3">
+                        <h5>Uploaded Files (If Applicable)</h5>
+                        <p>Profile Picture: {{profilePicture.value}}</p>
+                        <p>F1: {{f1File.value}}</p>
+                        <p>Driver's License: {{licenseFile.value}}</p>
+
+                        <hr class="mb-3">
                         <button type="submit" class="btn btn-success mb-5" (click)="onSubmit()">Submit Application</button>
                     </div>
 
                 </form>
-                <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
-                <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
+                <div class="row">
+                    <div class="col text-left">
+                        <button [hidden]="currPage<=1" class="btn btn-success" (click)="goPage('prev')">Prev</button>
+                    </div>
+                    <div class="col text-right">
+                        <button [hidden]="currPage>=5" class="btn btn-success " (click)="goPage('next')">Next</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
