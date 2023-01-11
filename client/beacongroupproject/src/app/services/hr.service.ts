@@ -13,4 +13,8 @@ export class HrService {
     getEmployeeList() {
         return this.http.get(`${BACKEND_URL}/hr/sortUser`);
     }
+
+    updateOnBoardingStatus(onboardingStatus: string, employeeid: string, message: string) {
+        return this.http.put(`${BACKEND_URL}/hr/update-boarding-status`, { onboardingStatus, employeeid, message })
+    }
 }

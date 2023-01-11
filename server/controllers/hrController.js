@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const { Employee } = require("../models");
-const { EmployeeDetail, LegalStatus, WorkStatus, FileUpload } = require('../models/EmployeeDetail');
+const { Employee, EmployeeDetail } = require("../models");
+
 const sendEmail = require('../utils/sendEmail');
 
 class HrController {
@@ -101,7 +100,7 @@ class HrController {
       const newEmployeeDetail = await EmployeeDetail.findByIdAndUpdate(
         //finding the user details and update it
         employee.user.id,
-        { $set: { onboardingStatus } },
+        { $set: { onboardingStatus, onboardingMessage: message } },
         { new: true }
       );
 
@@ -122,7 +121,7 @@ class HrController {
       if (response.status == 200) {
         res.json({ status: 200, message: "Successfully updated and send email" });
       } else {
-        res.json({ status: 400, message: response.message });
+        res.json({ status: 400, message: response.message, data: { onboardingStatus, employeeid, message } });
       }
 
     } catch (error) {

@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { HrActions } from './hr.actions';
+import { employeeList } from './hr.selector';
 
 export interface HR {
     email: string,
@@ -46,7 +47,35 @@ const HrReducer = createReducer(
             ...state,
             employeeList: []
         }
+    }),
+
+    on(HrActions.updateOnboardingStatusSuccess, (state, action: any) => {
+        let newEmployeeList = JSON.parse(JSON.stringify(state.employeeList));
+
+        console.log("newEmployeeList === state.employeeList ", newEmployeeList === state.employeeList);
+
+        const { onboardingStatus, employeeid, message } = action;
+
+        for (let i = 0; i < newEmployeeList.length; i++) {
+            if (newEmployeeList[i]._id == employeeid) {
+                newEmployeeList[i].user.onboardingStatus = onboardingStatus;
+                newEmployeeList[i].user.onboardingMessage = message;
+                break;
+            }
+        }
+
+        return {
+            ...state,
+            employeeList: newEmployeeList,
+        };
+    }),
+
+    on(HrActions.updateOnboardingStatusFail, (state, action: any) => {
+        return {
+            ...state,
+        }
     })
+
 )
 
 export const hrReducer = (state: any, action: any) => {
