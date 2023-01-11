@@ -19,7 +19,11 @@ import { hrReducer } from './store/hr/hr.reducer';
 import { HrEffects } from './store/hr/hr.effects';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
+import { OnboardingEffects } from './store/onboarding/onboarding.effects';
+import { onboardingReducer } from './store/onboarding/onboarding.reducer';
+
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+
 
 @NgModule({
   declarations: [
@@ -39,8 +43,8 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ auth: authReducer, hr: hrReducer }),
-    EffectsModule.forRoot([AuthEffects, HrEffects])
+    StoreModule.forRoot({ auth: authReducer, hr: hrReducer, employeeDetails: onboardingReducer}),
+    EffectsModule.forRoot([AuthEffects, HrEffects, OnboardingEffects])
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

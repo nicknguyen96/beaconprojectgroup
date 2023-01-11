@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { OnboardingService } from 'src/app/services/onboarding.service';
+import { OnboardingAction } from 'src/app/store/onboarding/onboarding.actions';
 
 @Component({
   selector: 'app-boarding',
@@ -8,12 +11,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class BoardingComponent {
 
+
+
   public progressBar: number=0;
   public pfpUrl: string='';
   public userEmail: string='(placeholder)@gmail.com';
   public currPage: number=1;
 
-  public profilePicture = new FormControl('', [Validators.required]);
+  public profilePicture = new FormControl('');
 
   public firstName = new FormControl('', [Validators.required]);
   public middleName = new FormControl('');
@@ -65,7 +70,7 @@ export class BoardingComponent {
   public emergencyRelationship = new FormControl('');
 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store) { }
 
     // initialize formgroup
     public boardForm: FormGroup = this.fb.group({
@@ -152,5 +157,76 @@ export class BoardingComponent {
         break;
       }
     }
+  }
+
+  onSubmit(): any {
+    if(this.boardForm.invalid) {
+    return alert("Form is not valid, please check if all fields are filled")
+    }
+    
+    const { firstName, lastName, middleName, preferredName, 
+      profilePicture, address, buildNum, city, state, pcode,
+      phoneNumber, carMake, carModel, carColor, ssn, dob,
+      gender, citizenStatus, notCitizenStatus, 
+      f1File, otherDesc, startDate, endDate,  licenseNum,
+      licenseExpiration, licenseFile, referFirstName, referMiddleName, 
+      referLastName, referEmail, referPhone, referRelationship,
+      emergencyFirstName, emergencyMiddleName, emergencyLastName,
+      emergencyEmail, emergencyPhone, emergencyRelationship,} = this.boardForm.getRawValue();
+    
+    
+
+    const joinedAddress = `${address}, ${buildNum}, ${city}, ${state} ${pcode}`
+ 
+    const employeeDetails = {
+      firstName,
+      lastName,
+      middleName,
+      preferredName,
+      profilePicture,
+      currentAddress: joinedAddress,
+      phoneNumber,
+      car: {
+        make: carMake,
+        model: carModel,
+        color: carColor
+      },
+      SSN: ssn,
+      DOB: dob,
+      gender: gender,
+      legalStatus: {
+        status: citizenStatus,
+        workStatus: {
+          visaTitle: notCitizenStatus,
+          issuedDate: startDate,
+          expirationDate: endDate,
+          fileUpload: f1File,
+        } 
+      },
+      driversLicense: {
+        number: licenseNum,
+        expiration: licenseExpiration,
+        picture: licenseFile
+      },
+      onBoardingStatus: 'Submitted',
+      emergencyContact: {
+        firstName : emergencyFirstName,
+        lastName : emergencyLastName,
+        middleName: emergencyMiddleName,
+        phone: emergencyPhone,
+        email: emergencyEmail,
+        relationship: emergencyRelationship
+      },
+      referenceContact: {
+        firstName : referFirstName,
+        lastName : referLastName,
+        middleName: referMiddleName,
+        phone: referPhone,
+        email: referEmail,
+        relationship: referRelationship
+      }
+
+    }
+    this.store.dispatch(OnboardingAction.updateOnboarding({employeeDetails}))
   }
 }

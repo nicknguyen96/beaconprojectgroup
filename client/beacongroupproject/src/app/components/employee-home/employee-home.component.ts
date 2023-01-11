@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { selectEmployee } from 'src/app/store/user/user.selector';
+import { selectEmployee } from 'src/app/store/user/auth.selector';
 
 @Component({
   selector: 'app-employee-home',

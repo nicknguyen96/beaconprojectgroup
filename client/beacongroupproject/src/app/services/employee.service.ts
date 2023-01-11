@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectEmployee, selectIsHR } from '../store/user/user.selector';
+import { selectEmployee, selectIsHR } from '../store/user/auth.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,10 @@ export class EmployeeService {
         return this.router.navigateByUrl('/')
       }
     })
+  }
+
+  sendOnboarding() {
+    
   }
 }
  
