@@ -23,6 +23,7 @@ import { OnboardingEffects } from './store/onboarding/onboarding.effects';
 import { onboardingReducer } from './store/onboarding/onboarding.reducer';
 
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     OnboardingDetailPageComponent,
     BoardingComponent,
     ForbiddenComponent,
+    HousingManagementComponent,
   ],
   imports: [
     BrowserModule,

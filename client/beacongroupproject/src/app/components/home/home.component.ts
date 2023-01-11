@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../../services/auth.service';
+import { HrActions } from 'src/app/store/hr/hr.actions';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent {
 
-  constructor(private store: Store, private authService: AuthService) {}
+  constructor(private store: Store) {}
 
   emailInviteForm = new FormBuilder().group({
     email: ''
@@ -19,5 +19,8 @@ export class HomeComponent {
   onInvite(): void {
     const { email } = this.emailInviteForm.getRawValue();
     console.log(email);
+    
+    this.store.dispatch(HrActions.getHousingList({data: 'empty list'}));
+    
   }
 }

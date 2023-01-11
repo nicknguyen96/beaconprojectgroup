@@ -84,4 +84,22 @@ export class HrEffects {
 
         )
     }, { dispatch: false });
+
+    getHousingList$ = createEffect((): any => {
+        return this.actions$.pipe(
+            ofType(HrActions.getHousingList),
+            exhaustMap((action) => {
+                return this.hrService.getHousingList().pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.getHousingListSuccess({ response: data.data });
+                        } else {
+                            return HrActions.getHousingListFail({ response: data.data })
+                        }
+                    })
+                )
+            })
+        )
+    })
+
 }
