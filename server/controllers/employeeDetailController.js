@@ -11,13 +11,13 @@ class UserController {
     // we will use middleware to append userid from the token
     const { userid } = req.headers;
     try {
-      const validType = ["profilePicture", "driversLicense", "i983", "other", "i20", "opt ead"];
+      const validType = ["profilePicture", "driversLicense", "i983", "optreceipt", "i20", "optead"];
       const fileType = filename && filename.split("-")[0];
       const email = filename && filename.split("-")[1];
       if (!validType.includes(fileType)) {
         return res.json({
           status: 400,
-          message: "file type name should include one of the following: profilePicture, driverLicence, workAuthorization, other",
+          message: "file type name should include one of the following: profilePicture, driversLicense, i983, optReceipt, i20, optead",
         });
       }
       const employee = await Employee.findById(userid);
@@ -49,12 +49,14 @@ class UserController {
             message: "Waiting for HR to approve",
           };
           console.log(property);
-          if (property.toLowerCase() == "opt ead") {
+          if (property.toLowerCase() == 'optreceipt') {
             employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
-          } else if (property.toLowerCase() == "i983") {
+          } else if (property.toLowerCase() == 'optead') {
             employeeDetail.legalStatus.workStatus.fileUpload[1] = fileUploadSchema;
-          } else if (property.toLowerCase() == "i20") {
+          } else if (property.toLowerCase() == 'i983') {
             employeeDetail.legalStatus.workStatus.fileUpload[2] = fileUploadSchema;
+          } else if (property.toLowerCase() == 'i20') {
+            employeeDetail.legalStatus.workStatus.fileUpload[3] = fileUploadSchema;
           } else {
             throw Error("no property match with the filename");
           }
@@ -92,13 +94,20 @@ class UserController {
     const employeeDetails = req.body.employeeDetails;
     const employeeDetailsId = req.body.employeeDetailsId;
 
+    // fileUpload should be an array of file with file name and file url. Prefer the EmployeeDetail model
+    employeeDetails.legalStatus.workStatus.fileUpload = [];
+
+    console.log(employeeDetails);
     try {
-      const employee = await EmployeeDetail.findOneAndReplace({ _id: employeeDetailsId }, { ...employeeDetails }, { new: true });
+      const employee = await EmployeeDetail.findByIdAndUpdate(employeeDetailsId, employeeDetails, { $new: true });
+
       console.log(employee);
 
       return res.json({ status: 200, message: "Employee details have been saved", data: employee });
     } catch (e) {
-      res.status(400).json({
+      console.log(e);
+      res.json({
+        status: 400,
         message: "ERROR: Something unexpected happened on the backend when attemping to update user info.",
         error: e,
       });
@@ -107,7 +116,6 @@ class UserController {
 
   async getFile(req, res) {
     const { filename } = req.params;
-    const { userid } = req.headers;
 
     try {
       const response = await getFile(filename);

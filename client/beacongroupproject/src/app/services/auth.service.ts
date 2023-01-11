@@ -25,10 +25,12 @@ export class AuthService {
   getEmployee() {
     let token = localStorage.getItem('token')
     let employee = JSON.parse(localStorage.getItem('employee'))
-    let isHR = localStorage.getItem('isHR')
+    let isHR = localStorage.getItem('isHR') == 'true' ? true : false
     const data = {
       token, employee, isHR
     }
+    console.log("isHR", isHR);
+    console.log(typeof isHR)
     this.store.dispatch(AuthActions.getEmployee({ data }))
   }
 

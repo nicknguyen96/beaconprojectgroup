@@ -23,6 +23,8 @@ import { OnboardingEffects } from './store/onboarding/onboarding.effects';
 import { onboardingReducer } from './store/onboarding/onboarding.reducer';
 
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 
 
@@ -37,6 +39,7 @@ import { HousingManagementComponent } from './components/housing-management/hous
     OnboardingDetailPageComponent,
     BoardingComponent,
     ForbiddenComponent,
+    VisaManagementHrComponent,
     HousingManagementComponent,
   ],
   imports: [
@@ -45,8 +48,12 @@ import { HousingManagementComponent } from './components/housing-management/hous
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ auth: authReducer, hr: hrReducer, employeeDetails: onboardingReducer}),
-    EffectsModule.forRoot([AuthEffects, HrEffects, OnboardingEffects])
+    StoreModule.forRoot({ auth: authReducer, hr: hrReducer, employeeDetails: onboardingReducer }),
+    EffectsModule.forRoot([AuthEffects, HrEffects, , OnboardingEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: true,
+    }),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
