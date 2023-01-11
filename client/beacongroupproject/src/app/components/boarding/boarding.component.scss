@@ -9,6 +9,12 @@ img {
     border-radius: 50%;
     object-fit: cover;
 }
+.progress-bar {
+    width: 100%;
+}
+.page {
+    width: 100%;
+}
 
 .hoverable {
     position: relative;
@@ -54,3 +60,7 @@ img {
     display: none;
 }
 
+
+.container {
+    width: 100% !important;
+}

@@ -1,8 +1,7 @@
 <div class="container mt-5" style="width:70rem;">
     <div class="card shadow">
-        <div class="card-body p-4">
+        <div class="card-body p-4 body">
             <h5>Employee Onboarding Application</h5>
-            <div class="progress mt-4">
             <div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-label="Example with label" style="width: {{progressBar}}%;" attr.aria-valuenow="{{progressBar}}"  aria-valuemin="0" aria-valuemax="100">{{progressBar}}%</div>
             </div>
 
@@ -11,7 +10,7 @@
                     <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
                     <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
 
-                    <h3 class="text-center">Page {{currPage}} of 5</h3> 
+                    <h3 class="text-center page">Page {{currPage}} of 5</h3> 
                     <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
                     <hr class="mb-3">
 
@@ -292,6 +291,5 @@
                 <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
                 <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
             </div>
-        </div>
     </div>
 </div>
