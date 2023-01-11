@@ -2,7 +2,7 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 
 import { Injectable } from '@angular/core';
 import { HrActions } from './hr.actions';
-import { exhaustMap, map, tap } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { HrService } from '../../services/hr.service';
 import { Router } from '@angular/router';
 import { BACKEND_URL } from 'src/app/utils/utils';
@@ -84,4 +84,22 @@ export class HrEffects {
 
         )
     }, { dispatch: false });
+
+    getHousingList$ = createEffect((): any => {
+        return this.actions$.pipe(
+            ofType(HrActions.getHousingList),
+            exhaustMap((action) => {
+                return this.hrService.getHousingList().pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.getHousingListSuccess({ response: data.data });
+                        } else {
+                            return HrActions.getHousingListFail({ response: data.data })
+                        }
+                    })
+                )
+            })
+        )
+    })
+
 }

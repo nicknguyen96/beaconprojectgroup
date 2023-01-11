@@ -20,6 +20,7 @@ import { HrEffects } from './store/hr/hr.effects';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     OnboardingDetailPageComponent,
     BoardingComponent,
     ForbiddenComponent,
+    HousingManagementComponent,
   ],
   imports: [
     BrowserModule,

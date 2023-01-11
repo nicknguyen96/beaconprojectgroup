@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { Employee, EmployeeDetail } = require("../models");
+const { Employee, EmployeeDetail, Housing } = require("../models");
 
 const sendEmail = require('../utils/sendEmail');
 
@@ -176,6 +176,7 @@ class HrController {
       res.json({ status: 500, message: error.message });
     }
   };
+  
 }
 
 module.exports = new HrController();

@@ -11,11 +11,16 @@ const { Housing } = require("../models");
 class HousingController {
   // getting all the houses
   async getAllHousing(req, res) {
+    console.log("the req is ", req)
     try {
       // getting all the houses and filling in the tenant information
       const allHousing = await Housing.find().populate({
         path: 'tenants',
-        populate: 'user'
+        model: 'Employee',
+        populate: {
+          path: 'user',
+          model: 'EmployeeDetail'
+        }
       });
 
       if (allHousing.length <= 0) {
@@ -24,7 +29,6 @@ class HousingController {
 
       res.status(200).json({ status: 200, message: "get allHousing", data: allHousing });
     } catch (error) {
-      console.log(error);
       return res.json({ status: 200, message: error.message });
     }
   }

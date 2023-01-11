@@ -7,6 +7,7 @@ export interface HR {
     isSent: boolean,
     message: string,
     employeeList: any[],
+    housingList: any[]
 }
 
 
@@ -16,6 +17,7 @@ export const initialState: HR = {
     isSent: false,
     message: '',
     employeeList: [],
+    housingList: []
 }
 
 const HrReducer = createReducer(
@@ -74,7 +76,18 @@ const HrReducer = createReducer(
         return {
             ...state,
         }
-    })
+    }),
+
+    on(HrActions.getHousingListSuccess, (state, action: any) => {
+        return {
+            ...state,
+            housingList: action.response
+        }
+    }), 
+
+    on(HrActions.getHousingListFail, (state) => {
+        return state
+    }),
 
 )
 
