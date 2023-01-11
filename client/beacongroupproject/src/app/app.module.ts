@@ -22,6 +22,9 @@ import { BoardingComponent } from './components/boarding/boarding.component';
 import { OnboardingEffects } from './store/onboarding/onboarding.effects';
 import { onboardingReducer } from './store/onboarding/onboarding.reducer';
 
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +35,7 @@ import { onboardingReducer } from './store/onboarding/onboarding.reducer';
     HiringManagementComponent,
     OnboardingDetailPageComponent,
     BoardingComponent,
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule,

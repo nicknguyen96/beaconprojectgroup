@@ -222,6 +222,10 @@ const employeeDetailSchema = new Schema({
     required: true,
     default: "Never submitted",
   },
+  onboardingMessage: {
+    type: String,
+    required: false,
+  },
   emergencyContact: {
     type: contactInfoSchema,
     required: true,

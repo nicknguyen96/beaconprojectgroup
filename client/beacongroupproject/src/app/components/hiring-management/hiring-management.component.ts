@@ -19,7 +19,7 @@ export class HiringManagementComponent implements OnInit {
 
   employeeListByCategory: any[] = [];
 
-  fileURL : string = '';
+  fileURL: string = '';
 
   tab = 'onboarding';
 
@@ -43,7 +43,9 @@ export class HiringManagementComponent implements OnInit {
     console.log(email);
 
     this.store.dispatch(HrActions.sendemail({ email }));
-
+    this.employeeList$.subscribe(employeeList => {
+      this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == status);
+    })
   }
 
   ngOnInit(): void {
