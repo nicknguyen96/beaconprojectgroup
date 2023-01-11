@@ -9,6 +9,6 @@ export const AuthActions = createActionGroup({
     "Get Employee": props<{ data: any }>(),
     "Logout": props<{ response: any }>(),
     "Logout Success": props<{ response: any }>(),
-    "Logout Failure": props<{ error: any }>()
+    "Logout Failure": props<{ error: any }>(),
   }
 })

@@ -124,6 +124,7 @@ class AuthController {
         userid: employee._id,
         isHR: employee.isHR,
       };
+
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
       res.json({
         token: accessToken,

@@ -5,7 +5,6 @@ const { uploadFile, getFile } = require("../utils/uploadFile");
 // const getFile = require('../utils/getFile');
 
 class UserController {
-
   async uploadFile(req, res) {
     // we will distingush which property of user info base on this one.
     const filename = req.file.originalname;
@@ -34,11 +33,11 @@ class UserController {
       if (response.status == 200) {
         console.log(response);
 
-        const property = req.file.originalname.split('-')[0];
-        if (property == 'profilePicture') {
+        const property = req.file.originalname.split("-")[0];
+        if (property == "profilePicture") {
           employeeDetail[property] = response.url;
-        } else if (property == 'driversLicense') {
-          if (!employeeDetail.driversLicense) employeeDetail.driversLicense = {}
+        } else if (property == "driversLicense") {
+          if (!employeeDetail.driversLicense) employeeDetail.driversLicense = {};
           employeeDetail.driversLicense.picture = response.url;
           console.log(employeeDetail);
         } else {
@@ -47,17 +46,17 @@ class UserController {
             fileName: property,
             fileUrl: response.url,
             status: "Pending",
-            message: "Waiting for HR to approve"
-          }
+            message: "Waiting for HR to approve",
+          };
           console.log(property);
-          if (property.toLowerCase() == 'opt ead'){
+          if (property.toLowerCase() == "opt ead") {
             employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
-          } else if (property.toLowerCase() == 'i983') {
+          } else if (property.toLowerCase() == "i983") {
             employeeDetail.legalStatus.workStatus.fileUpload[1] = fileUploadSchema;
-          } else if (property.toLowerCase() == 'i20') {
+          } else if (property.toLowerCase() == "i20") {
             employeeDetail.legalStatus.workStatus.fileUpload[2] = fileUploadSchema;
           } else {
-            throw Error('no property match with the filename');
+            throw Error("no property match with the filename");
           }
         }
         await employeeDetail.save();
@@ -90,14 +89,14 @@ class UserController {
   }
 
   async updateUserDetails(req, res) {
+    const employeeDetails = req.body.employeeDetails;
+    const employeeDetailsId = req.body.employeeDetailsId;
+
     try {
-      // get the user id
-      const { id } = req.body.uid;
-      const user = await User.findByIdAndUpdate(id, { ...req.body.data });
-      await user.save();
-      res.status(200).json({
-        message: "User details have been updated!",
-      });
+      const employee = await EmployeeDetail.findOneAndReplace({ _id: employeeDetailsId }, { ...employeeDetails }, { new: true });
+      console.log(employee);
+
+      return res.json({ status: 200, message: "Employee details have been saved", data: employee });
     } catch (e) {
       res.status(400).json({
         message: "ERROR: Something unexpected happened on the backend when attemping to update user info.",
@@ -107,25 +106,23 @@ class UserController {
   }
 
   async getFile(req, res) {
-      const { filename } = req.params;
-      const { userid } = req.headers;
+    const { filename } = req.params;
+    const { userid } = req.headers;
 
-      try {
-          const response = await getFile(filename);
-          if (response.status != 200) {
-              throw new Error(response.message);
-          } else {
-
-              return res.json({status: 200, message:"get the data successfully", data: response.data})
-          }
-      } catch (error){
-          if (error.message == 'Access Denied') {
-              return res.json({status: 403, message: error.message})
-          }
-          return res.json({status: 400, message: error.message});
+    try {
+      const response = await getFile(filename);
+      if (response.status != 200) {
+        throw new Error(response.message);
+      } else {
+        return res.json({ status: 200, message: "get the data successfully", data: response.data });
       }
+    } catch (error) {
+      if (error.message == "Access Denied") {
+        return res.json({ status: 403, message: error.message });
+      }
+      return res.json({ status: 400, message: error.message });
+    }
   }
-
 }
 
 module.exports = new UserController();
