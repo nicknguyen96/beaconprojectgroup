@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   // form related stuff
   public email = new FormControl('', [Validators.required, Validators.email]);
-  public password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,16}')]);
+  public password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*^&]).{8,16}')]);
   public confirm = new FormControl('');
 
   // server url
@@ -63,8 +63,6 @@ export class RegisterComponent implements OnInit {
         alert(res.message)
         if (res.status == 201) {
           this.router.navigate(['/employee'])
-        } else {
-          window.location.reload();
         }
       });
     }

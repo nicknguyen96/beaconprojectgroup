@@ -2,12 +2,14 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 
 import { Injectable } from '@angular/core';
 import { HrActions } from './hr.actions';
-import { exhaustMap, map } from 'rxjs';
+import { exhaustMap, map, tap } from 'rxjs';
 import { HrService } from '../../services/hr.service';
+import { Router } from '@angular/router';
+import { BACKEND_URL } from 'src/app/utils/utils';
 
 @Injectable()
 export class HrEffects {
-    constructor(private actions$: Actions, private hrService: HrService) { }
+    constructor(private actions$: Actions, private hrService: HrService, private router: Router) { }
     sendEmai$ = createEffect((): any => {
         console.log(this.actions$);
         return this.actions$.pipe(
@@ -70,4 +72,16 @@ export class HrEffects {
             })
         )
     })
+
+    updateOnBoardRedirect$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateOnboardingStatusSuccess),
+            tap((action : any) => {
+                const { onboardingStatus, employeeid, message } = action.response;
+                console.log(action);
+                window.close();
+            }),
+
+        )
+    }, { dispatch: false });
 }
