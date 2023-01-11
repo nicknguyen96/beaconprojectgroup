@@ -1,8 +1,18 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <div class="card shadow" style="width:60rem;">
       <div class="card-body">
-          <h2>Housing Management</h2>
-          <p>{{housingList$ | async | json}}</p>
+          <h2 class="text-center">Housing Management</h2>
+          <div class="d-flex flex-column">
+            <div class="shadow mb-4 p-1 border border-secondary rounded" *ngFor="let house of housingList$ | async"> 
+              <p>{{house._id}}</p>
+              <p>{{house.address}}</p>
+              <p>{{house.landlord}}</p>
+              <p>{{house.tenants}}</p>
+              <div class="text-center">
+                <button type="button" class="btn btn-outline-danger btn-sm m-2">Delete House</button>
+              </div>
+            </div>
+          </div>
       </div>
   </div>
 </div>
