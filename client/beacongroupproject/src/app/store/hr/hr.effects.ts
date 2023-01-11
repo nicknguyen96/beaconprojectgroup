@@ -2,7 +2,7 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 
 import { Injectable } from '@angular/core';
 import { HrActions } from './hr.actions';
-import { catchError, exhaustMap, map, of, tap } from 'rxjs';
+import { exhaustMap, map, tap } from 'rxjs';
 import { HrService } from '../../services/hr.service';
 import { Router } from '@angular/router';
 import { BACKEND_URL } from 'src/app/utils/utils';

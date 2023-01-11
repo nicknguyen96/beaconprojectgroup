@@ -11,7 +11,7 @@ const { Housing } = require("../models");
 class HousingController {
   // getting all the houses
   async getAllHousing(req, res) {
-    console.log("the req is ", req)
+    
     try {
       // getting all the houses and filling in the tenant information
       const allHousing = await Housing.find().populate({
