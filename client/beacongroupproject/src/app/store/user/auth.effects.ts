@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import { catchError, of, exhaustMap, map, tap, switchMap, Observable, mergeMap, EMPTY } from 'rxjs'
+import { catchError, of, exhaustMap, map, tap, switchMap, Observable, mergeMap, EMPTY, exhaust } from 'rxjs'
 
 import { AuthService } from 'src/app/services/auth.service'
 import { AuthActions } from './auth.actions'
+import { OnboardingService } from 'src/app/services/onboarding.service'
 
 @Injectable()
 
@@ -66,7 +67,7 @@ export class AuthEffects {
       })
     )
   })
-
+  
   deleteLocal() {
     localStorage.removeItem('employee')
     localStorage.removeItem('isHR')
@@ -76,6 +77,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private onboardingService: OnboardingService,
   ) { }
 }

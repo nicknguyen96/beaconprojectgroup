@@ -9,6 +9,7 @@ import { OnboardingDetailPageComponent } from './components/onboarding-detail-pa
 import { RegisterComponent } from './components/register/register.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
+import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
     path: 'hr', children: [
       { path: 'hiringManagement', component: HiringManagementComponent },
       { path: 'hiringManagement/:employeeid', component: OnboardingDetailPageComponent },
-      { path: 'visaManagement', component: VisaManagementHrComponent}
+      { path: 'visaManagement', component: VisaManagementHrComponent},
+      { path: 'housingManagement', component: HousingManagementComponent }
     ]
   },
   { path: 'forbidden', component: ForbiddenComponent}

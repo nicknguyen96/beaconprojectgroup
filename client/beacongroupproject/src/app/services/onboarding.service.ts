@@ -1,14 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectEmployee } from '../store/user/user.selector';
-
+import { tap } from 'rxjs';
+import { selectEmployee } from '../store/user/auth.selector';
+import { BACKEND_URL } from '../utils/utils';
+import { AuthActions } from '../store/user/auth.actions';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingService {
 
-  constructor(private store: Store, private router: Router) { }
+  constructor(private store: Store, private router: Router, private http: HttpClient) { }
 
   employee$ = this.store.select(selectEmployee)
 
@@ -25,7 +29,25 @@ export class OnboardingService {
         return this.router.navigateByUrl('/employee/boardingPage')
       }
     })
+  } 
+
+  onboardingSubmit(employeeDetails: any): any {
+    let employeeDetailsId: string;
+    let employeeDetail: any; 
+    this.store.select(selectEmployee).subscribe(employee => {
+      employeeDetailsId = employee.details._id
+      employeeDetail = employee.details
+    })
+
+    if(!employeeDetailsId) {
+      return alert('Not logged in')
+    }
+
+    const employee: any = {
+      employeeDetails,
+      employeeDetailsId,
+    }
+      return this.http.put(`${BACKEND_URL}/user/updateDetails`,  employee )
   }
-s
 
 }

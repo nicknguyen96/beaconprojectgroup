@@ -29,4 +29,8 @@ export class HrService {
             }
         })
     }
+    
+    getHousingList() {
+        return this.http.get(`${BACKEND_URL}/housing`);
+    }
 }

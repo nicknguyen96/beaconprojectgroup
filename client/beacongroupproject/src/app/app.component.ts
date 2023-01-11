@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { EmployeeService } from './services/employee.service';
 import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
-import { selectAuthState, selectEmployee, selectToken } from './store/user/user.selector';
+import { selectAuthState } from './store/user/auth.selector';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   employee : any;
 
   employee$ = this.store.select(selectAuthState).subscribe((data) => {
-    console.log(data);
     this.employee = data;
   });
 

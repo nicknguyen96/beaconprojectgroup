@@ -19,9 +19,14 @@ import { hrReducer } from './store/hr/hr.reducer';
 import { HrEffects } from './store/hr/hr.effects';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
+import { OnboardingEffects } from './store/onboarding/onboarding.effects';
+import { onboardingReducer } from './store/onboarding/onboarding.reducer';
+
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
+import { HousingManagementComponent } from './components/housing-management/housing-management.component';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { VisaManagementHrComponent } from './components/visa-management-hr/visa-
     BoardingComponent,
     ForbiddenComponent,
     VisaManagementHrComponent,
+    HousingManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,8 +48,8 @@ import { VisaManagementHrComponent } from './components/visa-management-hr/visa-
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ auth: authReducer, hr: hrReducer }),
-    EffectsModule.forRoot([AuthEffects, HrEffects]),
+    StoreModule.forRoot({ auth: authReducer, hr: hrReducer, employeeDetails: onboardingReducer }),
+    EffectsModule.forRoot([AuthEffects, HrEffects, , OnboardingEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 50,
       logOnly: true,
