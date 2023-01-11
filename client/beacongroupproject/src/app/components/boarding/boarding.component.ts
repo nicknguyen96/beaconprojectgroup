@@ -160,8 +160,8 @@ export class BoardingComponent implements OnInit {
   }
 
   onSubmit(): any {
-    if (this.boardForm.invalid) {
-      return alert("Form is not valid, please check if all fields are filled")
+    if(this.boardForm.invalid) {
+    return alert("ERROR: There are still some required fields you have not filled out!");
     }
 
     const { firstName, lastName, middleName, preferredName,

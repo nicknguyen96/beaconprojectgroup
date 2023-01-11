@@ -17,11 +17,20 @@ export class AuthEffects {
       exhaustMap(action =>
         this.authService.login(action.email, action.password)
           .pipe(
-            map((response: any) => AuthActions.loginSuccess({ response }),
-              catchError(error => of(AuthActions.loginFailure({ error })))
-            )
+            map((response: any) => {
+              console.log(response);
+              console.log(response.status);
+              if (response.status == 200) {
+                return AuthActions.loginSuccess({ response });
+              }
+              else {
+                return AuthActions.loginFailure({ error: response.message });
+              }
+            },
+              catchError(error => of(AuthActions.loginFailure({ error }))))
           )
-      ))
+      )
+    )
   );
 
   loginSuccess$ = createEffect(() =>
@@ -29,9 +38,11 @@ export class AuthEffects {
       ofType(AuthActions.loginSuccess),
       tap(({ response }) => {
         // saving the user in local storage
+        console.log(response);
         localStorage.setItem('token', response.token)
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)
+
         alert('Successfully logged in' + response.employee.email)
         if (response.isHR == true || response.isHR == 'true') {
           this.router.navigateByUrl('/hr/visaManagement')
@@ -47,7 +58,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.loginFailure),
       tap(({ error }) => {
-        alert('Couldnt sign in' + error)
+        alert('Invalid username and/or password.');
       })
     ),
     { dispatch: false }

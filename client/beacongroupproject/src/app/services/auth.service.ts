@@ -37,10 +37,10 @@ export class AuthService {
   userIsLoggedIn() {
     const token = localStorage.getItem('token')
     if (!token) {
-      this.router.navigateByUrl('/login')
+      return false;
     }
     else {
-      return true
+      return true;
     }
   }
 

@@ -16,6 +16,11 @@ img {
     width: 100%;
 }
 
+.disabled {
+    visibility: hidden;
+    cursor: default;
+}
+
 .hoverable {
     position: relative;
     display: block;
