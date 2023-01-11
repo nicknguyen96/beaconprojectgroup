@@ -14,5 +14,7 @@ export const HrActions = createActionGroup({
         "update onboarding status": props<{ onboardingStatus: string, employeeid: string, message: string }>(),
         "update onboarding status Success": props<{ response: any }>(),
         "update onboarding status Fail": props<{ response: any }>(),
+
+        
     }
 })

@@ -44,7 +44,7 @@ export class HiringManagementComponent implements OnInit {
 
     this.store.dispatch(HrActions.sendemail({ email }));
     this.employeeList$.subscribe(employeeList => {
-      this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == status);
+      this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == 'Pending');
     })
   }
 

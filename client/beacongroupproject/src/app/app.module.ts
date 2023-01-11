@@ -20,6 +20,8 @@ import { HrEffects } from './store/hr/hr.effects';
 import { OnboardingDetailPageComponent } from './components/onboarding-detail-page/onboarding-detail-page.component';
 import { BoardingComponent } from './components/boarding/boarding.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     OnboardingDetailPageComponent,
     BoardingComponent,
     ForbiddenComponent,
+    VisaManagementHrComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,11 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot({ auth: authReducer, hr: hrReducer }),
-    EffectsModule.forRoot([AuthEffects, HrEffects])
+    EffectsModule.forRoot([AuthEffects, HrEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: true,
+    }),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -17,4 +17,16 @@ export class HrService {
     updateOnBoardingStatus(onboardingStatus: string, employeeid: string, message: string) {
         return this.http.put(`${BACKEND_URL}/hr/update-boarding-status`, { onboardingStatus, employeeid, message })
     }
+
+    getFile(fileName: string) {
+        console.log(fileName);
+        this.http.get(`${BACKEND_URL}/user/getFile/${fileName}`).subscribe((data: any) => {
+            console.log(data);
+            if (data.status === 200) {
+                window.open(data.data, "_blank")
+            } else {
+                alert("Something wrong when getting this file")
+            }
+        })
+    }
 }
