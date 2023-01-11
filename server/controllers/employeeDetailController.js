@@ -51,7 +51,7 @@ class UserController {
           console.log(property);
           if (property.toLowerCase() == 'optreceipt') {
             employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
-          } else if (property.toLowerCase() == 'optead'){
+          } else if (property.toLowerCase() == 'optead') {
             employeeDetail.legalStatus.workStatus.fileUpload[1] = fileUploadSchema;
           } else if (property.toLowerCase() == 'i983') {
             employeeDetail.legalStatus.workStatus.fileUpload[2] = fileUploadSchema;
@@ -94,13 +94,20 @@ class UserController {
     const employeeDetails = req.body.employeeDetails;
     const employeeDetailsId = req.body.employeeDetailsId;
 
+    // fileUpload should be an array of file with file name and file url. Prefer the EmployeeDetail model
+    employeeDetails.legalStatus.workStatus.fileUpload = [];
+
+    console.log(employeeDetails);
     try {
-      const employee = await EmployeeDetail.findOneAndReplace({ _id: employeeDetailsId }, { ...employeeDetails }, { new: true });
+      const employee = await EmployeeDetail.findByIdAndUpdate(employeeDetailsId, employeeDetails, { $new: true });
+
       console.log(employee);
 
       return res.json({ status: 200, message: "Employee details have been saved", data: employee });
     } catch (e) {
-      res.status(400).json({
+      console.log(e);
+      res.json({
+        status: 400,
         message: "ERROR: Something unexpected happened on the backend when attemping to update user info.",
         error: e,
       });
@@ -109,7 +116,6 @@ class UserController {
 
   async getFile(req, res) {
     const { filename } = req.params;
-    const { userid } = req.headers;
 
     try {
       const response = await getFile(filename);

@@ -24,60 +24,79 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let employee of employeeList$ | async; let index = index">
-                            <td>
-                                {{index + 1}}
-                            </td>
-                            <td>
-                                {{employee?.user?.firstName}} {{employee?.user?.lastName}}
-                            </td>
-                            <td>
-                                {{employee?.user?.legalStatus?.status}}
-                            </td>
+                            <!-- Only see employee with visa status need actions -->
+                            <div *ngIf="!(employee?.user?.legalStatus?.isCompleted ||
+                                employee?.user?.legalStatus?.status=='Green Card' ||
+                                employee?.user?.legalStatus?.status=='Citizen' ); then needAction">
+                            </div>
+                            <ng-template #needAction>
 
-                            <!-- If onboardingStatus == Never submitted -->
-                            <div
-                                *ngIf="employee?.user?.onboardingStatus == 'Never submitted';then checkOnboarding else checkWorkStatus">
-                                Submit Onboarding Application</div>
-
-                            <ng-template #checkOnboarding>
-                                <td>Submit Onboarding Application</td>
-                                <td>Send Notification</td>
-                            </ng-template>
-
-                            <!-- Submit the OPT document and wait for HR to approve -->
-                            <ng-template #checkWorkStatus>
-                                <div *ngIf="(employee?.user?.legalStatus?.isCompleted); then complete else needApproveFile">
-                                </div>
-                            </ng-template>
-                            <ng-template #complete>
-                                <td>Completed, no more action required</td>
-                                <td>View Detail</td>
-                            </ng-template>
-                            <ng-template #needApproveFile>
                                 <td>
-                                    <p>Wait for HR to approve</p>
+                                    {{index + 1}}
+                                </td>
+                                <td *ngIf="employee?.user?.onboardingStatus != 'Never submitted';">
+                                    {{employee?.user?.firstName}} {{employee?.user?.lastName}}
+                                </td>
+                                <td *ngIf="employee?.user?.onboardingStatus == 'Never submitted';">
+                                    {{employee.email}}
                                 </td>
                                 <td>
-                                    <div *ngFor="let file of employee?.user.legalStatus.workStatus.fileUpload">
-                                        <button class="btn btn-info" (click)="getFile(file.fileUrl)">See Document</button>
-                                        <form [formGroup]="feedbackForm">
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <label for="message" class="form-label">Message <b style="color:red">*</b></label>
-                                                    <textarea class="form-control" name="message" id="message" cols="30" rows="3" style="width: 100%;" formControlName="message"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-row m-4">
-                                                <div class="col text-center">
-                                                    <button type="button" class="btn btn-outline-danger" (click)="onSubmit('Rejected', file.fileUrl, employee._id)">Reject</button>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <button type="button" class="btn btn-outline-primary" (click)="onSubmit('Approved', file.fileUrl, employee._id)">Approve</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    {{employee?.user?.legalStatus?.status}}
+                                </td>
+    
+                                <!-- If onboardingStatus == Never submitted -->
+                                <div
+                                    *ngIf="employee?.user?.onboardingStatus == 'Never submitted';then checkOnboarding else checkWorkStatus">
+                                    Submit Onboarding Application</div>
+    
+                                <ng-template #checkOnboarding>
+                                    <td>Submit Onboarding Application</td>
+                                    <td><button class="btn btn-outline-primary">Send Notification</button></td>
+                                </ng-template>
+    
+                                <!-- Submit the OPT document and wait for HR to approve -->
+                                <ng-template #checkWorkStatus>
+                                    <div *ngIf="(employee?.user?.legalStatus?.isCompleted || employee?.user?.legalStatus?.status == 'Green Card'
+                                    || employee?.user?.legalStatus?.status == 'Citizen'
+                                    ); then complete else needApproveFile">
                                     </div>
-                                </td>
+                                </ng-template>
+                                <ng-template #complete>
+                                    <td>Completed, no more action required</td>
+                                    <td>View Detail</td>
+                                </ng-template>
+                                <ng-template #needApproveFile>
+                                    <td>
+                                        <p>Wait for HR to approve</p>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let file of employee?.user.legalStatus.workStatus.fileUpload">
+                                            <button class="btn btn-info" (click)="getFile(file.fileUrl)">See
+                                                Document</button>
+                                            <form [formGroup]="feedbackForm">
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <label for="message" class="form-label">Message <b
+                                                                style="color:red">*</b></label>
+                                                        <textarea class="form-control" name="message" id="message" cols="30"
+                                                            rows="3" style="width: 100%;"
+                                                            formControlName="message"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row m-4">
+                                                    <div class="col text-center">
+                                                        <button type="button" class="btn btn-outline-danger"
+                                                            (click)="onSubmit('Rejected', file.fileUrl, employee._id)">Reject</button>
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                            (click)="onSubmit('Approved', file.fileUrl, employee._id)">Approve</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </ng-template>
                             </ng-template>
                         </tr>
                     </tbody>

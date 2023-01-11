@@ -33,7 +33,11 @@ export class AuthEffects {
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)
         alert('Successfully logged in' + response.employee.email)
-        this.router.navigateByUrl('/')
+        if (response.isHR == true || response.isHR == 'true') {
+          this.router.navigateByUrl('/hr/visaManagement')
+        } else {
+          this.router.navigateByUrl('/employee')
+        }
       })
     ), { dispatch: false }
   )

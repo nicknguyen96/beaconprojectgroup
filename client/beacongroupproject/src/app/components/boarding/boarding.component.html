@@ -1,8 +1,14 @@
 <div class="container mt-5" style="width:70rem;">
     <div class="card shadow">
-        <div class="card-body p-4 body">
-            <h5>Employee Onboarding Application</h5>
-            <div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-label="Example with label" style="width: {{progressBar}}%;" attr.aria-valuenow="{{progressBar}}"  aria-valuemin="0" aria-valuemax="100">{{progressBar}}%</div>
+        <div *ngIf="(employee$ | async)?.details?.onboardingStatus == 'Pending'; else nextBlock " class="card-body p-4 body">
+            Waiting for HR to approve
+        </div>
+        <ng-template #nextBlock>
+            <div class="card-body p-4 body">
+                <h5>Employee Onboarding Application</h5>
+                <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
+                    aria-label="Example with label" style="width: {{progressBar}}%;"
+                    attr.aria-valuenow="{{progressBar}}" aria-valuemin="0" aria-valuemax="100">{{progressBar}}%</div>
             </div>
 
             <div class="container mt-4 mb-4" style="width:75%; padding-bottom: 100px;">
@@ -10,7 +16,7 @@
                     <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
                     <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
 
-                    <h3 class="text-center page">Page {{currPage}} of 5</h3> 
+                    <h3 class="text-center page">Page {{currPage}} of 5</h3>
                     <p class="mt-4"><b style="color:red;">*</b> Indicates a required field.</p>
                     <hr class="mb-3">
 
@@ -23,47 +29,54 @@
                             </div>
                             <div class="background"></div>
                         </label>
-                        <input id="fileInput" type='file' (change)="onSelectFile($event)" formControlName="profilePicture">
+                        <input id="fileInput" type='file' (change)="onSelectFile($event)"
+                            formControlName="profilePicture">
                         <button class="btn btn-success" (click)="delete()">Reset</button>
-        
+
                         <hr class="mb-3">
-        
+
                         <h5>Legal Name</h5>
-                        <label class="form-label">First Name <b style="color:red">*</b></label> 
+                        <label class="form-label">First Name <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="firstName" required>
-        
-                        <label class="form-label">Middle Name</label> 
+
+                        <label class="form-label">Middle Name</label>
                         <input class="form-control mb-3" type="text" formControlName="middleName">
-        
-                        <label class="form-label">Last Name <b style="color:red">*</b></label> 
+
+                        <label class="form-label">Last Name <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="lastName" required>
-        
-                        <label class="form-label">Preferred Name</label> 
+
+                        <label class="form-label">Preferred Name</label>
                         <input class="form-control mb-3" type="text" formControlName="preferredName">
-        
-                        
+
+
                         <hr class="mb-3">
-        
+
                         <h5>Contact</h5>
-                        <label class="form-label">Email Address <b style="color:red">*</b></label> 
+                        <label class="form-label">Email Address <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="email" required>
-        
-                        <label class="form-label">Cell Phone Number <b style="color:red">*</b></label> 
-                        <input class="form-control mb-3" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="cellphone" required>
-        
-                        <label class="form-label">Work Phone Number</label> 
-                        <input class="form-control mb-3" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="workphone">
-        
+
+                        <label class="form-label">Cell Phone Number <b style="color:red">*</b></label>
+                        <input class="form-control mb-3" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
+                            formControlName="cellphone" required>
+
+                        <label class="form-label">Work Phone Number</label>
+                        <input class="form-control mb-3" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
+                            formControlName="workphone">
+
                         <hr class="mb-3">
-        
+
                         <h5>Identity</h5>
-                        <label class="form-label">SSN <b style="color:red">*</b></label> 
-                        <input class="form-control mb-3" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="ssn" required>
-        
+                        <label class="form-label">SSN <b style="color:red">*</b></label>
+                        <input class="form-control mb-3" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="ssn"
+                            required>
+
                         <label class="form-label">Date of Birth <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="date" formControlName="dob" required>
-        
-                        <label class="form-label">Gender <b style="color:red">*</b></label> 
+
+                        <label class="form-label">Gender <b style="color:red">*</b></label>
                         <select class="form-select mb-3" formControlName="gender" required>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -71,18 +84,18 @@
                         </select>
 
                         <hr class="mb-3">
-                        
+
                         <h5>Current Address</h5>
-                        <label class="form-label">Address <b style="color:red">*</b></label> 
+                        <label class="form-label">Address <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="address" required>
 
-                        <label class="form-label">Building / Apartment Number</label> 
+                        <label class="form-label">Building / Apartment Number</label>
                         <input class="form-control mb-3" type="text" formControlName="buildNum">
-        
-                        <label class="form-label">City <b style="color:red">*</b></label> 
+
+                        <label class="form-label">City <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="city" required>
-        
-                        <label class="form-label">State <b style="color:red">*</b></label> 
+
+                        <label class="form-label">State <b style="color:red">*</b></label>
                         <select class="form-select mb-3" formControlName="state" required>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -136,65 +149,77 @@
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
                         </select>
-        
-                        <label class="form-label">Postal Code <b style="color:red">*</b></label> 
-                        <input class="form-control mb-3" type="text" formControlName="pcode" required>  
+
+                        <label class="form-label">Postal Code <b style="color:red">*</b></label>
+                        <input class="form-control mb-3" type="text" formControlName="pcode" required>
                     </div>
 
-    
-    
+
+
                     <div *ngIf="currPage == 2">
                         <h5>Work Authorization</h5>
                         <p>Are you a citizen or permanent resident of the United States? <b style="color:red">*</b></p>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" id="isCitizenYes" name="isCitizen" formControlName="isCitizen" value="Yes">
+                            <input type="radio" class="form-check-input" id="isCitizenYes" name="isCitizen"
+                                formControlName="isCitizen" value="Yes">
                             <label class="form-check-label" for="isCitizenYes">Yes</label>
                         </div>
                         <div class="form-check mb-3">
-                            <input type="radio" class="form-check-input" id="isCitizenNo" name="isCitizen" formControlName="isCitizen" value="No">
+                            <input type="radio" class="form-check-input" id="isCitizenNo" name="isCitizen"
+                                formControlName="isCitizen" value="No">
                             <label class="form-check-label" for="isCitizenNo">No</label>
                         </div>
 
                         <div *ngIf="isCitizen.value == 'Yes'">
                             <p> If so, which of the following applies to you? <b style="color:red">*</b></p>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="isCitizenGreenCard" name="citizenStatus" formControlName="citizenStatus" value="Green Card">
+                                <input type="radio" class="form-check-input" id="isCitizenGreenCard"
+                                    name="citizenStatus" formControlName="citizenStatus" value="Green Card">
                                 <label class="form-check-label" for="isCitizenGreenCard">Green Card</label>
                             </div>
                             <div class="form-check mb-3">
-                                <input type="radio" class="form-check-input" id="isCitizenCitizen" name="citizenStatus" formControlName="citizenStatus" value="Citizen">
+                                <input type="radio" class="form-check-input" id="isCitizenCitizen" name="citizenStatus"
+                                    formControlName="citizenStatus" value="Citizen">
                                 <label class="form-check-label" for="isCitizenCitizen">Citizen</label>
                             </div>
                         </div>
-                        
+
                         <div *ngIf="isCitizen.value == 'No'">
                             <p> If not, what is your work authorization? <b style="color:red">*</b></p>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="notCitizenH1B" name="notCitizenStatus" formControlName="notCitizenStatus" value="H1-B">
+                                <input type="radio" class="form-check-input" id="notCitizenH1B" name="notCitizenStatus"
+                                    formControlName="notCitizenStatus" value="H1-B">
                                 <label class="form-check-label" for="notCitizenH1B">H1-B</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="notCitizenL2" name="notCitizenStatus" formControlName="notCitizenStatus" value="L2">
+                                <input type="radio" class="form-check-input" id="notCitizenL2" name="notCitizenStatus"
+                                    formControlName="notCitizenStatus" value="L2">
                                 <label class="form-check-label" for="notCitizenL2">L2</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="notCitizenF1" name="notCitizenStatus" formControlName="notCitizenStatus" value="F1(CPT/OPT)">
+                                <input type="radio" class="form-check-input" id="notCitizenF1" name="notCitizenStatus"
+                                    formControlName="notCitizenStatus" value="F1(CPT/OPT)">
                                 <label class="form-check-label" for="notCitizenF1">F1(CPT/OPT)</label>
                             </div>
                             <div *ngIf="notCitizenStatus.value == 'F1(CPT/OPT)'">
-                                <input class="form-control form-control-sm mb-2 mt-2" type="file" formControlName="f1File">
+                                <input class="form-control form-control-sm mb-2 mt-2" type="file"
+                                    formControlName="f1File">
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="notCitizenH4" name="notCitizenStatus" formControlName="notCitizenStatus" value="H4">
+                                <input type="radio" class="form-check-input" id="notCitizenH4" name="notCitizenStatus"
+                                    formControlName="notCitizenStatus" value="H4">
                                 <label class="form-check-label" for="notCitizenH4">H4</label>
                             </div>
                             <div class="form-check mb-3">
-                                <input type="radio" class="form-check-input" id="notCitizenOther" name="notCitizenStatus" formControlName="notCitizenStatus" value="Other">
+                                <input type="radio" class="form-check-input" id="notCitizenOther"
+                                    name="notCitizenStatus" formControlName="notCitizenStatus" value="Other">
                                 <label class="form-check-label" for="notCitizenOther">Other</label>
                             </div>
                             <div *ngIf="notCitizenStatus.value == 'Other'">
-                                <label class="form-label" for="otherFile">Please specify: <b style="color:red">*</b></label>
-                                <input class="form-control form-control-sm mb-2 mt-2" type="text" formControlName="otherDesc" required>
+                                <label class="form-label" for="otherFile">Please specify: <b
+                                        style="color:red">*</b></label>
+                                <input class="form-control form-control-sm mb-2 mt-2" type="text"
+                                    formControlName="otherDesc" required>
                             </div>
                             <div *ngIf="notCitizenStatus.value.length > 0">
                                 <label class="form-label" for="startDate">Start Date <b style="color:red">*</b></label>
@@ -209,31 +234,33 @@
                         <h5>Driving Information</h5>
                         <p>Do you have a driver's license? <b style="color:red">*</b></p>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" id="dLicense1" name="dLicense" formControlName="dLicense" value="Yes">
+                            <input type="radio" class="form-check-input" id="dLicense1" name="dLicense"
+                                formControlName="dLicense" value="Yes">
                             <label class="form-check-label" for="dLicense1">Yes</label>
                         </div>
                         <div class="form-check mb-3">
-                            <input type="radio" class="form-check-input" id="dLicense2" name="dLicense" formControlName="dLicense" value="No">
+                            <input type="radio" class="form-check-input" id="dLicense2" name="dLicense"
+                                formControlName="dLicense" value="No">
                             <label class="form-check-label" for="dLicense2">No</label>
                         </div>
 
                         <div *ngIf="dLicense.value == 'Yes'">
-                            <label class="form-label">License Number <b style="color:red">*</b></label> 
+                            <label class="form-label">License Number <b style="color:red">*</b></label>
                             <input class="form-control mb-3" type="text" formControlName="licenseNum" required>
-    
-                            <label class="form-label">Expiration Date <b style="color:red">*</b></label> 
+
+                            <label class="form-label">Expiration Date <b style="color:red">*</b></label>
                             <input class="form-control mb-3" type="date" formControlName="licenseExpiration" required>
 
                             <label class="form-label">Photo of License <b style="color:red">*</b></label>
                             <input class="form-control mb-3" type="file" formControlName="licenseFile" required>
-                            
-                            <label class="form-label">Car Make</label> 
+
+                            <label class="form-label">Car Make</label>
                             <input class="form-control mb-3" type="text" formControlName="carMake">
 
-                            <label class="form-label">Car Model</label> 
+                            <label class="form-label">Car Model</label>
                             <input class="form-control mb-3" type="text" formControlName="carModel">
 
-                            <label class="form-label">Car Color</label> 
+                            <label class="form-label">Car Color</label>
                             <input class="form-control mb-3" type="text" formControlName="carColor">
                         </div>
                     </div>
@@ -242,54 +269,61 @@
                         <h5>References</h5>
                         <p>Who, if anyone, referred you to this company? (List only one person)</p>
 
-                        <label class="form-label">First Name</label> 
+                        <label class="form-label">First Name</label>
                         <input class="form-control mb-3" type="text" formControlName="referFirstName">
 
-                        <label class="form-label">Middle Name</label> 
+                        <label class="form-label">Middle Name</label>
                         <input class="form-control mb-3" type="text" formControlName="referMiddleName">
 
-                        <label class="form-label">Last Name</label> 
+                        <label class="form-label">Last Name</label>
                         <input class="form-control mb-3" type="text" formControlName="referLastName">
 
-                        <label class="form-label">Email Address</label> 
+                        <label class="form-label">Email Address</label>
                         <input class="form-control mb-3" type="text" formControlName="referEmail">
-        
-                        <label class="form-label">Phone Number</label> 
-                        <input class="form-control mb-3" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="referPhone">
 
-                        <label class="form-label">Relationship</label> 
+                        <label class="form-label">Phone Number</label>
+                        <input class="form-control mb-3" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
+                            formControlName="referPhone">
+
+                        <label class="form-label">Relationship</label>
                         <input class="form-control mb-3" type="text" formControlName="referRelationship">
 
                         <hr class="mb-3">
 
                         <h5>Emergency Contact <b style="color:red">*</b></h5>
-                        <label class="form-label">First Name</label> 
+                        <label class="form-label">First Name</label>
                         <input class="form-control mb-3" type="text" formControlName="emergencyFirstName" required>
 
-                        <label class="form-label">Middle Name</label> 
+                        <label class="form-label">Middle Name</label>
                         <input class="form-control mb-3" type="text" formControlName="emergencyMiddleName">
 
-                        <label class="form-label">Last Name</label> 
+                        <label class="form-label">Last Name</label>
                         <input class="form-control mb-3" type="text" formControlName="emergencyLastName" required>
 
-                        <label class="form-label">Email Address</label> 
+                        <label class="form-label">Email Address</label>
                         <input class="form-control mb-3" type="text" formControlName="emergencyEmail" required>
-        
-                        <label class="form-label">Phone Number</label> 
-                        <input class="form-control mb-3" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="emergencyPhone" required>
 
-                        <label class="form-label">Relationship</label> 
+                        <label class="form-label">Phone Number</label>
+                        <input class="form-control mb-3" inputmode="numeric"
+                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
+                            formControlName="emergencyPhone" required>
+
+                        <label class="form-label">Relationship</label>
                         <input class="form-control mb-3" type="text" formControlName="emergencyRelationship" required>
                     </div>
 
                     <div *ngIf="currPage == 5">
                         <h5>Summary</h5>
-                        <button type="submit" class="btn btn-success mb-5" (click)="onSubmit()">Submit Application</button>
+                        <button type="submit" class="btn btn-success mb-5" (click)="onSubmit()">Submit
+                            Application</button>
                     </div>
 
                 </form>
                 <button class="btn btn-success float-end" (click)="goPage('next')">Next</button>
                 <button class="btn btn-success float-start" (click)="goPage('prev')">Prev</button>
             </div>
+
+        </ng-template>
     </div>
 </div>
