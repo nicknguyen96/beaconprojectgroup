@@ -46,7 +46,6 @@ export class OnboardingDetailPageComponent implements OnInit {
   onSubmit(type: string){
     const { message } = this.feedbackForm.getRawValue();
     this.store.dispatch(HrActions.updateOnboardingStatus({onboardingStatus: type, employeeid: this.employeeid, message}));
-    
   }
 
   ngOnInit(): void {
