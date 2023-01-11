@@ -72,7 +72,7 @@ const workStatusSchema = new Schema({
   },
   fileUpload: {
     type: [fileUploadSchema],
-    default : [],
+    default: [],
     required: true,
   },
 });
@@ -86,7 +86,7 @@ const legalStatus = new Schema({
   },
   status: {
     type: String,
-    default: 'Greencard | Citizen | Other | OPT',
+    default: "Greencard | Citizen | Other | OPT",
     required: true,
   },
   workStatus: {
@@ -118,12 +118,12 @@ const licenseSchema = new Schema({
 const contactInfoSchema = new Schema({
   firstName: {
     type: String,
-    default: 'firstName',
-    required: true
+    default: "firstName",
+    required: true,
   },
   lastName: {
     type: String,
-    default: 'lastName',
+    default: "lastName",
     required: true,
   },
   middleName: {
@@ -132,20 +132,20 @@ const contactInfoSchema = new Schema({
   },
   phone: {
     type: String,
-    default: 'xxxxxxxxxx',
-    required: true
+    default: "xxxxxxxxxx",
+    required: true,
   },
-  email :{
+  email: {
     type: String,
-    default: 'email',
-    required: true
+    default: "email",
+    required: true,
   },
   relationship: {
     type: String,
-    default: 'Family',
-    required: true
-  }
-})
+    default: "Family",
+    required: true,
+  },
+});
 
 const employeeDetailSchema = new Schema({
   firstName: {
@@ -208,7 +208,7 @@ const employeeDetailSchema = new Schema({
     required: false,
   },
   reports: {
-    required: false,
+    required: true,
     type: [Schema.Types.ObjectId],
     ref: "Report",
   },
@@ -233,7 +233,7 @@ const employeeDetailSchema = new Schema({
   referenceContact: {
     type: contactInfoSchema,
     required: false,
-  }
+  },
 });
 
 const EmployeeDetail = model("EmployeeDetail", employeeDetailSchema);

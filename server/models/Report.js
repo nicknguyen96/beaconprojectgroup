@@ -28,16 +28,19 @@ const reportSchema = new Schema({
   author: {
     type: String,
     required: true,
+    default: "N/A",
   },
 
   title: {
     type: String,
     required: true,
+    default: "N/A",
   },
 
   description: {
     type: String,
     required: true,
+    default: "N/A",
   },
 
   comments: {
@@ -49,6 +52,7 @@ const reportSchema = new Schema({
   status: {
     type: String,
     required: true,
+    default: "N/A",
   },
 
   timeStamp: {
@@ -58,5 +62,5 @@ const reportSchema = new Schema({
 });
 
 const Report = model("Report", reportSchema);
-const Comments = model('Comments', commentsSchema)
-module.exports = {Report, Comments};
+const Comments = model("Comments", commentsSchema);
+module.exports = { Report, Comments };

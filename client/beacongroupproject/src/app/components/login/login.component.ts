@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../services/auth.service';
 import { AuthActions } from '../../store/user/auth.actions';
-import { selectToken, selectEmployee } from '../../store/user/user.selector';
+import { selectToken, selectEmployee } from '../../store/user/auth.selector';
 
 
 @Component({
@@ -34,11 +34,7 @@ export class LoginComponent implements OnInit {
     else {
 
       const { email, password } = this.loginForm.getRawValue();
-      this.authService.login(email, password).subscribe(data => {
-        console.log(data);
-      }, err => {
-        console.log(err);
-      });
+      this.authService.login(email, password).subscribe()
     }
 
   }
