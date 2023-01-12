@@ -50,13 +50,13 @@ class UserController {
           };
           console.log(property);
           if (property.toLowerCase() == 'optreceipt') {
-            employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
+            employeeDetail.legalStatus.workStatus.fileUpload[0].fileUrl = fileUploadSchema;
           } else if (property.toLowerCase() == 'optead') {
-            employeeDetail.legalStatus.workStatus.fileUpload[1] = fileUploadSchema;
+            employeeDetail.legalStatus.workStatus.fileUpload[1].fileUrl = fileUploadSchema;
           } else if (property.toLowerCase() == 'i983') {
-            employeeDetail.legalStatus.workStatus.fileUpload[2] = fileUploadSchema;
+            employeeDetail.legalStatus.workStatus.fileUpload[2].fileUrl = fileUploadSchema;
           } else if (property.toLowerCase() == 'i20') {
-            employeeDetail.legalStatus.workStatus.fileUpload[3] = fileUploadSchema;
+            employeeDetail.legalStatus.workStatus.fileUpload[3].fileUrl = fileUploadSchema;
           } else {
             throw Error("no property match with the filename");
           }

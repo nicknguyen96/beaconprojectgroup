@@ -29,8 +29,13 @@ export class HrService {
             }
         })
     }
-    
+
     getHousingList() {
         return this.http.get(`${BACKEND_URL}/housing`);
+    }
+
+    updateFileStatus(employeeid: string, fileName: string, message: string, status: string) {
+        console.log(employeeid, fileName, message, status);
+        return this.http.put(`${BACKEND_URL}/hr/updateFileStatus`, { employeeid, fileName, message, status });
     }
 }

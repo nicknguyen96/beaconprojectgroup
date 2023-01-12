@@ -17,7 +17,7 @@ export class EmployeeHomeComponent {
   employee$ = this.store.select(selectEmployee);
 
   ngOnInit() {
-    this.onboardingService.onboardingIntercepter();
+    // this.onboardingService.onboardingIntercepter();
     this.authService.getEmployee();
     this.authService.userIsLoggedIn();
   }

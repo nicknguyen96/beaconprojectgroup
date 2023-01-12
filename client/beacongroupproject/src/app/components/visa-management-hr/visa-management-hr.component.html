@@ -24,13 +24,64 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let employee of employeeList$ | async; let index = index">
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Document</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div
+                                                *ngIf="employee?.user?.legalStatus?.workStatus?.fileUpload?.length == 0; else nextBlock">
+                                                <p>No file has been updated yet</p>
+                                            </div>
+
+                                            <ng-template #nextBlock>
+                                                <div
+                                                    *ngFor="let file of employee?.user.legalStatus.workStatus.fileUpload">
+                                                    <button class="btn btn-info" (click)="getFile(file.fileUrl)">See
+                                                        Document
+                                                    </button>
+                                                    <form [formGroup]="feedbackForm">
+                                                        <div class="form-row">
+                                                            <div class="col">
+                                                                <label for="message" class="form-label">Message <b
+                                                                        style="color:red">*</b></label>
+                                                                <textarea class="form-control" name="message"
+                                                                    id="message" cols="30" rows="3" style="width: 100%;"
+                                                                    formControlName="message"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row m-4">
+                                                            <div class="col text-center">
+                                                                <button type="button" class="btn btn-outline-danger"
+                                                                    (click)="updateFileStatus(employee._id, file.fileUrl, 'Rejected')">Reject</button>
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <button type="button" class="btn btn-outline-primary"
+                                                                    (click)="updateFileStatus(employee._id, file.fileUrl, 'Approved')">Approve</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </ng-template>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Only see employee with visa status need actions -->
-                            <div *ngIf="!(employee?.user?.legalStatus?.isCompleted ||
-                                employee?.user?.legalStatus?.status=='Green Card' ||
-                                employee?.user?.legalStatus?.status=='Citizen' ); then needAction">
+                            <div
+                                *ngIf="( !(employee?.user?.legalStatus?.isCompleted || employee?.user?.legalStatus?.status=='Green Card' || employee?.user?.legalStatus?.status=='Citizen') || (employee?.user?.onboardingStatus == 'Never submitted')); then needAction">
                             </div>
                             <ng-template #needAction>
-
                                 <td>
                                     {{index + 1}}
                                 </td>
@@ -43,17 +94,18 @@
                                 <td>
                                     {{employee?.user?.legalStatus?.status}}
                                 </td>
-    
+
                                 <!-- If onboardingStatus == Never submitted -->
                                 <div
                                     *ngIf="employee?.user?.onboardingStatus == 'Never submitted';then checkOnboarding else checkWorkStatus">
                                     Submit Onboarding Application</div>
-    
+
                                 <ng-template #checkOnboarding>
                                     <td>Submit Onboarding Application</td>
-                                    <td><button class="btn btn-outline-primary">Send Notification</button></td>
+                                    <td><button class="btn btn-outline-primary"
+                                            (click)="sendNotification(employee.email)">Send Notification</button></td>
                                 </ng-template>
-    
+
                                 <!-- Submit the OPT document and wait for HR to approve -->
                                 <ng-template #checkWorkStatus>
                                     <div *ngIf="(employee?.user?.legalStatus?.isCompleted || employee?.user?.legalStatus?.status == 'Green Card'
@@ -70,31 +122,10 @@
                                         <p>Wait for HR to approve</p>
                                     </td>
                                     <td>
-                                        <div *ngFor="let file of employee?.user.legalStatus.workStatus.fileUpload">
-                                            <button class="btn btn-info" (click)="getFile(file.fileUrl)">See
-                                                Document</button>
-                                            <form [formGroup]="feedbackForm">
-                                                <div class="form-row">
-                                                    <div class="col">
-                                                        <label for="message" class="form-label">Message <b
-                                                                style="color:red">*</b></label>
-                                                        <textarea class="form-control" name="message" id="message" cols="30"
-                                                            rows="3" style="width: 100%;"
-                                                            formControlName="message"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row m-4">
-                                                    <div class="col text-center">
-                                                        <button type="button" class="btn btn-outline-danger"
-                                                            (click)="onSubmit('Rejected', file.fileUrl, employee._id)">Reject</button>
-                                                    </div>
-                                                    <div class="col text-center">
-                                                        <button type="button" class="btn btn-outline-primary"
-                                                            (click)="onSubmit('Approved', file.fileUrl, employee._id)">Approve</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                            See Details
+                                        </button>
                                     </td>
                                 </ng-template>
                             </ng-template>

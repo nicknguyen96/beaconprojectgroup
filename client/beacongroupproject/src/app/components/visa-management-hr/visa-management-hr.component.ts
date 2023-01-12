@@ -16,7 +16,7 @@ export class VisaManagementHrComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private HrService: HrService,
-    private fb : FormBuilder) { }
+    private fb: FormBuilder) { }
   tab = 'inprocess';
   employeeList$: Observable<any>;
 
@@ -33,12 +33,12 @@ export class VisaManagementHrComponent implements OnInit {
     message: ['']
   });
 
-  onSubmit(type: string, fileName: string, employeeid : string){
+  onSubmit(type: string, fileName: string, employeeid: string) {
     const { message } = this.feedbackForm.getRawValue();
     console.log(type, fileName, employeeid, message);
   }
 
-  getFile(fileName : string){
+  getFile(fileName: string) {
     this.HrService.getFile(fileName);
   }
 
@@ -47,11 +47,13 @@ export class VisaManagementHrComponent implements OnInit {
     this.employeeList$ = this.store.select(employeeList);
   }
 
-  sendNotification(employeeid : string){
-
+  sendNotification(email: string) {
+    this.store.dispatch(HrActions.sendemail({ email }));
   }
 
-  updateFileStatus(employeeid : string, type : string, message : string){
-
+  updateFileStatus(employeeid: string, fileName: string, status: string) {
+    const { message } = this.feedbackForm.getRawValue();
+    console.log(employeeid, fileName, message, status)
+    this.store.dispatch(HrActions.updateFileStatus({ employeeid, fileName, message, status }))
   }
 }

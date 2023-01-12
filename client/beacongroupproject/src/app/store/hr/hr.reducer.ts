@@ -89,6 +89,14 @@ const HrReducer = createReducer(
         return state
     }),
 
+    on(HrActions.updateFileStatus, (state , action) => {
+        return state
+    }),
+
+    on(HrActions.updateFileStatus, (state , action) => {
+        return state
+    }),
+
 )
 
 export const hrReducer = (state: any, action: any) => {
