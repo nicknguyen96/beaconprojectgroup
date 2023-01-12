@@ -1,10 +1,9 @@
 <div class="container mt-5" style="width:50rem;">
     <div class="card shadow">
-        {{(employee$|async)?.details?.onboardingStatus}}
-        <div class="card-body p-4 body" *ngIf="(employee$|async)?.details?.onboardingStatus=='Pending'; else nextBlock">
+        <!-- <div class="card-body p-4 body" *ngIf="(employee$|async)?.details?.onboardingStatus=='Pending'; else nextBlock">
             Waiting for HR to approve
-        </div>
-        <ng-template #nextBlock>
+        </div> -->
+        <!-- <ng-template #nextBlock> -->
             <div class="card-body p-4">
                 <h5>Employee Onboarding Application</h5>
                 <div class="progress mt-4">
@@ -401,6 +400,6 @@
                 </div>
             </div>
 
-        </ng-template>
+        <!-- </ng-template> -->
     </div>
 </div>

@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="card shadow mt-5">
+    <div class="card shadow mt-5 mb-5">
         <div class="card-body p-4">
             <h4 class="mb-3">My Account</h4>
 
@@ -113,7 +113,7 @@
                                     </div>    
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mt-3" (click)="onEditAddress()">Save Changes</button>
                         </form>
                     </div>
     
@@ -123,15 +123,11 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <label class="form-label">Cell Phone Number <b style="color:red">*</b></label> 
-                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="cellphone" required>
-                                    </div>
-                                    <div class="col">
-                                        <label class="form-label">Work Phone Number</label> 
-                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="workphone" required>
+                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="phoneNumber" required>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mt-3" (click)="onEditContact()">Save Changes</button>
                         </form>
                     </div>
     
@@ -145,15 +141,15 @@
                                     </div>
                                     <div class="col col-lg-2">
                                         <label class="form-label">Start Date</label> 
-                                        <input class="form-control" type="date" formControlName="startDate" required>
+                                        <input class="form-control" type="date" formControlName="startDate">
                                     </div>
                                     <div class="col col-lg-2">
                                         <label class="form-label">End Date</label> 
-                                        <input class="form-control" type="date" formControlName="endDate" required>
+                                        <input class="form-control" type="date" formControlName="endDate">
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mt-3" (click)="onEditEmployment()">Save Changes</button>
                         </form>
                     </div>
                     
@@ -192,7 +188,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mt-3" (click)="onEditEmergency()">Save Changes</button>
                         </form>
                     </div>
     

@@ -24,9 +24,10 @@ export class OnboardingService {
         this.router.navigate(['/'])
       }
       console.log(employee)
-      console.log(employee?.details?.onboardingStatus)
-      console.log(!(employee?.details?.onboardingStatus == "Approved"))
-      if(!(employee?.details?.onboardingStatus == "Approved")) {
+      console.log(employee?.details?.onboardingStatus);
+      console.log(!(employee?.details?.onboardingStatus == "Approved"));
+      console.log('EMPLOYEE APP STATUS:', employee?.details?.onboardingStatus);
+      if((employee?.details?.onboardingStatus == "Never submitted")) {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         this.router.navigate(['/employee/boarding'])
       }
@@ -41,7 +42,7 @@ export class OnboardingService {
         this.router.navigate(['/login'])
       }
       console.log(employee)
-      if(employee.details.onboardingStatus === "Approved") {
+      if(employee.details.onboardingStatus != "Never submitted") {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         this.router.navigate(['/employee']);
       }
