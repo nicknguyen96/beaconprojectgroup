@@ -74,7 +74,7 @@ export class HrEffects {
     updateOnBoardRedirect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HrActions.updateOnboardingStatusSuccess),
-            tap((action : any) => {
+            tap((action: any) => {
                 const { onboardingStatus, employeeid, message } = action.response;
                 console.log(action);
                 window.close();
@@ -83,11 +83,11 @@ export class HrEffects {
         )
     }, { dispatch: false });
 
-    getHousingList$ = createEffect((): any => {
-        return this.actions$.pipe(
+    getHousingList$ = createEffect(() => 
+        this.actions$.pipe(
             ofType(HrActions.getHousingList),
-            exhaustMap((action) => {
-                return this.hrService.getHousingList().pipe(
+            exhaustMap(action => 
+                this.hrService.getHousingList().pipe(
                     map((data: any) => {
                         if (data.status == 200) {
                             return HrActions.getHousingListSuccess({ response: data.data });
@@ -96,8 +96,68 @@ export class HrEffects {
                         }
                     })
                 )
+            )
+        )
+    );
+
+    deleteHousing$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(HrActions.deleteHousing),
+            exhaustMap(action => 
+                this.hrService.deleteHousing(action.id).pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.deleteHousingSuccess({ id: data.id });
+                        } else {
+                            return HrActions.deleteHousingFail({ id: data.id });
+                        }
+                    })
+                )
+            )
+        )
+    );
+
+    addHousing$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(HrActions.addHousing),
+            exhaustMap(action =>
+                this.hrService.addHousing(action.houseInfo).pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.addHousingSuccess({ response: data.data });
+                        } else {
+                            return HrActions.addHousingFail({ message: data.message });
+                        }
+                    })
+                )
+            )
+        )
+    )
+
+    updateFileStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateFileStatus),
+            exhaustMap((action) => {
+                const { employeeid, fileName, message, status } = action;
+                return this.hrService.updateFileStatus(employeeid, fileName, message, status).pipe(
+                    map((response: any) => {
+                        if (response.status == 200) {
+                            return HrActions.updateFileStatusSuccess({ response });
+                        } else {
+                            return HrActions.updateFileStatusFail({ response });
+                        }
+                    })
+                )
             })
         )
     })
 
+    updateFileStatusSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateFileStatusSuccess),
+            tap((action) => {
+                alert("Update File Status Success")
+            })
+        )
+    }, { dispatch: false })
 }

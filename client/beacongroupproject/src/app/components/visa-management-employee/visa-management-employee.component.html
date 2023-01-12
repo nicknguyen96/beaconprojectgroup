@@ -1,0 +1,59 @@
+<div class="container mt-5" style="width:70%">
+    <div>
+        <h1>Visa Management</h1>
+    </div>
+
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
+            <h4 class="mb-3">My document</h4>
+            {{(employee$|async).details.legalStatus.status}}
+
+            <div
+                *ngIf="(employee$ | async).details.legalStatus.status == 'Green Card' || (employee$ | async).details.legalStatus.status == 'Citizen'; then noDocument else needDocument">
+            </div>
+            <ng-template #noDocument>
+                <p>You are good, don't need to upload any document</p>
+            </ng-template>
+            <ng-template #needDocument>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Document</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                            <th>Re-Upload</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let file of (employee$|async).details.legalStatus.workStatus.fileUpload; let index = index">
+                            <td> {{index + 1}}</td>
+                            <td> {{ file.fileName }}</td>
+                            <td> {{ file.status }}</td>
+                            <td> {{ file.message }}</td>
+                            <td>
+                                <input type="file" [disabled]="!(file.status == 'Rejected')" (change)="onChange($event, file.fileName)">
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngFor="let file of (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload; let index = index">
+                    <div *ngIf="index == (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload?.length - 1
+                            && (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload[index]?.status == 'Approved'
+                            && index < validFileName.length">
+                        <label class="form-label">Upload {{validFileName[index+1] | uppercase}} file here:</label>
+                        <br>
+                        <input type="file" (change)="onChange($event, 'newFile')">
+                    </div>
+                </div>
+            </ng-template>
+
+
+
+
+        </div>
+    </div>
+</div>

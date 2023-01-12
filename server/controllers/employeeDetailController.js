@@ -37,7 +37,6 @@ class UserController {
       }
       const response = await uploadFile(req.file);
       if (response.status == 200) {
-        console.log(response);
 
         const property = req.file.originalname.split("-")[0];
         if (property == "profilePicture") {
@@ -45,7 +44,7 @@ class UserController {
         } else if (property == "driversLicense") {
           if (!employeeDetail.driversLicense) employeeDetail.driversLicense = {};
           employeeDetail.driversLicense.picture = response.url;
-          console.log(employeeDetail);
+
         } else {
           // save the work document here
           const fileUploadSchema = {
@@ -54,14 +53,14 @@ class UserController {
             status: "Pending",
             message: "Waiting for HR to approve",
           };
-          console.log(property);
-          if (property.toLowerCase() == "optreceipt") {
+
+          if (property.toLowerCase() == 'optreceipt') {
             employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
-          } else if (property.toLowerCase() == "optead") {
+          } else if (property.toLowerCase() == 'optead') {
             employeeDetail.legalStatus.workStatus.fileUpload[1] = fileUploadSchema;
-          } else if (property.toLowerCase() == "i983") {
+          } else if (property.toLowerCase() == 'i983') {
             employeeDetail.legalStatus.workStatus.fileUpload[2] = fileUploadSchema;
-          } else if (property.toLowerCase() == "i20") {
+          } else if (property.toLowerCase() == 'i20') {
             employeeDetail.legalStatus.workStatus.fileUpload[3] = fileUploadSchema;
           } else {
             throw Error("no property match with the filename");

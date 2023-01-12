@@ -1,11 +1,83 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <div class="card shadow" style="width:60rem;">
       <div class="card-body">
-        <!-- <p>{{housingList$ | async | json}}</p> -->
           <h2 class="text-center">Housing Management</h2>
-          <div class="d-flex flex-row">
+          <button type="button" class="btn btn-outline-dark btn-sm mb-2 mt-4 ml-2" data-bs-toggle="modal" data-bs-target="#newHouse">Add New House</button>
+          <div class="modal" id="newHouse" tabindex="-1" role="dialog" aria-labelledby="newHouseLabel">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="newHouseLabel">New House Information</h6>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" id="newHouseModalBody">
+                  <div>
+                    <form class="row g-3" [formGroup]="houseInfo">
+                      <div class="col-md-4">
+                        <label for="inputName4" class="form-label">Landlord Full Name</label>
+                        <input type="text" class="form-control" id="inputName4" formControlName="fullName">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="inputEmail4" class="form-label">Landlord Email</label>
+                        <input type="email" class="form-control" id="inputEmail4" formControlName="email">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="inputPhone4" class="form-label">Landlord Phone Number</label>
+                        <input type="text" class="form-control" id="inputPhone4" formControlName="phone">
+                      </div>
+                      <div class="col-12">
+                        <label for="inputAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" formControlName="address">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="inputCity" formControlName="city">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="inputState" class="form-label">State</label>
+                        <select id="inputState" class="form-select" formControlName="state">
+                          <option value="CA">California</option>
+                          <option value="NJ">New Jersey</option>
+                      </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label for="inputZip" class="form-label">Zip</label>
+                        <input type="text" class="form-control" id="inputZip" formControlName="zip">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputBed4" class="form-label"># of Bed</label>
+                        <input type="number" class="form-control" id="inputBed4" formControlName="bed">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputTable4" class="form-label"># of Table</label>
+                        <input type="number" class="form-control" id="inputTable4" formControlName="table">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputMatress4" class="form-label"># of Matress</label>
+                        <input type="number" class="form-control" id="inputMatress4" formControlName="matress">
+                      </div>
+                      <div class="col-md-3">
+                        <label for="inputChair4" class="form-label"># of Chair</label>
+                        <input type="number" class="form-control" id="inputChair4" formControlName="chair">
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-outline-primary" (click)="addNewHouse()">Save</button>
+                      </div>
+                      <div class="col-12">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column">
             <div class="shadow m-1 p-1 border border-secondary rounded w-100 house " *ngFor="let house of housingList$ | async"> 
-              <p class="font-weight-bold text-capitalize mb-1 pl-1" style="height:60px;">{{house.address}}</p>
+              <p class="font-weight-bold text-capitalize mb-1 pl-1 pt-2">{{house.address}}</p>
               <hr>
               <div class="mb-2" style="height:7rem;">
                 <p class="m-0 pl-1">Land Lord</p>
@@ -20,10 +92,10 @@
                 <span *ngIf="house.tenants.length == 0" class="pl-3 m-0">No Tenants Yet</span>
               </div>
               <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-danger btn-sm mb-2 mt-4">Delete House</button>
+                <button type="button" class="btn btn-outline-danger btn-sm mb-2 mt-4" (click)="deleteHousing(house._id)">Delete House</button>
                 <button type="button" class="btn btn-outline-dark btn-sm mb-2 mt-4 ml-2" data-bs-toggle="modal" data-bs-target="#houseDetail" (click)="showDetail(house)">Show More</button>
                 <div class="modal" id="houseDetail" tabindex="-1" role="dialog" aria-labelledby="houseDetailLabel" data-bs-backdrop="static">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h6 class="modal-title" id="houseDetailLabel">House Detail</h6>

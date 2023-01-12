@@ -14,10 +14,10 @@
           <a class="nav-link" routerLink="/employee">Personal Information</a>
         </li>
         <li class="nav-item" *ngIf="(employee.employee && !employee.isHR)">
-          <a class="nav-link" routerLink="/">Visa Status</a>
+          <a class="nav-link" routerLink="/employee/visa">Visa Status</a>
         </li>
         <li class="nav-item" *ngIf="(employee.employee && !employee.isHR)">
-          <a class="nav-link" routerLink="/">Housing</a>
+          <a class="nav-link" routerLink="/employee/housing">Housing</a>
         </li>
         <li class="nav-item" *ngIf="(employee.employee && employee.isHR)">
           <a class="nav-link" routerLink="/hr/visaManagement">Visa Status</a>

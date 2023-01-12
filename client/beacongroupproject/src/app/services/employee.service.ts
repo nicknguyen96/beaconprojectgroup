@@ -1,14 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectEmployee, selectIsHR } from '../store/user/auth.selector';
+import { BACKEND_URL } from '../utils/utils';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store, private router: Router, private http : HttpClient) {}
 
   isHR$ = this.store.select(selectIsHR) 
 
@@ -32,8 +35,8 @@ export class EmployeeService {
     })
   }
 
-  sendOnboarding() {
-    
+  uploadFile(form : any){
+    return this.http.put(`${BACKEND_URL}/user/uploadFile`, form);
   }
 }
  

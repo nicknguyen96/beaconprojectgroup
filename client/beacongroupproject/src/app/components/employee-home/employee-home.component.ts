@@ -123,7 +123,7 @@ export class EmployeeHomeComponent {
   });
 
   ngOnInit() {
-    this.onboardingService.onboardingIntercepter();
+    // this.onboardingService.onboardingIntercepter();
     this.authService.getEmployee();
     if(!this.authService.userIsLoggedIn()) { 
       this.router.navigateByUrl('/login');

@@ -40,39 +40,29 @@ class HousingController {
 
   async addingHousing(req, res) {
     const { houseInfo } = req.body;
-
     if (!houseInfo) {
       throw new Error("Not all inputs have been filed");
     }
-
     try {
       // creating the new house with the user input
       const newHouse = await Housing.create(houseInfo);
-
-      console.log(newHouse);
-
-      return res.json({ status: 200, data: newHouse, message: "House has been added" });
+      res.json({ status: 200, data: newHouse, message: "House has been added" });
     } catch (error) {
-      console.log(error);
       res.json({ status: 400, message: error.message });
     }
   }
 
   async deleteHousing(req, res) {
-    const { id } = req.body;
+    const { id } = req.query;
 
     if (!id) {
-      return res.json({ status: 403, message: "No houseid was provided" });
+      res.json({ status: 403, message: "No houseid was provided" });
     }
     try {
-      const deletedHouse = await Housing.findByIdAndDelete(id);
-
-      console.log(deletedHouse);
-
-      res.status(200).json({ status: 200, message: "House has been deleted" });
+      await Housing.findByIdAndDelete(id);
+      res.json({ status: 200, message: "House has been deleted", id });
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ status: 400, message: error.message });
+      res.json({ status: 400, message: error.message });
     }
   }
 }
