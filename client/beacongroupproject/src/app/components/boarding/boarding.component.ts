@@ -251,7 +251,7 @@ export class BoardingComponent implements OnInit {
   employee$: Observable<any>;
   ngOnInit(): void {
     // it checks if the employee is already approved then it should move to employee main page
-    this.onboardingService.onboardingApprove();
+    // this.onboardingService.onboardingApprove();
     this.employee$ = this.store.select(selectEmployee);
     this.store.select(selectEmployee).subscribe(data => {
       this.employee = data

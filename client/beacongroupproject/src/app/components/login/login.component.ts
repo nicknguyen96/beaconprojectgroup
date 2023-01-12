@@ -33,7 +33,13 @@ export class LoginComponent implements OnInit {
     this.authService.getEmployee();
     if(this.authService.userIsLoggedIn()) {
       alert('You are already logged in!');
-      this.router.navigateByUrl('/');
+      this.employee$.subscribe(data => {
+        if (data.isHR) {
+          this.router.navigateByUrl('/hr');
+        } else {
+          this.router.navigateByUrl('/employee');
+        }
+      })
     } 
   }
 }

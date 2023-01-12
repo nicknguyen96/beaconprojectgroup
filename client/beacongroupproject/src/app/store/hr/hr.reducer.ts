@@ -83,7 +83,7 @@ const HrReducer = createReducer(
             ...state,
             housingList: action.response
         }
-    }), 
+    }),
 
     on(HrActions.getHousingListFail, (state) => {
         return state
@@ -114,6 +114,16 @@ const HrReducer = createReducer(
     on(HrActions.addHousingFail, (state) => {
         return state
     }),
+    on(HrActions.updateFileStatusSuccess, (state, action) => {
+        const newState = { ...state }
+        console.log(newState);
+        return state
+    }),
+
+    on(HrActions.updateFileStatusFail, (state, action) => {
+        return state
+    }),
+
 )
 
 export const hrReducer = (state: any, action: any) => {

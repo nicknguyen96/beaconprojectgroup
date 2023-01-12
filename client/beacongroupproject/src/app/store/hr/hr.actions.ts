@@ -15,6 +15,10 @@ export const HrActions = createActionGroup({
         "update onboarding status Success": props<{ response: any }>(),
         "update onboarding status Fail": props<{ response: any }>(),
 
+        "update file status": props<{ employeeid: string, fileName: string, message: string, status: string }>(),
+        "update file status Success": props<{ response: any }>(),
+        "update file status Fail": props<{ response: any }>(),
+
         "get housing list": props<{ data: any }>(),
         "get housing list Success": props<{ response: any }>(),
         "get housing list Fail": props<{ response: any }>(),

@@ -26,6 +26,8 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
+import { VisaManagementEmployeeComponent } from './components/visa-management-employee/visa-management-employee.component';
+import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { HousingManagementComponent } from './components/housing-management/hous
     ForbiddenComponent,
     VisaManagementHrComponent,
     HousingManagementComponent,
+    VisaManagementEmployeeComponent,
+    HousingManagementEmployeeComponent,
   ],
   imports: [
     BrowserModule,

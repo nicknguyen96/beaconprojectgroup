@@ -74,7 +74,7 @@ export class HrEffects {
     updateOnBoardRedirect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(HrActions.updateOnboardingStatusSuccess),
-            tap((action : any) => {
+            tap((action: any) => {
                 const { onboardingStatus, employeeid, message } = action.response;
                 console.log(action);
                 window.close();
@@ -134,4 +134,30 @@ export class HrEffects {
         )
     )
 
+    updateFileStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateFileStatus),
+            exhaustMap((action) => {
+                const { employeeid, fileName, message, status } = action;
+                return this.hrService.updateFileStatus(employeeid, fileName, message, status).pipe(
+                    map((response: any) => {
+                        if (response.status == 200) {
+                            return HrActions.updateFileStatusSuccess({ response });
+                        } else {
+                            return HrActions.updateFileStatusFail({ response });
+                        }
+                    })
+                )
+            })
+        )
+    })
+
+    updateFileStatusSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(HrActions.updateFileStatusSuccess),
+            tap((action) => {
+                alert("Update File Status Success")
+            })
+        )
+    }, { dispatch: false })
 }
