@@ -1,5 +1,6 @@
 const employeeDetailRouter = require("express").Router();
 const employeeDetailController = require("../controllers/employeeDetailController");
+const HousingController = require("../controllers/housingController")
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -12,5 +13,7 @@ employeeDetailRouter.post("/submitDetails", employeeDetailController.submitUserD
 employeeDetailRouter.put("/updateDetails", employeeDetailController.updateUserDetails);
 
 employeeDetailRouter.get("/getFile/:filename", employeeDetailController.getFile);
+
+employeeDetailRouter.get('/getHouse/:houseid', HousingController.getHouse);
 
 module.exports = employeeDetailRouter;
