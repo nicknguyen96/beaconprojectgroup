@@ -32,9 +32,7 @@ export class EmployeeHomeComponent implements OnInit{
   public address = new FormControl('', [Validators.required]);
 
   // contact info
-  public cellphone = new FormControl('', [Validators.required]);
-  public workphone = new FormControl('');
-
+  public phoneNumber = new FormControl('', [Validators.required]);
 
   // work status
   public workStatus = new FormControl('', [Validators.required]);
@@ -67,8 +65,7 @@ export class EmployeeHomeComponent implements OnInit{
     this.dob = this.employee.employee.details.DOB;
     this.gender = this.employee.employee.details.gender;
     this.address = this.employee.employee.details.currentAddress;
-    this.cellphone = this.employee.employee.details.phoneNumber;
-    this.workphone = this.employee.employee.details.phoneNumber;
+    this.phoneNumber = this.employee.employee.details.phoneNumber;
     this.workStatus = this.employee.employee.details.legalStatus.status;
     this.emergencyFirstName = this.employee.employee.details.emergencyContact.firstName;
     this.emergencyMiddleName = this.employee.employee.details.emergencyContact.middleName;
@@ -85,7 +82,10 @@ export class EmployeeHomeComponent implements OnInit{
     middleName: this.middleName,
     lastName: this.lastName,
     preferredName: this.preferredName,
-    gender: this.gender
+    gender: this.gender,
+    dob: this.dob,
+    ssn: this.ssn,
+    email: this.email
   });
 
   public editAddressForm: FormGroup = this.fb.group({
@@ -93,8 +93,7 @@ export class EmployeeHomeComponent implements OnInit{
   });
 
   public editContactForm: FormGroup = this.fb.group({
-    cellphone: this.cellphone,
-    workphone: this.workphone
+    phoneNumber: this.phoneNumber
   });
 
   public editEmploymentForm: FormGroup = this.fb.group({
@@ -142,7 +141,8 @@ export class EmployeeHomeComponent implements OnInit{
       profilePicture: profilePicture,
       gender: gender
     }
-    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }))
+    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }));
+    alert('Information successfully updated.');
   };
 
 
@@ -156,23 +156,71 @@ export class EmployeeHomeComponent implements OnInit{
     const { address } = this.editAddressForm.getRawValue();
 
     const employeeDetails = {
-      address: address
+      currentAddress: address
     }
-    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }))
+    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }));
+    alert('Information successfully updated.');
   };
 
 
   
   public onEditContact(): void {
     console.log(this.editContactForm.getRawValue());
+    if(this.editContactForm.invalid) {
+      return alert("ERROR: Required fields cannot be empty! ");
+    }
+
+    const { phoneNumber } = this.editContactForm.getRawValue();
+
+    const employeeDetails = {
+      phoneNumber: phoneNumber
+    }
+    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }));
+    alert('Information successfully updated.');
   };
 
   public onEditEmployment(): void {
     console.log(this.editEmploymentForm.getRawValue());
+    if(this.editEmploymentForm.invalid) {
+      return alert("ERROR: Required fields cannot be empty! ");
+    }
+
+    const { workStatus, startDate, endDate } = this.editEmploymentForm.getRawValue();
+
+    const employeeDetails = {
+      legalStatus: {
+        status: workStatus
+      },
+      startDate: startDate,
+      endDate: endDate
+    }
+
+    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }));
+    alert('Information successfully updated.');
   };
 
   public onEditEmergency(): void {
     console.log(this.editEmergencyForm.getRawValue());
+    if(this.editEmergencyForm.invalid) {
+      return alert("ERROR: Required fields cannot be empty! ");
+    }
+
+    const { emergencyFirstName, emergencyMiddleName, emergencyLastName, emergencyEmail, emergencyPhone, emergencyRelationship } = this.editEmergencyForm.getRawValue();
+
+    console.log(emergencyFirstName);
+    const employeeDetails = {
+      emergencyContact: {
+        firstName: emergencyFirstName,
+        lastName: emergencyLastName,
+        middleName: emergencyMiddleName,
+        email: emergencyEmail,
+        phone: emergencyPhone,
+        relationship: emergencyRelationship
+      }
+
+    }
+    this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }));
+    alert('Information successfully updated.');
   };
 
   public onEditDocuments(): void {
