@@ -83,11 +83,11 @@ export class HrEffects {
         )
     }, { dispatch: false });
 
-    getHousingList$ = createEffect((): any => {
-        return this.actions$.pipe(
+    getHousingList$ = createEffect(() => 
+        this.actions$.pipe(
             ofType(HrActions.getHousingList),
-            exhaustMap((action) => {
-                return this.hrService.getHousingList().pipe(
+            exhaustMap(action => 
+                this.hrService.getHousingList().pipe(
                     map((data: any) => {
                         if (data.status == 200) {
                             return HrActions.getHousingListSuccess({ response: data.data });
@@ -96,9 +96,43 @@ export class HrEffects {
                         }
                     })
                 )
-            })
+            )
         )
-    })
+    );
+
+    deleteHousing$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(HrActions.deleteHousing),
+            exhaustMap(action => 
+                this.hrService.deleteHousing(action.id).pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.deleteHousingSuccess({ id: data.id });
+                        } else {
+                            return HrActions.deleteHousingFail({ id: data.id });
+                        }
+                    })
+                )
+            )
+        )
+    );
+
+    addHousing$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(HrActions.addHousing),
+            exhaustMap(action =>
+                this.hrService.addHousing(action.houseInfo).pipe(
+                    map((data: any) => {
+                        if (data.status == 200) {
+                            return HrActions.addHousingSuccess({ response: data.data });
+                        } else {
+                            return HrActions.addHousingFail({ message: data.message });
+                        }
+                    })
+                )
+            )
+        )
+    )
 
     updateFileStatus$ = createEffect(() => {
         return this.actions$.pipe(

@@ -88,7 +88,32 @@ const HrReducer = createReducer(
     on(HrActions.getHousingListFail, (state) => {
         return state
     }),
+    
+    on(HrActions.deleteHousingSuccess, (state, action: any) => {
+        let oldHousingList = JSON.parse(JSON.stringify(state.housingList));
+        let newHousingList = oldHousingList.filter((house: any) => house._id !== action.id);
+        return {
+            ...state,
+            housingList: newHousingList
+        }
+    }),
+    
+    on(HrActions.deleteHousingFail, (state) => {
+        return state
+    }),
+    
+    on(HrActions.addHousingSuccess, (state, action: any) => {
+        let newHousingList = JSON.parse(JSON.stringify(state.housingList));
+        newHousingList.unshift(action.response);
+        return {
+            ...state,
+            housingList: newHousingList
+        }
+    }),
 
+    on(HrActions.addHousingFail, (state) => {
+        return state
+    }),
     on(HrActions.updateFileStatusSuccess, (state, action) => {
         const newState = { ...state }
         console.log(newState);

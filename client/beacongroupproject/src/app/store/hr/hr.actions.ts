@@ -23,6 +23,13 @@ export const HrActions = createActionGroup({
         "get housing list Success": props<{ response: any }>(),
         "get housing list Fail": props<{ response: any }>(),
 
+        "delete housing": props<{ id: string }>(),
+        "delete housing Success": props<{ id: string }>(),
+        "delete housing Fail": props<{ id: string }>(),
+        
+        "add housing": props<{ houseInfo: any }>(),
+        "add housing Success": props<{ response: any }>(),
+        "add housing Fail": props<{ message: string }>(),
 
     }
 })
