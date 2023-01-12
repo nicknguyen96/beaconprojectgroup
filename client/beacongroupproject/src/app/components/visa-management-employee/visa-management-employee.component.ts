@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { OnboardingService } from 'src/app/services/onboarding.service';
 import { AuthActions } from 'src/app/store/user/auth.actions';
 import { selectEmployee } from 'src/app/store/user/auth.selector';
 
@@ -14,6 +15,7 @@ export class VisaManagementEmployeeComponent implements OnInit{
   constructor(
     private store: Store<any>,
     private fb: FormBuilder,
+    private onboardingService: OnboardingService
   ) { }
 
   employee$: Observable<any>;
@@ -54,6 +56,7 @@ export class VisaManagementEmployeeComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.onboardingService.onboardingIntercepter();
     this.employee$ = this.store.select(selectEmployee);
     this.store.select(selectEmployee).subscribe(employee => {
       const length = employee.details.legalStatus.workStatus.fileUpload.length;

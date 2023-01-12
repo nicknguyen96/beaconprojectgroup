@@ -84,6 +84,7 @@ class AuthController {
       const availableHouse = await Housing.find();
       for (let i = 0; i < availableHouse.length; i++) {
         if (availableHouse[i].tenants.length < MAX_COMPACITY) {
+          console.log(availableHouse[i]._id);
           employeeDetail.housing = availableHouse[i]._id;
           availableHouse[i].tenants.push(newEmployee._id);
           await employeeDetail.save();

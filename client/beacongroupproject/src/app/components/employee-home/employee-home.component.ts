@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import { selectAuthState, selectEmployee } from 'src/app/store/user/auth.selecto
   templateUrl: './employee-home.component.html',
   styleUrls: ['./employee-home.component.scss']
 })
-export class EmployeeHomeComponent {
+export class EmployeeHomeComponent implements OnInit{
 
   constructor(private fb: FormBuilder,private router: Router, private authService: AuthService, private store: Store, private employeeService: EmployeeService, private onboardingService: OnboardingService) { }
 
