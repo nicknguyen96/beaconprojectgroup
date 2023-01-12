@@ -12,7 +12,7 @@ import { VisaManagementHrComponent } from './components/visa-management-hr/visa-
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {

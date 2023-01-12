@@ -21,6 +21,7 @@ export class VisaManagementHrComponent implements OnInit {
   employeeList$: Observable<any>;
 
   setTab(tab: string) {
+    if (this.tab == tab) return;
     if (this.tab == 'inprocess') {
       this.tab = 'all';
     } else {
@@ -44,5 +45,13 @@ export class VisaManagementHrComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(HrActions.getEmployeeList({ data: 'getting data' }));
     this.employeeList$ = this.store.select(employeeList);
+  }
+
+  sendNotification(employeeid : string){
+
+  }
+
+  updateFileStatus(employeeid : string, type : string, message : string){
+
   }
 }

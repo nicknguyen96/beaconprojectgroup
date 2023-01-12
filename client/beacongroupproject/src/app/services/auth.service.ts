@@ -25,7 +25,7 @@ export class AuthService {
   getEmployee() {
     let token = localStorage.getItem('token')
     let employee = JSON.parse(localStorage.getItem('employee'))
-    let isHR = localStorage.getItem('isHR')
+    let isHR = localStorage.getItem('isHR') == 'true' ? true : false
     const data = {
       token, employee, isHR
     }
@@ -35,10 +35,10 @@ export class AuthService {
   userIsLoggedIn() {
     const token = localStorage.getItem('token')
     if (!token) {
-      this.router.navigateByUrl('/login')
+      return false;
     }
     else {
-      return true
+      return true;
     }
   }
 
