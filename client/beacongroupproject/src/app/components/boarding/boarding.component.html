@@ -1,6 +1,7 @@
 <div class="container mt-5" style="width:50rem;">
     <div class="card shadow">
-        <div class="card-body p-4 body">
+        {{(employee$|async)?.details?.onboardingStatus}}
+        <div class="card-body p-4 body" *ngIf="(employee$|async)?.details?.onboardingStatus=='Pending'; else nextBlock">
             Waiting for HR to approve
         </div>
         <ng-template #nextBlock>
@@ -58,7 +59,7 @@
                         <hr class="mb-3">
 
                         <h5>Contact</h5>
-                        <label class="form-label">Email Address <b style="color:red">*</b></label>
+                        <label class="form-label">Email Address<b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="email" required>
 
                         <label class="form-label">Phone Number <b style="color:red">*</b></label>
