@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -12,13 +13,16 @@ import { selectEmployee } from 'src/app/store/user/auth.selector';
 })
 export class EmployeeHomeComponent {
 
-  constructor(private authService: AuthService, private store: Store, private employeeService: EmployeeService, private onboardingService: OnboardingService) { }
+  constructor(private router: Router, private authService: AuthService, private store: Store, private employeeService: EmployeeService, private onboardingService: OnboardingService) { }
 
   employee$ = this.store.select(selectEmployee);
 
   ngOnInit() {
     // this.onboardingService.onboardingIntercepter();
     this.authService.getEmployee();
-    this.authService.userIsLoggedIn();
+    if(!this.authService.userIsLoggedIn()) { 
+      alert('You must be logged in to access this page!');
+      this.router.navigateByUrl('/login');
+    }
   }
 }

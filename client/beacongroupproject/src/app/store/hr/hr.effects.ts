@@ -11,11 +11,9 @@ import { BACKEND_URL } from 'src/app/utils/utils';
 export class HrEffects {
     constructor(private actions$: Actions, private hrService: HrService, private router: Router) { }
     sendEmai$ = createEffect((): any => {
-        console.log(this.actions$);
         return this.actions$.pipe(
             ofType(HrActions.sendemail),
             exhaustMap((action) => {
-                console.log(action);
                 return this.hrService.sendInvitationEmail(action.email).pipe(
                     map((data: any) => {
                         console.log(data);

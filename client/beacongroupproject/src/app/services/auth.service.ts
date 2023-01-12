@@ -29,18 +29,16 @@ export class AuthService {
     const data = {
       token, employee, isHR
     }
-    console.log("isHR", isHR);
-    console.log(typeof isHR)
     this.store.dispatch(AuthActions.getEmployee({ data }))
   }
 
   userIsLoggedIn() {
     const token = localStorage.getItem('token')
     if (!token) {
-      this.router.navigateByUrl('/login')
+      return false;
     }
     else {
-      return true
+      return true;
     }
   }
 

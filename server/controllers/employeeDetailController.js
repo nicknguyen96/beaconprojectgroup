@@ -6,10 +6,16 @@ const { uploadFile, getFile } = require("../utils/uploadFile");
 
 class UserController {
   async uploadFile(req, res) {
+    // console.log(req.file);
+
+    // res.json({ status: 200, data: req.file });
     // we will distingush which property of user info base on this one.
     const filename = req.file.originalname;
+
+    console.log(req.file);
     // we will use middleware to append userid from the token
-    const { userid } = req.headers;
+    const { employeeid } = req.body;
+    console.log(employeeid);
     try {
       const validType = ["profilePicture", "driversLicense", "i983", "optreceipt", "i20", "optead"];
       const fileType = filename && filename.split("-")[0];
@@ -20,7 +26,7 @@ class UserController {
           message: "file type name should include one of the following: profilePicture, driversLicense, i983, optReceipt, i20, optead",
         });
       }
-      const employee = await Employee.findById(userid);
+      const employee = await Employee.findById(employeeid);
       if (!employee) {
         throw Error("No employee was found given userid");
       }
