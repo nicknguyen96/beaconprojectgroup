@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -5,6 +6,7 @@ import { Observable } from 'rxjs';
 import { OnboardingService } from 'src/app/services/onboarding.service';
 import { OnboardingAction } from 'src/app/store/onboarding/onboarding.actions';
 import { selectEmployee } from 'src/app/store/user/auth.selector';
+import { BACKEND_URL } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-boarding',
@@ -70,7 +72,7 @@ export class BoardingComponent implements OnInit {
   public emergencyRelationship = new FormControl('');
 
 
-  constructor(private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store) { }
+  constructor(private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store, private http: HttpClient) { }
 
   // initialize formgroup
   boardForm: FormGroup = this.fb.group({
@@ -130,15 +132,27 @@ export class BoardingComponent implements OnInit {
     console.log(this.boardForm.getRawValue());
   }
 
-  public onSelectFile(event): void {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.pfpUrl = event.target.result;
-      }
-    }
+
+  image: any;
+
+  selectedFile : File;
+
+  public onSelectFile(event : any, fileType : string){
+
+
+    // just to make the image appear in the circle once the user selects it
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => {
+      this.pfpUrl = event.target.result
+      this.image = reader.result as string;
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+
+    return this.onboardingService.onboardingUploadFile(event, fileType)
   }
+
 
   public delete(): void {
     this.pfpUrl = null;
@@ -239,9 +253,8 @@ export class BoardingComponent implements OnInit {
     // it checks if the employee is already approved then it should move to employee main page
     this.onboardingService.onboardingApprove();
     this.employee$ = this.store.select(selectEmployee);
-    this.employee = this.store.select(selectEmployee).subscribe(data => {
-      console.log(data);
-      return data
+    this.store.select(selectEmployee).subscribe(data => {
+      this.employee = data
     });
   }
 }
