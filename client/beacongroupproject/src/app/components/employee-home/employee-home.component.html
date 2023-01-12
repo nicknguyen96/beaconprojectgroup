@@ -6,256 +6,204 @@
 
     <div class="card shadow mt-5">
         <div class="card-body p-4">
+            <h4 class="mb-3">Application Status: 
+                <span *ngIf="employee.employee.details.onboardingStatus == 'Approved'" style="color:green">Approved! Welcome aboard!</span>
+                <span *ngIf="employee.employee.details.onboardingStatus == 'Pending'" style="color:goldenrod">Pending... Waiting for HR to check your application.</span>
+                <span *ngIf="employee.employee.details.onboardingStatus == 'Rejected'" style="color:red">Rejected! For more information, please check with HR.</span>
+            </h4>
+            <h5>Message from HR:</h5>
+            <p>"{{employee.employee.details.onboardingMessage}}"</p>
+        </div>
+    </div>
+
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
             <h4 class="mb-3">My Account</h4>
 
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="contact-tab" data-bs-toggle="tab"
-                        data-bs-target="#personal-tab-pane" type="button" role="tab" aria-controls="personal-tab-pane"
-                        aria-selected="true">Personal Information</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane"
-                        type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Address</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
-                        type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact Info</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="employment-tab" data-bs-toggle="tab" data-bs-target="#employment-tab-pane"
-                        type="button" role="tab" aria-controls="employment-tab-pane" aria-selected="false">Employment</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="emergency-tab" data-bs-toggle="tab" data-bs-target="#emergency-tab-pane"
-                        type="button" role="tab" aria-controls="emergency-tab-pane" aria-selected="false">Emergency Contact</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane"
-                        type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">Documents</button>
-                </li>
-
-            </ul>
-
-
-
-
-
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="personal-tab-pane" role="tabpanel"
-                    aria-labelledby="personal-tab" tabindex="0">
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">First Name <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="firstName" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Middle Name</label> 
-                                <input class="form-control" type="text" formControlName="middleName">
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Last Name <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="lastName" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Preferred Name</label> 
-                                <input class="form-control" type="text" formControlName="preferredName">
-                            </div>
-                        </div>
+            <div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="contact-tab" data-bs-toggle="tab"
+                            data-bs-target="#personal-tab-pane" type="button" role="tab" aria-controls="personal-tab-pane"
+                            aria-selected="true">Personal Information</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane"
+                            type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Address</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                            type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="employment-tab" data-bs-toggle="tab" data-bs-target="#employment-tab-pane"
+                            type="button" role="tab" aria-controls="employment-tab-pane" aria-selected="false">Employment</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="emergency-tab" data-bs-toggle="tab" data-bs-target="#emergency-tab-pane"
+                            type="button" role="tab" aria-controls="emergency-tab-pane" aria-selected="false">Emergency Contact</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane"
+                            type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">Documents</button>
+                    </li>
+    
+                </ul>
+    
+    
+                <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="personal-tab-pane" role="tabpanel" aria-labelledby="personal-tab" tabindex="0">
+                            <form class="form" [formGroup]="editPersonalForm">
+                                <div class="pt-2 pb-2">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label class="form-label">First Name <b style="color:red">*</b></label> 
+                                            <input class="form-control" type="text" formControlName="firstName" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Middle Name</label> 
+                                            <input class="form-control" type="text" formControlName="middleName">
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Last Name <b style="color:red">*</b></label> 
+                                            <input class="form-control" type="text" formControlName="lastName" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Preferred Name</label> 
+                                            <input class="form-control" type="text" formControlName="preferredName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 pb-2">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label class="form-label">Email Address <b style="color:red">*</b></label> 
+                                            <input class="form-control noChange" type="text" formControlName="email" required readonly>
+                                        </div>
+                                        <div class="col col-lg-2">
+                                            <label class="form-label">SSN <b style="color:red">*</b></label> 
+                                            <input class="form-control noChange" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="ssn" required readonly>
+                    
+                                        </div>
+                                        <div class="col col-lg-2">
+                                            <label class="form-label">Date of Birth <b style="color:red">*</b></label> 
+                                            <input class="form-control noChange" type="date" formControlName="dob" required readonly>
+                                        </div>
+                                        <div class="col ">
+                                            <label class="form-label">Gender <b style="color:red">*</b></label> 
+                                            <select class="form-select" formControlName="gender" required>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">I do not wish to disclose</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3" (click)="onEditPersonal()">Save Changes</button>
+                            </form>
                     </div>
-
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">Email Address <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="email" required>
+    
+                    <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="1">
+                        <form class="form" [formGroup]="editAddressForm">
+                            <div class="pt-2 pb-2">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="form-label">Address (Street Name, Apt/Build #, City, State, Postal Code) <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="address" required>
+                                    </div>    
+                                </div>
                             </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">SSN <b style="color:red">*</b></label> 
-                                <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="ssn" required>
-        
-                            </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">Date of Birth <b style="color:red">*</b></label> 
-                                <input class="form-control" type="date" formControlName="dob" required>
-                            </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">Gender <b style="color:red">*</b></label> 
-                                <select class="form-select" formControlName="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">I do not wish to disclose</option>
-                                </select>
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-                </div>
-
-                <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="1">
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">Street Name <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="streetName" required>
+    
+                    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="2">
+                        <form class="form" [formGroup]="editContactForm">
+                            <div class="pt-2 pb-2">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="form-label">Cell Phone Number <b style="color:red">*</b></label> 
+                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="cellphone" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Work Phone Number</label> 
+                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="workphone" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col col-5">
-                                <label class="form-label">Building / Apt #</label> 
-                                <input class="form-control" type="text" formControlName="buildNum" required>
-                            </div>
-
-                        </div>
+                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        </form>
                     </div>
-
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">City <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="city" required>
+    
+                    <div class="tab-pane fade" id="employment-tab-pane" role="tabpanel" aria-labelledby="employment-tab" tabindex="3">
+                        <form class="form" [formGroup]="editEmploymentForm">
+                            <div class="pt-2 pb-2">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="form-label">Work Authorization Status <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="workStatus" required>
+                                    </div>
+                                    <div class="col col-lg-2">
+                                        <label class="form-label">Start Date</label> 
+                                        <input class="form-control" type="date" formControlName="startDate" required>
+                                    </div>
+                                    <div class="col col-lg-2">
+                                        <label class="form-label">End Date</label> 
+                                        <input class="form-control" type="date" formControlName="endDate" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <label class="form-label">State <b style="color:red">*</b></label> 
-                                <select class="form-select mb-3" formControlName="state" required>
-                                    <option value="AL">Alabama</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AZ">Arizona</option>
-                                    <option value="AR">Arkansas</option>
-                                    <option value="CA">California</option>
-                                    <option value="CO">Colorado</option>
-                                    <option value="CT">Connecticut</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="DC">District Of Columbia</option>
-                                    <option value="FL">Florida</option>
-                                    <option value="GA">Georgia</option>
-                                    <option value="HI">Hawaii</option>
-                                    <option value="ID">Idaho</option>
-                                    <option value="IL">Illinois</option>
-                                    <option value="IN">Indiana</option>
-                                    <option value="IA">Iowa</option>
-                                    <option value="KS">Kansas</option>
-                                    <option value="KY">Kentucky</option>
-                                    <option value="LA">Louisiana</option>
-                                    <option value="ME">Maine</option>
-                                    <option value="MD">Maryland</option>
-                                    <option value="MA">Massachusetts</option>
-                                    <option value="MI">Michigan</option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="MS">Mississippi</option>
-                                    <option value="MO">Missouri</option>
-                                    <option value="MT">Montana</option>
-                                    <option value="NE">Nebraska</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="NH">New Hampshire</option>
-                                    <option value="NJ">New Jersey</option>
-                                    <option value="NM">New Mexico</option>
-                                    <option value="NY">New York</option>
-                                    <option value="NC">North Carolina</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="OH">Ohio</option>
-                                    <option value="OK">Oklahoma</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="PA">Pennsylvania</option>
-                                    <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="TN">Tennessee</option>
-                                    <option value="TX">Texas</option>
-                                    <option value="UT">Utah</option>
-                                    <option value="VT">Vermont</option>
-                                    <option value="VA">Virginia</option>
-                                    <option value="WA">Washington</option>
-                                    <option value="WV">West Virginia</option>
-                                    <option value="WI">Wisconsin</option>
-                                    <option value="WY">Wyoming</option>
-                                </select>
-                            </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">Postal Code <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="pcode" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success mt-3">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        </form>
                     </div>
-                </div>
-
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="2">
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">Cell Phone Number <b style="color:red">*</b></label> 
-                                <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="cellphone" required>
+                    
+    
+                    <div class="tab-pane fade" id="emergency-tab-pane" role="tabpanel" aria-labelledby="emergency-tab" tabindex="4">
+                        <form class="form" [formGroup]="editEmergencyForm">
+                            <div class="pt-2 pb-2">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="form-label">First Name <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="emergencyFirstName" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Middle Name</label> 
+                                        <input class="form-control" type="text" formControlName="emergencyMiddleName">
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Last Name <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="emergencyLastName" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <label class="form-label">Work Phone Number</label> 
-                                <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="workphone" required>
+                            <div class="pt-2 pb-2">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="form-label">Email Address <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="emergencyEmail" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Phone Number <b style="color:red">*</b></label> 
+                                        <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="emergencyPhone" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Relationship <b style="color:red">*</b></label> 
+                                        <input class="form-control" type="text" formControlName="emergencyRelationship" required>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-                </div>
-
-                <div class="tab-pane fade" id="employment-tab-pane" role="tabpanel" aria-labelledby="employment-tab" tabindex="3">
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">Work Authorization Status <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="workStatus" required>
-                            </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">Start Date</label> 
-                                <input class="form-control" type="date" formControlName="startDate" required>
-                            </div>
-                            <div class="col col-lg-2">
-                                <label class="form-label">End Date</label> 
-                                <input class="form-control" type="date" formControlName="endDate" required>
-                            </div>
-                        </div>
+    
+                    <div class="tab-pane fade" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="5">
+                        <form class="form" [formGroup]="editDocumentsForm">
+                            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-                </div>
-
-                <div class="tab-pane fade" id="emergency-tab-pane" role="tabpanel" aria-labelledby="emergency-tab" tabindex="4">
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">First Name <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="emergencyFirstName" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Middle Name</label> 
-                                <input class="form-control" type="text" formControlName="emergencyMiddleName">
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Last Name <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="emergencyLastName" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pt-2 pb-2">
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="form-label">Email Address <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="emergencyEmail" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Phone Number <b style="color:red">*</b></label> 
-                                <input class="form-control" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" formControlName="emergencyPhone" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Relationship <b style="color:red">*</b></label> 
-                                <input class="form-control" type="text" formControlName="emergencyRelationship" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-                </div>
-
-                <div class="tab-pane fade" id="documents-tab-pane" role="tabpanel" aria-labelledby="documents-tab" tabindex="5">
-                    <p>(documents here)</p>
                 </div>
             </div>
+
 
             
 
@@ -264,11 +212,4 @@
 
         </div>
     </div>
-    <div class="card shadow mt-5">
-        <div class="card-body">
-
-        </div>
-    </div>
-</div> -->
-
-personal information page
+</div>

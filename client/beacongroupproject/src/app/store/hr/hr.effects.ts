@@ -19,6 +19,7 @@ export class HrEffects {
                         console.log(data);
                         if (data?.status == 200) {
                             console.log(data);
+                            alert('Success! Email has been sent to the target email.');
                             return HrActions.sendemailSuccess({ response: data });
                         } else {
                             return HrActions.sendemailFail();

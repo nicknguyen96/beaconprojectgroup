@@ -5,6 +5,8 @@ import { employeeList } from 'src/app/store/hr/hr.selector';
 import { Observable } from 'rxjs';
 import { HrService } from 'src/app/services/hr.service';
 import { FormBuilder } from '@angular/forms';
+import { selectAuthState } from 'src/app/store/user/auth.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-visa-management-hr',
@@ -16,9 +18,15 @@ export class VisaManagementHrComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private HrService: HrService,
+    private router: Router,
     private fb: FormBuilder) { }
   tab = 'inprocess';
   employeeList$: Observable<any>;
+  public employee : any;
+
+  employee$ = this.store.select(selectAuthState).subscribe((data) => {
+    this.employee = data;
+  });
 
   setTab(tab: string) {
     if (this.tab == tab) return;
@@ -43,8 +51,15 @@ export class VisaManagementHrComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(HrActions.getEmployeeList({ data: 'getting data' }));
-    this.employeeList$ = this.store.select(employeeList);
+    console.log('Current User:', this.employee);
+    console.log(this.employee.isHR);
+    if (this.employee.isHR == false) {
+      this.router.navigateByUrl('/forbidden');
+    } 
+    else {
+      this.store.dispatch(HrActions.getEmployeeList({ data: 'getting data' }));
+      this.employeeList$ = this.store.select(employeeList);
+    }
   }
 
   sendNotification(email: string) {

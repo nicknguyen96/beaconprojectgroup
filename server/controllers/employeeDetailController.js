@@ -100,12 +100,14 @@ class UserController {
     const employeeDetailsId = req.body.employeeDetailsId;
 
     // fileUpload should be an array of file with file name and file url. Prefer the EmployeeDetail model
-    employeeDetails.legalStatus.workStatus.fileUpload = [];
+    if (employeeDetails.legalStatus) employeeDetails.legalStatus.workStatus.fileUpload = [];
 
     console.log(employeeDetails);
     try {
       const employee = await EmployeeDetail.findByIdAndUpdate(employeeDetailsId, employeeDetails, { $new: true });
 
+      if (employeeDetails.onboardingStatus == 'Never submitted') employee.onboardingStatus = 'Pending';
+      
       console.log(employee);
 
       return res.json({ status: 200, message: "Employee details have been saved", data: employee });

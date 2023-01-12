@@ -30,6 +30,7 @@ import { HousingManagementComponent } from './components/housing-management/hous
 import { VisaManagementEmployeeComponent } from './components/visa-management-employee/visa-management-employee.component';
 import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
 import { HousingEffects } from './store/housing/housing.effects';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { HousingEffects } from './store/housing/housing.effects';
     HousingManagementComponent,
     VisaManagementEmployeeComponent,
     HousingManagementEmployeeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
