@@ -9,25 +9,54 @@ const { Housing } = require("../models");
 
 // able to view all existing houses
 class HousingController {
+
+  async getHouse(req, res) {
+    const { houseid } = req.params;
+    if (!houseid) return res.json({ status: 400, message: 'houseid is required' });
+
+    try {
+      const house = await Housing.findById(houseid).populate({
+        path: 'tenants',
+        select: '-password',
+        populate: {
+          path: 'user',
+          
+       }
+      })
+        .populate({
+          path: 'summary.reports',
+          populate: { path: 'comments', populate: { path: 'author' } }
+        })
+        .populate({
+          path: 'summary.reports',
+          populate: { path: 'author', populate: { path: 'user' } }
+        });
+
+      return res.json({ status: 200, message: 'get house successfully', data: house })
+    } catch (error) {
+      console.log(error);
+      return res.json({ status: 500, message: error.message });
+    }
+  }
+
   // getting all the houses
   async getAllHousing(req, res) {
-    
     try {
       // getting all the houses and filling in the tenant information
       const allHousing = await Housing.find()
-      .populate({
-        path: 'tenants',
-        populate: { path: 'user' }
-      })
-      .populate({
-        path: 'summary.reports',
-        populate: { path: 'comments', populate: { path: 'author' }}
-      })
-      .populate({
-        path: 'summary.reports',
-        populate: { path: 'author', populate: { path: 'user' }}
-      });
-      
+        .populate({
+          path: 'tenants',
+          populate: { path: 'user' }
+        })
+        .populate({
+          path: 'summary.reports',
+          populate: { path: 'comments', populate: { path: 'author' } }
+        })
+        .populate({
+          path: 'summary.reports',
+          populate: { path: 'author', populate: { path: 'user' } }
+        });
+
       if (allHousing.length <= 0) {
         return res.status(200).json({ status: 200, message: "No houses have been added" });
       }

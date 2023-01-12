@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 require("dotenv").config();
-const { employeeDetailRouter, authRouter, housingRouter, hrRouter } = require("./routes/index");
+const { employeeDetailRouter, authRouter, housingRouter, hrRouter, facilityRouter } = require("./routes/index");
 const isHR = require("./middlewares/isHR");
 
 // parse incoming JSON requests
@@ -22,5 +22,6 @@ app.use("/user", employeeDetailRouter);
 app.use("/auth", authRouter);
 app.use("/housing", isHR, housingRouter);
 app.use("/hr", isHR, hrRouter);
+app.use('/report', facilityRouter)
 
 module.exports = app;
