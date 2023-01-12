@@ -77,23 +77,23 @@
 
           <div class="d-flex flex-row flex-wrap">
             <div class="shadow m-1 p-1 border border-secondary rounded w-100 house flex-grow-1" *ngFor="let house of housingList$ | async"> 
-              <p class="text-capitalize mb-1 pl-1 pt-2 fs-6 address">{{house.address}}</p>
+              <p class="font-weight-bold text-capitalize mb-1 pl-1 pt-3 address">{{house.address}}</p>
               <hr>
               <div class="mb-2" style="height:7rem;">
                 <p class="m-0 pl-1">Land Lord</p>
                 <p class="pl-3 m-0">{{house.landlord.fullName}}</p>
                 <p class="pl-3 m-0">{{house.landlord.phoneNumber}}</p>
-                <p class="pl-3 m-0">{{house.landlord.email}}</p>
+                <p class="pl-3 m-0 "><a class="text-decoration-none" href="mailto: {{house.landlord.email}}">{{house.landlord.email}}</a></p>
               </div>
               <hr>
               <div>
-                <p class="m-0 pl-1">Tenants</p>
-                <span *ngIf="house.tenants.length > 0" class="pl-3 m-0">{{house.tenants.length}}</span>
-                <span *ngIf="house.tenants.length == 0" class="pl-3 m-0">No Tenants Yet</span>
+                <span class="m-0 pl-1">Tenants</span>
+                <span *ngIf="house.tenants.length > 0" class="pl-3 pr-3 pt-1 pb-1 ml-3 bg-success text-white text-center rounded d-md-inline">{{house.tenants.length}}</span>
+                <span *ngIf="house.tenants.length == 0" class="pl-3 pr-3 pt-1 pb-1 ml-3 rounded bg-secondary text-white">N/A</span>
               </div>
               <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-danger btn-sm mb-2 mt-4" (click)="deleteHousing(house._id)">Delete House</button>
-                <button type="button" class="btn btn-outline-dark btn-sm mb-2 mt-4 ml-2" data-bs-toggle="modal" data-bs-target="#houseDetail" (click)="showDetail(house)">Show More</button>
+                <button type="button" class="btn btn-outline-danger btn-xs mb-2 mt-4" (click)="deleteHousing(house._id)">Delete House</button>
+                <button type="button" class="btn btn-outline-dark btn-xs mb-2 mt-4 ml-2" data-bs-toggle="modal" data-bs-target="#houseDetail" (click)="showDetail(house)">Show More</button>
                 <div class="modal" id="houseDetail" tabindex="-1" role="dialog" aria-labelledby="houseDetailLabel" data-bs-backdrop="static">
                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
