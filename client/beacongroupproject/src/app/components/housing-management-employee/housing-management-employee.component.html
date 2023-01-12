@@ -1,1 +1,119 @@
-<p>housing-management-employee works!</p>
+<div class="container mt-5" style="width:70%">
+    <div>
+        <h1>Housing</h1>
+    </div>
+
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
+            <ul class="nav justify-content-center nav-tabs">
+                <li class="nav-item">
+                    <button class="btn nav-link" (click)="setTab('detail')">Housing Detail</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn nav-link" (click)="setTab('report')">Facility Report</button>
+                </li>
+            </ul>
+            <div *ngIf="tab == 'detail'; then detailTab; else reportTab"></div>
+            <ng-template #detailTab>
+                <p class="font-weight-bold text-capitalize mb-1 pl-1 pt-2">Address: {{(house$|async).address}}</p>
+                <hr>
+                <div class="mb-2" style="height:7rem;">
+                    <p class="m-0 pl-1">Land Lord</p>
+                    <p class="pl-3 m-0">{{(house$|async).landlord.fullName}}</p>
+                    <p class="pl-3 m-0">{{(house$|async).landlord.phoneNumber}}</p>
+                    <p class="pl-3 m-0">{{(house$|async).landlord.email}}</p>
+                </div>
+                <hr>
+                <div>
+                    <p class="m-0 pl-1">Roomates: </p>
+                    <ul *ngFor="let employee of (house$|async).tenants" class="list-group">
+                        <li *ngIf="employee._id != (employee$|async).id" class="list-group-item">
+                            {{employee.user.firstName}} {{employee.user.lastName}} -
+                            <span>{{employee.user.phoneNumber}}</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </ng-template>
+            <ng-template #reportTab>
+                <button type="button" class="btn btn-outline-dark btn-sm mb-2 mt-4 ml-2" data-bs-toggle="modal"
+                    data-bs-target="#newReport">Add New Report</button>
+
+                <div class="modal" id="newReport" tabindex="-1" role="dialog" aria-labelledby="newHouseLabel">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="newHouseLabel">New Report Information</h6>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="newHouseModalBody">
+                                <div>
+                                    <form class="row g-3" [formGroup]="reportForm">
+                                        <div class="form-group">
+                                            <label>Title</label>
+                                            <input type="text" class="form-control" formControlName="title">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea cols="30" rows="3" class="form-control"
+                                                formControlName="description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-primary"
+                                                (click)="saveReport()">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let report of (house$|async).summary.reports; let index = index" class="d-flex flex-column">
+                    <div class="shadow m-1 p-1 border border-secondary rounded w-100 card" *ngIf="report?.author?._id == (employee$|async).id">
+                        <div class="mt-4"><strong>Title:</strong> {{report.title}}</div>
+                        <div class=""><strong>Description:</strong> {{report.description}}</div>
+                        <div class=""><strong>Status:</strong> {{report.status}}</div>
+                        <div class=""><strong>Created:</strong> {{report.timeStamp}}</div>
+                        <hr>
+                        <div class=""><strong>Comment:</strong>:</div>
+                        <div *ngFor="let comment of report.comments" style="max-height: 400px; overflow-y: scroll;">
+                            <p>
+                                <span>{{comment.author.email}}</span> : {{comment.description}}
+                            </p>
+                            <p style="float: right; margin: 4px"><i>{{comment.timeStamp}}</i></p>
+                        </div>
+                        <button class="btn btn-outline-primary my-4" data-bs-toggle="modal"
+                            data-bs-target="#viewDetail" (click)="setReportId(index)">View more</button>
+                    </div>
+                    <div class="modal" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="viewDetail">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div>
+                                        <form class="row g-3" [formGroup]="commentForm">
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea cols="30" rows="3" class="form-control"
+                                                    formControlName="description"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-outline-primary"
+                                                    (click)="saveComment()">Send Comment</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+
+
+        </div>
+    </div>
+</div>

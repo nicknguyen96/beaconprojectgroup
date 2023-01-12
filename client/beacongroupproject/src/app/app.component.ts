@@ -5,6 +5,7 @@ import { EmployeeService } from './services/employee.service';
 import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
 import { selectAuthState } from './store/user/auth.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { selectAuthState } from './store/user/auth.selector';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService, private store: Store, private employeeService: EmployeeService) { }
+  constructor(private router: Router, private authService: AuthService, private store: Store, private employeeService: EmployeeService) { }
   title = 'beacongroupproject';
 
   employee : any;
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     const response: any = {
       state: false
     }
-    this.store.dispatch(AuthActions.logout(response))
+    this.store.dispatch(AuthActions.logout(response));
   }
 
   ngOnInit() {

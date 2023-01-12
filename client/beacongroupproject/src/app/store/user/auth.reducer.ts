@@ -58,7 +58,7 @@ const AuthReducer = createReducer(
     newState.employee.details = action.response.data;
     const newEmployee = JSON.parse(localStorage.getItem('employee'));
     newEmployee.details = action.response.data;
-    localStorage.setItem('employee', JSON.stringify(newEmployee));
+    localStorage.setItem('employee', JSON.stringify(newEmployee))
     return newState;
   }),
 

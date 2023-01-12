@@ -21,13 +21,12 @@ export class OnboardingService {
     const token = localStorage.getItem('token')
     this.employee$.subscribe(employee => {
       if(!token) {
-        alert('Please login before entering this page')
         this.router.navigate(['/'])
       }
       console.log(employee)
       console.log(employee?.details?.onboardingStatus)
-      console.log(!(employee?.details?.onboardingStatus == "Aprroved"))
-      if(!(employee?.details?.onboardingStatus == "Aprroved")) {
+      console.log(!(employee?.details?.onboardingStatus == "Approved"))
+      if(!(employee?.details?.onboardingStatus == "Approved")) {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         this.router.navigate(['/employee/boarding'])
       }
@@ -39,10 +38,10 @@ export class OnboardingService {
     const token = localStorage.getItem('token')
     this.employee$.subscribe(employee => {
       if(!token) {
-        alert('Please login before entering this page')
-        this.router.navigate(['/'])
+        this.router.navigate(['/login'])
       }
-      if(employee.details.onboardingStatus === "Aprroved") {
+      console.log(employee)
+      if(employee.details.onboardingStatus === "Approved" || employee.details.onboardingStatus === "Pending") {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         this.router.navigate(['/employee']);
       }
@@ -72,7 +71,6 @@ export class OnboardingService {
   
   onboardingUploadFile(event : any, fileType : string): void {
       if (event.target.files && event.target.files[0]) {
-         
           const selectedFile: File = event.target.files[0];
           
           const form = new FormData();

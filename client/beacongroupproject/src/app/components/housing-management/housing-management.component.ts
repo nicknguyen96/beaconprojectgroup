@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { HrActions } from 'src/app/store/hr/hr.actions';
 import { housingList } from 'src/app/store/hr/hr.selector';
 import { FormBuilder, Validators } from '@angular/forms';
+import { selectAuthState } from 'src/app/store/user/auth.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-housing-management',
@@ -11,7 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./housing-management.component.scss']
 })
 export class HousingManagementComponent implements OnInit{
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   houseInfo = new FormBuilder().group({
     address: ['', Validators.required],
@@ -158,9 +160,21 @@ export class HousingManagementComponent implements OnInit{
     }
   }
 
+  public employee : any;
+
+  employee$ = this.store.select(selectAuthState).subscribe((data) => {
+    this.employee = data;
+  });
+
   ngOnInit(): void {
+    console.log('Current User:', this.employee);
+    console.log(this.employee.isHR);
+    if (this.employee.isHR == false) {
+      this.router.navigateByUrl('/forbidden');
+    } 
+    else {
     this.store.dispatch(HrActions.getHousingList({data: 'some data'}));
     this.housingList$ = this.store.select(housingList);
-    
+    }
   }
 }

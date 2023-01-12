@@ -44,9 +44,8 @@ export class AuthEffects {
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)
 
-        alert('Successfully logged in' + response.employee.email)
         if (response.isHR == true || response.isHR == 'true') {
-          this.router.navigateByUrl('/hr/visaManagement')
+          this.router.navigateByUrl('/hr/hiringManagement')
         } else {
           this.router.navigateByUrl('/employee')
         }
@@ -74,9 +73,10 @@ export class AuthEffects {
             console.log(data);
             if (data?.status == 200) {
               this.deleteLocal();
-              return AuthActions.logoutSuccess({ response: "something right" });
+              this.router.navigateByUrl['/login'];
+              return AuthActions.logoutSuccess({ response: "logged out successfully." });
             } else {
-              return AuthActions.logoutFailure({ error: "something wrong" });
+              return AuthActions.logoutFailure({ error: "something went wrong with logging you out." });
             }
           })
         )
