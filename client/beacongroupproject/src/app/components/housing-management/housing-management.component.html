@@ -1,15 +1,45 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <div class="card shadow" style="width:60rem;">
       <div class="card-body">
+        <!-- <p>{{housingList$ | async | json}}</p> -->
           <h2 class="text-center">Housing Management</h2>
-          <div class="d-flex flex-column">
-            <div class="shadow mb-4 p-1 border border-secondary rounded" *ngFor="let house of housingList$ | async"> 
-              <p>{{house._id}}</p>
-              <p>{{house.address}}</p>
-              <p>{{house.landlord}}</p>
-              <p>{{house.tenants}}</p>
-              <div class="text-center">
-                <button type="button" class="btn btn-outline-danger btn-sm m-2">Delete House</button>
+          <div class="d-flex flex-row">
+            <div class="shadow m-1 p-1 border border-secondary rounded w-100 house " *ngFor="let house of housingList$ | async"> 
+              <p class="font-weight-bold text-capitalize mb-1 pl-1" style="height:60px;">{{house.address}}</p>
+              <hr>
+              <div class="mb-2" style="height:7rem;">
+                <p class="m-0 pl-1">Land Lord</p>
+                <p class="pl-3 m-0">{{house.landlord.fullName}}</p>
+                <p class="pl-3 m-0">{{house.landlord.phoneNumber}}</p>
+                <p class="pl-3 m-0">{{house.landlord.email}}</p>
+              </div>
+              <hr>
+              <div>
+                <p class="m-0 pl-1">Tenants</p>
+                <span *ngIf="house.tenants.length > 0" class="pl-3 m-0">{{house.tenants.length}}</span>
+                <span *ngIf="house.tenants.length == 0" class="pl-3 m-0">No Tenants Yet</span>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-danger btn-sm mb-2 mt-4">Delete House</button>
+                <button type="button" class="btn btn-outline-dark btn-sm mb-2 mt-4 ml-2" data-bs-toggle="modal" data-bs-target="#houseDetail" (click)="showDetail(house)">Show More</button>
+                <div class="modal" id="houseDetail" tabindex="-1" role="dialog" aria-labelledby="houseDetailLabel" data-bs-backdrop="static">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title" id="houseDetailLabel">House Detail</h6>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDetail()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" id="modalBody">
+                        <!-- dynamiclly show the house detail -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="closeDetail()">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
