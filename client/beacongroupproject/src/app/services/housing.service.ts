@@ -11,7 +11,11 @@ export class HousingService {
         return this.http.get(`${BACKEND_URL}/user/getHouse/${houseid}`);
     }
 
-    createReport(title : string, description: string, houseid: string) {
+    createReport(title: string, description: string, houseid: string) {
         return this.http.post(`${BACKEND_URL}/report/create`, { title, description, houseid });
+    }
+
+    createComment(description: string, reportid: string) {
+        return this.http.post(`${BACKEND_URL}/report/comment`, { description, reportid });
     }
 }
