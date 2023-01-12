@@ -223,7 +223,7 @@ export class BoardingComponent implements OnInit {
         expiration: licenseExpiration,
         picture: licenseFile
       },
-      onboardingStatus: 'Pending',
+      onBoardingStatus: 'Submitted',
       emergencyContact: {
         firstName: emergencyFirstName,
         lastName: emergencyLastName,

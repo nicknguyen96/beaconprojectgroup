@@ -73,7 +73,7 @@ const legalStatus = new Schema({
   status: {
     type: String,
     default: "Greencard | Citizen | Other | OPT",
-    required: true,
+    required: false,
   },
   workStatus: {
     type: workStatusSchema,
@@ -87,17 +87,17 @@ const licenseSchema = new Schema({
   number: {
     type: String,
     default: "enter your driver licence number here",
-    required: true,
+    required: false,
   },
   expiration: {
     type: String,
     default: "enter your expiration date",
-    required: true,
+    required: false,
   },
   picture: {
     type: String,
     default: "enter your driver licence here",
-    required: true,
+    required: false,
   },
 });
 
@@ -214,7 +214,7 @@ const employeeDetailSchema = new Schema({
   },
   legalStatus: {
     type: legalStatus,
-    required: true,
+    required: false,
   },
   driversLicense: {
     type: licenseSchema,

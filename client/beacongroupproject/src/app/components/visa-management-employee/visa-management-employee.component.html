@@ -33,14 +33,16 @@
                             <td> {{ file.status }}</td>
                             <td> {{ file.message }}</td>
                             <td>
-                                <input type="file" [disabled]="!(file.status == 'Rejected')" (change)="onChange($event, file.fileName)">
+                                <input type="file" [disabled]="!(file.status == 'Rejected')"
+                                    (change)="onChange($event, file.fileName)">
                             </td>
                         </tr>
                         <tr>
                         </tr>
                     </tbody>
                 </table>
-                <div *ngFor="let file of (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload; let index = index">
+                <div
+                    *ngFor="let file of (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload; let index = index">
                     <div *ngIf="index == (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload?.length - 1
                             && (employee$|async)?.details?.legalStatus?.workStatus?.fileUpload[index]?.status == 'Approved'
                             && index < validFileName.length">
@@ -48,6 +50,11 @@
                         <br>
                         <input type="file" (change)="onChange($event, 'newFile')">
                     </div>
+                </div>
+                <div *ngIf="(employee$|async)?.details?.legalStatus?.workStatus?.fileUpload.length==0">
+                    <label class="form-label">Upload {{validFileName[0]}} file here:</label>
+                    <br>
+                    <input type="file" (change)="onChange($event, 'newFile')">
                 </div>
             </ng-template>
 

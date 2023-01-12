@@ -53,7 +53,7 @@ class UserController {
             status: "Pending",
             message: "Waiting for HR to approve",
           };
-
+          console.log("been here");
           if (property.toLowerCase() == 'optreceipt') {
             employeeDetail.legalStatus.workStatus.fileUpload[0] = fileUploadSchema;
           } else if (property.toLowerCase() == 'optead') {
@@ -72,6 +72,7 @@ class UserController {
         throw new Error(response.message);
       }
     } catch (error) {
+      console.log(error);
       if (error.message == "Access Denied") {
         return res.json({ status: 403, message: error.message });
       }
@@ -100,7 +101,7 @@ class UserController {
     const employeeDetailsId = req.body.employeeDetailsId;
 
     // fileUpload should be an array of file with file name and file url. Prefer the EmployeeDetail model
-    if (employeeDetails.legalStatus) employeeDetails.legalStatus.workStatus.fileUpload = [];
+    // if (employeeDetails.legalStatus) employeeDetails.legalStatus.workStatus.fileUpload = [];
 
     console.log(employeeDetails);
     try {
