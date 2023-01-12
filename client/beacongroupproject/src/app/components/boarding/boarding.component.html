@@ -35,7 +35,7 @@
                             </div>
                             <div class="background"></div>
                         </label>
-                        <input id="fileInput" type='file' (change)="onSelectFile($event)"
+                        <input id="fileInput" type='file' (change)="onSelectFile($event, 'profilePicture')"
                             formControlName="profilePicture">
                         <button class="btn btn-success" (click)="delete()">Reset</button>
 
@@ -210,7 +210,7 @@
                             </div>
                             <div *ngIf="notCitizenStatus.value == 'F1(CPT/OPT)'">
                                 <input class="form-control form-control-sm mb-2 mt-2" type="file"
-                                    formControlName="f1File">
+                                    formControlName="f1File" (change)="onSelectFile($event, 'optreceipt')">
                             </div>
                             <div class="form-check">
                                 <input type="radio" class="form-check-input" id="notCitizenH4" name="notCitizenStatus"
@@ -261,7 +261,7 @@
                             <input class="form-control mb-3" type="date" formControlName="licenseExpiration" required>
 
                             <label class="form-label">Photo of License <b style="color:red">*</b></label>
-                            <input class="form-control mb-3" type="file" formControlName="licenseFile" required>
+                            <input class="form-control mb-3" type="file" formControlName="licenseFile" required (change)="onSelectFile( $event, 'driversLicense')">
 
                             <label class="form-label">Car Make</label>
                             <input class="form-control mb-3" type="text" formControlName="carMake">

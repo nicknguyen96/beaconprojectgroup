@@ -26,7 +26,8 @@ const commentsSchema = new Schema({
 
 const reportSchema = new Schema({
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Employee",
     required: true,
     default: "N/A",
   },
@@ -43,11 +44,11 @@ const reportSchema = new Schema({
     default: "N/A",
   },
 
-  comments: {
-    type: [Schema.Types.ObjectId],
+  comments: [{
+    type: Schema.Types.ObjectId,
     ref: "Comments",
     required: false,
-  },
+  }],
 
   status: {
     type: String,

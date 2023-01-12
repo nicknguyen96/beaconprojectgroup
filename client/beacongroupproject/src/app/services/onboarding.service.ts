@@ -49,6 +49,7 @@ export class OnboardingService {
       }
     })
   }
+  
 
   onboardingSubmit(employeeDetails: any): any {
     let employeeDetailsId: string;
@@ -67,6 +68,35 @@ export class OnboardingService {
       employeeDetailsId,
     }
       return this.http.put(`${BACKEND_URL}/user/updateDetails`,  employee )
+  }
+
+  
+  onboardingUploadFile(event : any, fileType : string): void {
+      if (event.target.files && event.target.files[0]) {
+         
+          const selectedFile: File = event.target.files[0];
+          
+          const form = new FormData();
+
+          let employee: any; 
+          this.employee$.subscribe(data => {
+            employee = data
+          })
+  
+          form.append('image', selectedFile, `${fileType}-${employee.email}`);
+          form.append('employeeid', employee.id);
+          console.log(form);
+  
+          form.forEach(img => {
+            console.log(img);
+          })
+  
+          this.http.put(`${BACKEND_URL}/user/uploadFile`, form)
+          .subscribe(res => {
+            console.log(res)
+          })
+        }
+      
   }
 
 }
