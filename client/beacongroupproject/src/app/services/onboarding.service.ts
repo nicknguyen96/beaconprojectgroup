@@ -41,7 +41,7 @@ export class OnboardingService {
         this.router.navigate(['/login'])
       }
       console.log(employee)
-      if(employee.details.onboardingStatus === "Approved" || employee.details.onboardingStatus === "Pending") {
+      if(employee.details.onboardingStatus === "Approved") {
         // /* Redirecting the user to the onboarding page if the user is not onboarded. */
         this.router.navigate(['/employee']);
       }

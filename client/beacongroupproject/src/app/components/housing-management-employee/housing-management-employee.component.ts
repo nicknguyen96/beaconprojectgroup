@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { OnboardingService } from 'src/app/services/onboarding.service';
 import { HousingActions } from 'src/app/store/housing/housing.actions';
 import { selectHousing } from 'src/app/store/housing/housing.selector';
 import { selectEmployee } from '../../store/user/auth.selector'
@@ -12,7 +13,7 @@ import { selectEmployee } from '../../store/user/auth.selector'
   styleUrls: ['./housing-management-employee.component.scss']
 })
 export class HousingManagementEmployeeComponent implements OnInit {
-  constructor(private store: Store, private fb: FormBuilder) { }
+  constructor(private store: Store, private fb: FormBuilder, private onboardingService: OnboardingService) { }
 
   employee$: Observable<any>;
   houseid: string = '';
@@ -55,6 +56,7 @@ export class HousingManagementEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onboardingService.onboardingIntercepter();
     this.house$ = this.store.select(selectHousing);
     this.employee$ = this.store.select(selectEmployee);
     this.store.select(selectEmployee).subscribe(employee => {
