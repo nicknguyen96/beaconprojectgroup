@@ -29,8 +29,6 @@ export class AuthService {
     const data = {
       token, employee, isHR
     }
-    console.log("isHR", isHR);
-    console.log(typeof isHR)
     this.store.dispatch(AuthActions.getEmployee({ data }))
   }
 

@@ -9,17 +9,6 @@ img {
     border-radius: 50%;
     object-fit: cover;
 }
-.progress-bar {
-    width: 100%;
-}
-.page {
-    width: 100%;
-}
-
-.disabled {
-    visibility: hidden;
-    cursor: default;
-}
 
 .hoverable {
     position: relative;
@@ -66,6 +55,3 @@ img {
 }
 
 
-.container {
-    width: 100% !important;
-}
