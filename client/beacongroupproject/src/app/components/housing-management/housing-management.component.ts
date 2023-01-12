@@ -30,6 +30,7 @@ export class HousingManagementComponent implements OnInit{
   housingList$: Observable<any>;
   
   public showDetail(house: any) {
+    console.log(house)
     /**********************************************
      * following part is for Facility Information *
      **********************************************/

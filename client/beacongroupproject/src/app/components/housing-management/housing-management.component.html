@@ -75,9 +75,9 @@
             </div>
           </div>
 
-          <div class="d-flex flex-column">
-            <div class="shadow m-1 p-1 border border-secondary rounded w-100 house " *ngFor="let house of housingList$ | async"> 
-              <p class="font-weight-bold text-capitalize mb-1 pl-1 pt-2">{{house.address}}</p>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="shadow m-1 p-1 border border-secondary rounded w-100 house flex-grow-1" *ngFor="let house of housingList$ | async"> 
+              <p class="text-capitalize mb-1 pl-1 pt-2 fs-6">{{house.address}}</p>
               <hr>
               <div class="mb-2" style="height:7rem;">
                 <p class="m-0 pl-1">Land Lord</p>
