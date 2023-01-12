@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HrActions } from 'src/app/store/hr/hr.actions';
 import { housingList } from 'src/app/store/hr/hr.selector';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-housing-management',
@@ -12,7 +13,19 @@ import { housingList } from 'src/app/store/hr/hr.selector';
 export class HousingManagementComponent implements OnInit{
   constructor(private store: Store) {}
 
-  houseIdforDelete: string = '';
+  houseInfo = new FormBuilder().group({
+    address: ['', Validators.required],
+    city: ['', Validators.required],
+    state: ['', Validators.required],
+    zip: ['', Validators.required],
+    fullName: ['', Validators.required],
+    phone: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    bed: ['', Validators.required],
+    table: ['', Validators.required],
+    matress: ['', Validators.required],
+    chair: ['', Validators.required]
+  })
 
   housingList$: Observable<any>;
   
@@ -98,6 +111,51 @@ export class HousingManagementComponent implements OnInit{
   public closeDetail() {
     document.getElementById('modalBody').innerHTML = '';
   };
+
+  public deleteHousing(id: string) {
+    this.store.dispatch(HrActions.deleteHousing({id}));
+    this.housingList$ = this.store.select(housingList);
+  }
+
+  public addNewHouse() {
+    if (
+      this.houseInfo.controls.address.errors ||
+      this.houseInfo.controls.city.errors ||
+      this.houseInfo.controls.state.errors ||
+      this.houseInfo.controls.zip.errors ||
+      this.houseInfo.controls.fullName.errors ||
+      this.houseInfo.controls.phone.errors ||
+      this.houseInfo.controls.email.errors ||
+      this.houseInfo.controls.bed.errors ||
+      this.houseInfo.controls.matress.errors ||
+      this.houseInfo.controls.chair.errors ||
+      this.houseInfo.controls.table.errors
+    ) {
+      alert("All Fields are required, Please check again")
+    } else {
+      const houseInfo = {
+        address: `${this.houseInfo.controls.address.value}, ${this.houseInfo.controls.city.value}, ${this.houseInfo.controls.state.value} ${this.houseInfo.controls.zip.value}`,
+        landlord: {
+          fullName: this.houseInfo.controls.fullName.value,
+          phoneNumber: this.houseInfo.controls.phone.value,
+          email: this.houseInfo.controls.email.value
+        },
+        summary: {
+          furniture: {
+            beds: this.houseInfo.controls.bed.value,
+            matresses: this.houseInfo.controls.matress.value,
+            tables: this.houseInfo.controls.table.value,
+            chairs: this.houseInfo.controls.chair.value
+          }
+        }
+      };
+
+      this.store.dispatch(HrActions.addHousing({houseInfo}));
+      this.housingList$ = this.store.select(housingList);
+      alert('Successfully Add New House');
+      this.houseInfo.reset();
+    }
+  }
 
   ngOnInit(): void {
     this.store.dispatch(HrActions.getHousingList({data: 'some data'}));
