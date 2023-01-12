@@ -45,7 +45,7 @@ export class AuthEffects {
         localStorage.setItem('isHR', response.isHR)
 
         if (response.isHR == true || response.isHR == 'true') {
-          this.router.navigateByUrl('/hr/visaManagement')
+          this.router.navigateByUrl('/hr/hiringManagement')
         } else {
           this.router.navigateByUrl('/employee')
         }

@@ -28,6 +28,7 @@ import { VisaManagementHrComponent } from './components/visa-management-hr/visa-
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 import { VisaManagementEmployeeComponent } from './components/visa-management-employee/visa-management-employee.component';
 import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { HousingManagementEmployeeComponent } from './components/housing-managem
     HousingManagementComponent,
     VisaManagementEmployeeComponent,
     HousingManagementEmployeeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

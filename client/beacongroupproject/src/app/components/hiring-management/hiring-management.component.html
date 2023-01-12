@@ -1,44 +1,42 @@
-<div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="card shadow" style="width:60rem;">
-        <div class="card-body">
-            <h1 class="text-center">{{tab == 'onboarding' ? "Onboarding Application Review" : "Send registration token"}}</h1>
-            <ul class="nav justify-content-center nav-tabs">
-                <li class="nav-item">
-                  <button class="btn nav-link" (click)="setTab('onboarding')">Review onBoarding Employee</button>
-                </li>
-                <li class="nav-item">
-                  <button class="btn nav-link" (click)="setTab('sendemail')">Send email to new Employee</button>
-                </li>
-            </ul>
-            
-            <div *ngIf="tab == 'sendemail'">
-                <form class="form" [formGroup]="emailInviteForm">
-                    <label class="form-label" for="emailInvite">Invite new employee: </label> 
-                    <input class="form-control mb-4" type="text" formControlName="email" placeholder="Enter email here...">
-                    <button (click)="onInvite()" class="btn btn-primary">Send Invitation</button>
-                </form>
-            </div>
+<div class="container mt-5" style="width:70%">
+    <div>
+        <h1>HR Console</h1>
+    </div>
 
-            <div *ngIf="tab == 'onboarding'" class="d-flex">
-                <ul class="nav flex-column">
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
+            <h4 class="mb-3">Send Invitation</h4>
+            <p>Enter an email below to send them an invitation link to the onboarding process.</p>
+            <form class="form " [formGroup]="emailInviteForm">
+                <input class="form-control mb-2" type="text" formControlName="email" style="width:30%;min-width: 200px">
+                <button (click)="onInvite()" class="btn btn-primary ">Send Invite</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow mt-5">
+        <div class="card-body p-4">
+            <h4 class="mb-3">Review Onboarding Employees</h4>
+            <div class="d-flex">
+                <ul class="nav flex-column mr-3">
                     <li class="nav-item">
-                      <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Pending')">Pending</button>
+                    <button class="btn nav-link btn-light" (click)="onSelectOnboardingApplicationList('Pending')" style="color:goldenrod">Pending</button>
                     </li>
                     <li class="nav-item">
-                      <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Rejected')">Rejected</button>
+                    <button class="btn nav-link btn-light" (click)="onSelectOnboardingApplicationList('Rejected')" style="color:red">Rejected</button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn nav-link" (click)="onSelectOnboardingApplicationList('Approved')">Approved</button>
+                        <button class="btn nav-link btn-light" (click)="onSelectOnboardingApplicationList('Approved')" style="color:green">Approved</button>
                     </li>
                 </ul>
-                <div>
-                    <table class="table table-striped">
+                <div class="flex-column">
+                    <table class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Full name</th>
+                                <th>Name</th>
                                 <th>Email</th>
-                                <th>Action</th>
+                                <th>Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +51,7 @@
                                     {{employee.email}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-secondary" href="/hr/hiringManagement/{{employee._id}}" target="_blank">View Details</a>
+                                    <a class="btn btn-secondary" href="/hr/hiringManagement/{{employee._id}}" target="_blank">View</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -62,4 +60,37 @@
             </div>
         </div>
     </div>
+
+    <div class="card shadow mt-5 mb-5">
+        <div class="card-body p-4">
+            <h4 class="mb-3">Other Management Services</h4>
+            <ul>
+                <li><a href="/hr/visaManagement">Visa Management</a></li>
+                <li><a href="/hr/housingManagement">Housing Management</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
+            
+
+
+
+
+            <!-- <h1 class="text-center">{{tab == 'onboarding' ? "Onboarding Application Review" : "Send registration token"}}</h1>
+            <ul class="nav justify-content-center nav-tabs">
+                <li class="nav-item">
+                  <button class="btn nav-link" (click)="setTab('onboarding')">Review onBoarding Employee</button>
+                </li>
+                <li class="nav-item">
+                  <button class="btn nav-link" (click)="setTab('sendemail')">Send email to new Employee</button>
+                </li>
+            </ul>
+            
+            <div *ngIf="tab == 'sendemail'">
+            </div>
+
+            <div *ngIf="tab == 'onboarding'" class="d-flex">
+
+            </div> -->
+
+

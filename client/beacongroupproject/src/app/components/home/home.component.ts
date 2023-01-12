@@ -32,6 +32,9 @@ export class HomeComponent implements OnInit {
         this.router.navigateByUrl('/hr/hiringManagement');
       }
     }
+    else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   

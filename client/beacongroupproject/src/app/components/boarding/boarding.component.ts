@@ -29,8 +29,7 @@ export class BoardingComponent implements OnInit {
   public preferredName = new FormControl('');
 
   public email = new FormControl('', [Validators.required]);
-  public cellphone = new FormControl('', [Validators.required]);
-  public workphone = new FormControl('');
+  public phoneNumber = new FormControl('', [Validators.required]);
 
   public ssn = new FormControl('', [Validators.required]);
   public dob = new FormControl('', [Validators.required]);
@@ -85,8 +84,7 @@ export class BoardingComponent implements OnInit {
     preferredName: this.preferredName,
 
     email: this.email,
-    cellphone: this.cellphone,
-    workphone: this.workphone,
+    phoneNumber: this.phoneNumber,
 
     ssn: this.ssn,
     dob: this.dob,
@@ -254,10 +252,12 @@ export class BoardingComponent implements OnInit {
 
   ngOnInit(): void {
     // it checks if the employee is already approved then it should move to employee main page
-    // this.onboardingService.onboardingApprove();
+    this.onboardingService.onboardingApprove();
     this.employee$ = this.store.select(selectEmployee);
     this.store.select(selectEmployee).subscribe(data => {
       this.employee = data
     });
+
+    console.log(this.employee);
   }
 }
