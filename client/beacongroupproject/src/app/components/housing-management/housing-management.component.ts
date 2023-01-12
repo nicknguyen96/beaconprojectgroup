@@ -48,7 +48,9 @@ export class HousingManagementComponent implements OnInit{
       let report = document.createElement('div');
       report.innerHTML = `
         <p class="m-0 p-0">Author</p>
-        <p class="border border-success rounded p-2">${currentReport.author.user.firstName} ${currentReport.author.user.lastName}</p>
+        <p class="border border-success rounded p-2">
+          ${currentReport.author.user.firstName ? currentReport.author.user.firstName : '*'} ${currentReport.author.user.lastName ? currentReport.author.user.lastName : '*'}
+        </p>
         <p class="m-0 p-0">Description</p>
         <p class="border border-success rounded p-2 mb-0">${currentReport.description}</p><br>
         <p class="m-0 p-0">Comments</p>
@@ -83,7 +85,8 @@ export class HousingManagementComponent implements OnInit{
             href='/hr/hiringManagement/${employee._id}'
             target='__blank'
             class="text-decoration-none bg-primary text-light p-1 rounded">
-            ${employee.user.firstName} ${employee.user.lastName}</a>
+            ${employee.user.firstName ? employee.user.firstName : '*'} ${employee.user.lastName ? employee.user.lastName : '*'}
+          </a>
         </p>
       `;
       employees.appendChild(newEmployee);
