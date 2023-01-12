@@ -30,6 +30,22 @@ const HousingReducer = createReducer(
 
         return newHouse;
     }),
+
+    on(HousingActions.createCommentSuccess, (state, action) => {
+        const newHouse = JSON.parse(JSON.stringify(state));
+        console.log(newHouse);
+        const { reportid, newReport } = action.response.data;
+
+        for (let i = 0 ; i < newHouse.summary.reports.length; i++){
+            if (newHouse.summary.reports[i]._id === reportid) {
+                newHouse.summary.reports[i] = newReport;
+                console.log(i);
+                break;
+            }
+        }
+        console.log(newHouse);
+        return newHouse;
+    })
 )
 
 export const housingReducer = (state:any, action:any) => {

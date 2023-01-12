@@ -71,15 +71,22 @@
                         </div>
                     </div>
                 </div>
-                <div *ngFor="let report of (house$|async).summary.reports" class="d-flex flex-column">
+                <div *ngFor="let report of (house$|async).summary.reports; let index = index" class="d-flex flex-column">
                     <div class="shadow m-1 p-1 border border-secondary rounded w-100 card" *ngIf="report?.author?._id == (employee$|async).id">
-                        <div class="m-4"><strong>Title:</strong> {{report.title}}</div>
-                        <div class="m-4"><strong>Description:</strong> {{report.description}}</div>
-                        <div class="m-4"><strong>Status:</strong> {{report.status}}</div>
-                        <div class="m-4"><strong>Created:</strong> {{report.timeStamp}}</div>
-                        
+                        <div class="mt-4"><strong>Title:</strong> {{report.title}}</div>
+                        <div class=""><strong>Description:</strong> {{report.description}}</div>
+                        <div class=""><strong>Status:</strong> {{report.status}}</div>
+                        <div class=""><strong>Created:</strong> {{report.timeStamp}}</div>
+                        <hr>
+                        <div class=""><strong>Comment:</strong>:</div>
+                        <div *ngFor="let comment of report.comments" style="max-height: 400px; overflow-y: scroll;">
+                            <p>
+                                <span>{{comment.author.email}}</span> : {{comment.description}}
+                            </p>
+                            <p style="float: right; margin: 4px"><i>{{comment.timeStamp}}</i></p>
+                        </div>
                         <button class="btn btn-outline-primary my-4" data-bs-toggle="modal"
-                            data-bs-target="#viewDetail">View more</button>
+                            data-bs-target="#viewDetail" (click)="setReportId(index)">View more</button>
                     </div>
                     <div class="modal" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="viewDetail">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -94,7 +101,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-outline-primary"
-                                                    (click)="saveComment()">Save</button>
+                                                    (click)="saveComment()">Send Comment</button>
                                             </div>
                                         </form>
                                     </div>

@@ -62,17 +62,17 @@ exports.getReportsAndComments = async (req, res) => {
 exports.createComment = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const { reportId, description } = req.body;
+    const { reportid, description } = req.body;
     const { userid } = jwt.decode(token, JWT_SECRET);
     const comment = { description, author: userid };
     const newComment = await Comments.create(comment);
     const updateResult = await Report.updateOne(
-      { "_id": reportId },
+      { "_id": reportid },
       {
         $push: { 'comments': newComment._id },
-        $set: { "status": "In Progress" }
+        $set: { "status": "In Progress" },
       });
-    res.json({ status: 201, msg: 'Comment Created', data: updateResult })
+    res.json({ status: 201, msg: 'Comment Created', data: { updateResult, reportid } })
   } catch (error) {
     res.json({ status: 500, msg: error.message })
   }

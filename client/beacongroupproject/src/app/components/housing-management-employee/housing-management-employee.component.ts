@@ -17,7 +17,7 @@ export class HousingManagementEmployeeComponent implements OnInit {
   employee$: Observable<any>;
   houseid: string = '';
   house$: Observable<any>;
-
+  index: string = '';
   tab: string = 'detail';
 
   setTab(tab: string) {
@@ -30,6 +30,23 @@ export class HousingManagementEmployeeComponent implements OnInit {
     title: [''],
     description: ['']
   })
+
+  commentForm = this.fb.group({
+    description: ['']
+  })
+
+  saveComment() {
+    const { description } = this.commentForm.getRawValue();
+    this.house$.subscribe(house => {
+      const reportid = house.summary.reports[this.index];
+      console.log(reportid);
+      this.store.dispatch(HousingActions.createComment({ description, reportid }))
+    })
+  }
+
+  setReportId(index : number){
+    this.index = String(index);
+  }
 
   saveReport() {
     const { title, description } = this.reportForm.getRawValue();
