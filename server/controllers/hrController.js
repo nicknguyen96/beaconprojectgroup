@@ -134,6 +134,7 @@ class HrController {
   async updateFileStatus(req, res) {
     try {
       const { employeeid, fileName, message, status } = req.body;
+      console.log(employeeid, fileName, message, status)
       const employee = await
         Employee
           .findById(employeeid)
@@ -142,7 +143,7 @@ class HrController {
         res.json({ status: 404, message: 'Employee Doesn\'t Exist' });
       } else {
         console.log("employee ", employee);
-        await EmployeeDetail.findOneAndUpdate(
+        const newDetail = await EmployeeDetail.findOneAndUpdate(
           { "_id": employee.user },
           {
             $set: {
@@ -150,7 +151,14 @@ class HrController {
               'legalStatus.workStatus.fileUpload.$[file].message': message,
             }
           },
-          { arrayFilters: [{ 'file.fileName': fileName }] });
+          { arrayFilters: [{ 'file.fileUrl': fileName }], $new: true });
+
+        console.log(newDetail);
+
+        if (newDetail.legalStatus.workStatus.fileUpload.length == 4 && status) {
+          newDetail.legalStatus.isCompleted = true;
+          newDetail.save();
+        }
 
         const subject = "New status in file uploaded";
         const html = `
@@ -176,7 +184,7 @@ class HrController {
       res.json({ status: 500, message: error.message });
     }
   };
-  
+
 }
 
 module.exports = new HrController();

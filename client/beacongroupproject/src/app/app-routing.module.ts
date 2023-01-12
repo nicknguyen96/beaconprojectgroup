@@ -10,6 +10,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { VisaManagementHrComponent } from './components/visa-management-hr/visa-management-hr.component';
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
+import { VisaManagementEmployeeComponent } from './components/visa-management-employee/visa-management-employee.component';
+import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,7 +20,9 @@ const routes: Routes = [
   {
     path: 'employee', children: [
       { path: '', component: EmployeeHomeComponent },
-      { path: 'boarding', component: BoardingComponent }
+      { path: 'boarding', component: BoardingComponent },
+      { path: 'visa', component: VisaManagementEmployeeComponent},
+      { path: 'housing', component: HousingManagementEmployeeComponent}
     ]
   },
   {

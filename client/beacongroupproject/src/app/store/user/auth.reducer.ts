@@ -52,6 +52,16 @@ const AuthReducer = createReducer(
       employee: null
     }
   }),
+
+  on(AuthActions.uploadFileSuccess, (state, action) => {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.employee.details = action.response.data;
+    const newEmployee = JSON.parse(localStorage.getItem('employee'));
+    newEmployee.details = action.response.data;
+    localStorage.setItem('employee', JSON.stringify(newEmployee));
+    return newState;
+  }),
+
 )
 export const authReducer = (state: Employee, action) => {
   return AuthReducer(state, action)

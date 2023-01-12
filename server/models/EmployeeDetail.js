@@ -27,20 +27,6 @@ const fileUploadSchema = new Schema({
     default: "visa title",
     required: true,
   },
-  issuedDate: {
-    type: String,
-    default: "issued date",
-    required: true,
-  },
-  expirationDate: {
-    type: String,
-    default: "expiration date",
-    required: true,
-  },
-  fileUpload: {
-    type: String,
-    required: true,
-  },
   status: {
     type: String,
     required: true,
@@ -147,6 +133,33 @@ const contactInfoSchema = new Schema({
   },
 });
 
+const contactReferenceInfoSchema = new Schema({
+  firstName: {
+    type: String,
+    required: false,
+  },
+  lastName: {
+    type: String,
+    required: false,
+  },
+  middleName: {
+    type: String,
+    required: false,
+  },
+  phone: {
+    type: String,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
+  },
+  relationship: {
+    type: String,
+    required: false,
+  },
+});
+
 const employeeDetailSchema = new Schema({
   firstName: {
     type: String,
@@ -231,7 +244,7 @@ const employeeDetailSchema = new Schema({
     required: true,
   },
   referenceContact: {
-    type: contactInfoSchema,
+    type: contactReferenceInfoSchema,
     required: false,
   },
 });
