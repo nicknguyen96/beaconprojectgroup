@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       alert('You are already logged in!');
       this.employee$.subscribe(data => {
         if (data.isHR) {
-          this.router.navigateByUrl('/hr');
+          this.router.navigateByUrl('/hr/hiringManagement');
         } else {
           this.router.navigateByUrl('/employee');
         }

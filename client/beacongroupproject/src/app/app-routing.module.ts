@@ -12,9 +12,10 @@ import { VisaManagementHrComponent } from './components/visa-management-hr/visa-
 import { HousingManagementComponent } from './components/housing-management/housing-management.component';
 import { VisaManagementEmployeeComponent } from './components/visa-management-employee/visa-management-employee.component';
 import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: HomeComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {
@@ -27,13 +28,15 @@ const routes: Routes = [
   },
   {
     path: 'hr', children: [
+      { path: '', redirectTo: '/hr/hiringManagement', pathMatch: 'full'},
       { path: 'hiringManagement', component: HiringManagementComponent },
       { path: 'hiringManagement/:employeeid', component: OnboardingDetailPageComponent },
       { path: 'visaManagement', component: VisaManagementHrComponent},
       { path: 'housingManagement', component: HousingManagementComponent }
     ]
   },
-  { path: 'forbidden', component: ForbiddenComponent}
+  { path: 'forbidden', component: ForbiddenComponent},
+  { path: '**', pathMatch: 'full', component: NotFoundComponent }
 ]
 
 @NgModule({

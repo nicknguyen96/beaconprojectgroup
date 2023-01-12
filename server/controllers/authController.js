@@ -96,10 +96,24 @@ class AuthController {
 
       await newEmployee.save();
 
-      const payload = { userid: newEmployee._id, isHR: false };
+      const emp = await Employee.findOne({ email: newEmployee.email.toLowerCase() }).populate("user");
+
+      const payload = { userid: emp._id, isHR: false };
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
 
-      return res.json({ status: 201, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
+      return res.json({
+        status: 201,
+        token: token,
+        employee: {
+          id: emp._id,
+          isHR: emp.isHR,
+          email: emp.email,
+          details: emp.user,
+        },
+        isHR: newEmployee.isHR,
+      });
+
+      // return res.json({ status: 201, message: "Successfully create new employee", data: { token, userid: newEmployee._id, isHR: false } });
     } catch (error) {
       console.log(error.message);
       return res.json({ status: 400, message: "Something wrong while creating new employee. Please contact your HR or try again." });

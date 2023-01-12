@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit {
 
   public registerUser(): void {
     if (!this.regForm.invalid) {
-      console.log("User passes validation! Pass onto backend (WIP)");
       const { email, password } = this.regForm.getRawValue();
       const body = JSON.stringify({email, password});
       const headers = { 'content-type': 'application/json', 'email': email };
@@ -60,14 +59,26 @@ export class RegisterComponent implements OnInit {
 
       this.http.post(`${this.BASE_URL}/auth/register`, body, options).subscribe((res: any) => {
         
-        alert(res.message)
+        if (res.status == 401) {
+          alert('You must use the same email that the registration link was sent to. If this is a mistake, please contact HR.');
+        }
+
+        if (res.status == 409) {
+          alert('There is already an account with this email. If this is a mistake, please contact HR.');
+        }
+
         if (res.status == 201) {
-          this.router.navigate(['/employee'])
+          localStorage.setItem('token', res.token)
+          localStorage.setItem('employee', JSON.stringify(res.employee))
+          localStorage.setItem('isHR', res.isHR)
+          console.log(res);
+          alert('Account created successfully!');
+          this.router.navigate(['/employee']);
         }
       });
     }
     else {
-      alert("There are still errors with your form!");
+      alert("There are still errors with your form. Please make sure all requirements have been fulfilled.");
     }
 
   }

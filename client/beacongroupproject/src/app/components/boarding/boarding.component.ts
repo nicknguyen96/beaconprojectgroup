@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { OnboardingService } from 'src/app/services/onboarding.service';
 import { OnboardingAction } from 'src/app/store/onboarding/onboarding.actions';
 import { selectEmployee } from 'src/app/store/user/auth.selector';
@@ -17,7 +19,6 @@ export class BoardingComponent implements OnInit {
 
   public progressBar: number = 0;
   public pfpUrl: string = '';
-  public userEmail: string = '(placeholder)@gmail.com';
   public currPage: number = 1;
 
   public profilePicture = new FormControl('');
@@ -28,8 +29,7 @@ export class BoardingComponent implements OnInit {
   public preferredName = new FormControl('');
 
   public email = new FormControl('', [Validators.required]);
-  public cellphone = new FormControl('', [Validators.required]);
-  public workphone = new FormControl('');
+  public phoneNumber = new FormControl('', [Validators.required]);
 
   public ssn = new FormControl('', [Validators.required]);
   public dob = new FormControl('', [Validators.required]);
@@ -64,15 +64,15 @@ export class BoardingComponent implements OnInit {
   public referPhone = new FormControl('');
   public referRelationship = new FormControl('');
 
-  public emergencyFirstName = new FormControl('');
+  public emergencyFirstName = new FormControl('', [Validators.required]);
   public emergencyMiddleName = new FormControl('');
-  public emergencyLastName = new FormControl('');
-  public emergencyEmail = new FormControl('');
-  public emergencyPhone = new FormControl('');
-  public emergencyRelationship = new FormControl('');
+  public emergencyLastName = new FormControl('', [Validators.required]);
+  public emergencyEmail = new FormControl('', [Validators.required]);
+  public emergencyPhone = new FormControl('', [Validators.required]);
+  public emergencyRelationship = new FormControl('', [Validators.required]);
 
 
-  constructor(private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store, private http: HttpClient) { }
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store, private http: HttpClient) { }
 
   // initialize formgroup
   boardForm: FormGroup = this.fb.group({
@@ -84,8 +84,7 @@ export class BoardingComponent implements OnInit {
     preferredName: this.preferredName,
 
     email: this.email,
-    cellphone: this.cellphone,
-    workphone: this.workphone,
+    phoneNumber: this.phoneNumber,
 
     ssn: this.ssn,
     dob: this.dob,
@@ -246,15 +245,19 @@ export class BoardingComponent implements OnInit {
     this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }))
   }
 
+  
   employee: any;
 
   employee$: Observable<any>;
+
   ngOnInit(): void {
     // it checks if the employee is already approved then it should move to employee main page
-    // this.onboardingService.onboardingApprove();
+    this.onboardingService.onboardingApprove();
     this.employee$ = this.store.select(selectEmployee);
     this.store.select(selectEmployee).subscribe(data => {
       this.employee = data
     });
+
+    console.log(this.employee);
   }
 }

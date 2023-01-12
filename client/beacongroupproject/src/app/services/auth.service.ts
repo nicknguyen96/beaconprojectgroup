@@ -43,6 +43,7 @@ export class AuthService {
   }
 
   logOut(): Observable<any> {
+
     return this.http.post(`${BACKEND_URL}/auth/logout`, {});
   }
 

@@ -1,6 +1,6 @@
 input[type="text"], select, input[type="date"], input[type="file"] {
     width:20%;
-    min-width:350px;
+    min-width:300px;
 }
 
 img {
@@ -8,6 +8,18 @@ img {
     width: 100%;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.progress-bar {
+    width: 100%;
+}
+.page {
+    width: 100%;
+}
+
+.disabled {
+    visibility: hidden;
+    cursor: default;
 }
 
 .hoverable {
@@ -54,4 +66,6 @@ img {
     display: none;
 }
 
-
+.container {
+    max-width: 100% !important;
+}

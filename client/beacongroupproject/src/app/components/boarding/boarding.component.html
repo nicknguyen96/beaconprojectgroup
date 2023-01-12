@@ -1,14 +1,14 @@
-<div class="container mt-5" style="width:70rem;">
+<div class="container mt-5" style="width:50rem;">
     <div class="card shadow">
-        <div *ngIf="(employee$ | async)?.details?.onboardingStatus == 'Pending'; else nextBlock " class="card-body p-4 body">
+        <div class="card-body p-4 body">
             Waiting for HR to approve
         </div>
         <ng-template #nextBlock>
-            <div class="card-body p-4 body">
+            <div class="card-body p-4">
                 <h5>Employee Onboarding Application</h5>
-                <div class="progress-bar bg-success progress-bar-striped" role="progressbar"
-                    aria-label="Example with label" style="width: {{ progressBar }}%;"
-                    attr.aria-valuenow="{{progressBar}}" aria-valuemin="0" aria-valuemax="100">{{progressBar }}%</div>
+                <div class="progress mt-4">
+                    <div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-label="Example with label" style="width: {{progressBar}}%;" attr.aria-valuenow="{{progressBar}}"  aria-valuemin="0" aria-valuemax="100">{{progressBar}}%</div>
+                </div>
             </div>
 
             <div class="container mt-4 mb-4" style="width:75%; padding-bottom: 100px;">
@@ -61,15 +61,10 @@
                         <label class="form-label">Email Address <b style="color:red">*</b></label>
                         <input class="form-control mb-3" type="text" formControlName="email" required>
 
-                        <label class="form-label">Cell Phone Number <b style="color:red">*</b></label>
+                        <label class="form-label">Phone Number <b style="color:red">*</b></label>
                         <input class="form-control mb-3" inputmode="numeric"
                             oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
-                            formControlName="cellphone" required>
-
-                        <label class="form-label">Work Phone Number</label>
-                        <input class="form-control mb-3" inputmode="numeric"
-                            oninput="this.value = this.value.replace(/\D+/g, '')" type="text"
-                            formControlName="workphone">
+                            formControlName="phoneNumber" required>
 
                         <hr class="mb-3">
 
@@ -255,10 +250,10 @@
 
                         <div *ngIf="dLicense.value == 'Yes'">
                             <label class="form-label">License Number <b style="color:red">*</b></label>
-                            <input class="form-control mb-3" type="text" formControlName="licenseNum" required>
+                            <input class="form-control mb-3" type="text" formControlName="licenseNum">
 
                             <label class="form-label">Expiration Date <b style="color:red">*</b></label>
-                            <input class="form-control mb-3" type="date" formControlName="licenseExpiration" required>
+                            <input class="form-control mb-3" type="date" formControlName="licenseExpiration">
 
                             <label class="form-label">Photo of License <b style="color:red">*</b></label>
                             <input class="form-control mb-3" type="file" formControlName="licenseFile" required (change)="onSelectFile( $event, 'driversLicense')">
@@ -337,8 +332,7 @@
                         <p>Name: {{firstName.value}} {{middleName.value}} {{lastName.value}}</p>
                         <p>Preferred Name: {{preferredName.value}} </p>
                         <p>Email: {{email.value}}</p>
-                        <p>Cell Phone Number: {{cellphone.value}}</p>
-                        <p>Work Phone Number: {{workphone.value}}</p>
+                        <p>Phone Number: {{phoneNumber.value}}</p>
                         <p>SSN: {{ssn.value}}</p>
                         <p>Date of Birth: {{dob.value}}</p>
                         <p>Gender: {{gender.value}}</p>
