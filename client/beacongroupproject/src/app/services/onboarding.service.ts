@@ -21,7 +21,6 @@ export class OnboardingService {
     const token = localStorage.getItem('token')
     this.employee$.subscribe(employee => {
       if(!token) {
-        alert('Please login before entering this page')
         this.router.navigate(['/'])
       }
       console.log(employee)
@@ -39,7 +38,6 @@ export class OnboardingService {
     const token = localStorage.getItem('token')
     this.employee$.subscribe(employee => {
       if(!token) {
-        alert('Please login before entering this page')
         this.router.navigate(['/login'])
       }
       console.log(employee)
@@ -73,7 +71,6 @@ export class OnboardingService {
   
   onboardingUploadFile(event : any, fileType : string): void {
       if (event.target.files && event.target.files[0]) {
-         
           const selectedFile: File = event.target.files[0];
           
           const form = new FormData();

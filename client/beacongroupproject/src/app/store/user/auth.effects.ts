@@ -44,7 +44,6 @@ export class AuthEffects {
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)
 
-        alert('Successfully logged in' + response.employee.email)
         if (response.isHR == true || response.isHR == 'true') {
           this.router.navigateByUrl('/hr/visaManagement')
         } else {
@@ -75,7 +74,6 @@ export class AuthEffects {
             if (data?.status == 200) {
               this.deleteLocal();
               this.router.navigateByUrl['/login'];
-              alert('Logged out successfully.');
               return AuthActions.logoutSuccess({ response: "logged out successfully." });
             } else {
               return AuthActions.logoutFailure({ error: "something went wrong with logging you out." });
