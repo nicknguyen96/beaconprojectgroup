@@ -49,7 +49,7 @@ export class HousingManagementComponent implements OnInit{
       report.innerHTML = `
         <p class="m-0 p-0">Author</p>
         <p class="border border-success rounded p-2">
-          ${currentReport.author.user.firstName ? currentReport.author.user.firstName : '*'} ${currentReport.author.user.lastName ? currentReport.author.user.lastName : '*'}
+          ${currentReport.author ? currentReport.author.user.firstName : '*'} ${currentReport.author ? currentReport.author.user.lastName : '*'}
         </p>
         <p class="m-0 p-0">Description</p>
         <p class="border border-success rounded p-2 mb-0">${currentReport.description}</p><br>
