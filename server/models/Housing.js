@@ -49,10 +49,10 @@ const summarySchema = new Schema({
     type: furnitureSchema,
     required: true,
   },
-  reports: {
-    type: [Schema.Types.ObjectId],
+  reports: [{
+    type: Schema.Types.ObjectId,
     ref: "Report",
-  },
+  }],
 });
 
 // sub schema

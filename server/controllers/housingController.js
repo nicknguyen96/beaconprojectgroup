@@ -14,22 +14,27 @@ class HousingController {
     
     try {
       // getting all the houses and filling in the tenant information
-      const allHousing = await Housing.find().populate({
+      const allHousing = await Housing.find()
+      .populate({
         path: 'tenants',
-        model: 'Employee',
-        populate: {
-          path: 'user',
-          model: 'EmployeeDetail'
-        }
+        populate: { path: 'user' }
+      })
+      .populate({
+        path: 'summary.reports',
+        populate: { path: 'comments', populate: { path: 'author' }}
+      })
+      .populate({
+        path: 'summary.reports',
+        populate: { path: 'author', populate: { path: 'user' }}
       });
-
+      
       if (allHousing.length <= 0) {
         return res.status(200).json({ status: 200, message: "No houses have been added" });
       }
 
       res.status(200).json({ status: 200, message: "get allHousing", data: allHousing });
     } catch (error) {
-      return res.json({ status: 200, message: error.message });
+      return res.json({ status: 500, message: error.message });
     }
   }
 
