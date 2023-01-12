@@ -1,5 +1,10 @@
 .house {
+  flex-basis: 25%;
   &:hover {
     background-color: #E0E0E0;
   }
+}
+
+.address {
+  height: 60px;
 }
