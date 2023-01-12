@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { OnboardingService } from 'src/app/services/onboarding.service';
 import { OnboardingAction } from 'src/app/store/onboarding/onboarding.actions';
 import { selectEmployee } from 'src/app/store/user/auth.selector';
@@ -15,7 +17,6 @@ export class BoardingComponent implements OnInit {
 
   public progressBar: number = 0;
   public pfpUrl: string = '';
-  public userEmail: string = '(placeholder)@gmail.com';
   public currPage: number = 1;
 
   public profilePicture = new FormControl('');
@@ -62,15 +63,15 @@ export class BoardingComponent implements OnInit {
   public referPhone = new FormControl('');
   public referRelationship = new FormControl('');
 
-  public emergencyFirstName = new FormControl('');
+  public emergencyFirstName = new FormControl('', [Validators.required]);
   public emergencyMiddleName = new FormControl('');
-  public emergencyLastName = new FormControl('');
-  public emergencyEmail = new FormControl('');
-  public emergencyPhone = new FormControl('');
-  public emergencyRelationship = new FormControl('');
+  public emergencyLastName = new FormControl('', [Validators.required]);
+  public emergencyEmail = new FormControl('', [Validators.required]);
+  public emergencyPhone = new FormControl('', [Validators.required]);
+  public emergencyRelationship = new FormControl('', [Validators.required]);
 
 
-  constructor(private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store) { }
+  constructor(private router: Router, private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store, private authService: AuthService) { }
 
   // initialize formgroup
   boardForm: FormGroup = this.fb.group({
@@ -232,9 +233,11 @@ export class BoardingComponent implements OnInit {
     this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }))
   }
 
+  
   employee: any;
 
   employee$: Observable<any>;
+
   ngOnInit(): void {
     // it checks if the employee is already approved then it should move to employee main page
     this.onboardingService.onboardingApprove();

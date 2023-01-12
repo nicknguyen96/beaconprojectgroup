@@ -73,9 +73,11 @@ export class AuthEffects {
             console.log(data);
             if (data?.status == 200) {
               this.deleteLocal();
-              return AuthActions.logoutSuccess({ response: "something right" });
+              this.router.navigateByUrl['/login'];
+              alert('Logged out successfully.');
+              return AuthActions.logoutSuccess({ response: "logged out successfully." });
             } else {
-              return AuthActions.logoutFailure({ error: "something wrong" });
+              return AuthActions.logoutFailure({ error: "something went wrong with logging you out." });
             }
           })
         )

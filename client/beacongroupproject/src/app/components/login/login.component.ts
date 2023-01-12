@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.authService.getEmployee();
     if(this.authService.userIsLoggedIn()) {
       alert('You are already logged in!');
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/forbidden');
     } 
   }
 }

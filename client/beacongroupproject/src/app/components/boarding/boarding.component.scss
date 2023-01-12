@@ -1,6 +1,6 @@
 input[type="text"], select, input[type="date"], input[type="file"] {
     width:20%;
-    min-width:350px;
+    min-width:300px;
 }
 
 img {
@@ -9,6 +9,7 @@ img {
     border-radius: 50%;
     object-fit: cover;
 }
+
 .progress-bar {
     width: 100%;
 }
@@ -67,5 +68,5 @@ img {
 
 
 .container {
-    width: 100% !important;
+    max-width: 100% !important;
 }
