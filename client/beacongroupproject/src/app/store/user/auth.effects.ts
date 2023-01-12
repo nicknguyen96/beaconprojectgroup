@@ -7,6 +7,7 @@ import { catchError, of, exhaustMap, map, tap, switchMap, Observable, mergeMap, 
 import { AuthService } from 'src/app/services/auth.service'
 import { AuthActions } from './auth.actions'
 import { OnboardingService } from 'src/app/services/onboarding.service'
+import { EmployeeService } from 'src/app/services/employee.service'
 
 @Injectable()
 
@@ -82,17 +83,37 @@ export class AuthEffects {
       })
     )
   })
-  
+
   deleteLocal() {
     localStorage.removeItem('employee')
     localStorage.removeItem('isHR')
     localStorage.removeItem('token')
     this.router.navigateByUrl('/login')
   }
+
+  uploadFile$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.uploadFile),
+      exhaustMap((action) => {
+        console.log(action);
+        return this.employeeService.uploadFile(action.form).pipe(
+          map((response: any) => {
+            if (response.status == 200) {
+              return AuthActions.uploadFileSuccess({ response });
+            } else {
+              return AuthActions.uploadFileFail({ response });
+            }
+          })
+        )
+      })
+    )
+  })
+
   constructor(
     private actions$: Actions,
     private authService: AuthService,
     private router: Router,
     private onboardingService: OnboardingService,
+    private employeeService: EmployeeService,
   ) { }
 }
