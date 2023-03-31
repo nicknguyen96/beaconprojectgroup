@@ -3,3 +3,8 @@ This is a beaconfire group project. It is an employee/HR website portal for mana
 
 # Instructions
 While in the root directory, do npm i , then npm start.
+
+
+# HR Account
+admin@gmail.com
+Admin*1234

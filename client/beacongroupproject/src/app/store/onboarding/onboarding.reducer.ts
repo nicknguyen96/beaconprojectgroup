@@ -13,12 +13,11 @@ const initialState = {
 
 const OnboardingReducer = createReducer(
   initialState,
-  on(OnboardingAction.updateOnboardingSuccess, (state, {response}): any => {
-    console.log(response)
-    return {
-      ...state, 
-      employee: response.data
-    }
+  on(OnboardingAction.updateOnboardingSuccess, (state, action): any => {
+    console.log(action.employeeDetails);
+    const newState = JSON.parse(JSON.stringify(state));
+    console.log(state, newState);
+    return newState;
   })
 )
 

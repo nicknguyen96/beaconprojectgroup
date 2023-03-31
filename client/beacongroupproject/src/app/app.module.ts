@@ -31,6 +31,7 @@ import { VisaManagementEmployeeComponent } from './components/visa-management-em
 import { HousingManagementEmployeeComponent } from './components/housing-management-employee/housing-management-employee.component';
 import { HousingEffects } from './store/housing/housing.effects';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ToPhoneNumberPipe } from './pipes/to-phone-number.pipe';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     VisaManagementEmployeeComponent,
     HousingManagementEmployeeComponent,
     NotFoundComponent,
+    ToPhoneNumberPipe,
   ],
   imports: [
     BrowserModule,

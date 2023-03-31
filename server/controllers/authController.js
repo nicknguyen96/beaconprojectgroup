@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const { JWT_SECRET } = process.env; 
+const { JWT_SECRET } = process.env;
 const { BlackListToken, Employee, EmployeeDetail, Housing } = require("../models");
 
 // maximum of tenents in the house
@@ -14,12 +14,12 @@ class AuthController {
       const token = req.headers.authorization.split(' ')[1];
       const email = jwt.decode(token, JWT_SECRET);
       if (!token || !email) {
-        return res.json({ status: 403, message: 'You are not allowed to access this link'});
+        return res.json({ status: 403, message: 'You are not allowed to access this link' });
       } else {
-        return res.json({ status: 200, message: 'Valid Token'});
+        return res.json({ status: 200, message: 'Valid Token' });
       }
-    } catch(error) {
-      return res.json({ status: 500, message: 'You are not allowed to access this link'});
+    } catch (error) {
+      return res.json({ status: 500, message: 'You are not allowed to access this link' });
     }
   };
 
@@ -54,7 +54,7 @@ class AuthController {
         password: req.body.password,
         isHR: false,
       });
-      const salt = await bcrypt.genSalt();
+      const salt = await bcrypt.genSalt(Number(process.env.SALT));
       const hashedPassword = await bcrypt.hash(newEmployee.password, salt);
       newEmployee.password = hashedPassword;
 
@@ -146,10 +146,9 @@ class AuthController {
       }
 
       const employee = await Employee.findOne({ email: email.toLowerCase() }).populate("user");
-      if (!employee) return res.status(404).send({ message: "User not found!" });
-      // check if user credentials are correct
+      if (!employee) return res.send({status: 404, message: "User not found!" });
       const comparePassword = await bcrypt.compare(password, employee.password);
-      if (!comparePassword) return res.status(401).send({ message: "Invalid password!" });
+      if (!comparePassword) return res.json({ status: 401, message: "Invalid password!" });
 
       const payload = {
         userid: employee._id,
@@ -170,7 +169,7 @@ class AuthController {
       });
     } catch (error) {
       console.log(error.message);
-      res.json({ status: 400, message: error.message });
+      res.json({ status: 500, message: error.message });
     }
   }
 }

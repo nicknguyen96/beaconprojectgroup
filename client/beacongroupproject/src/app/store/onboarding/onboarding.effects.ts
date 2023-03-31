@@ -15,9 +15,9 @@ export class OnboardingEffects {
         .pipe(
           map((response: any) => {
             if (response?.status == 200) {
-              return OnboardingAction.updateOnboardingSuccess({ response });
+              return OnboardingAction.updateOnboardingSuccess({employeeDetails : response.data});
             } else {
-              return OnboardingAction.updateOnboardingFailure({ error: "something wrong" });
+              return OnboardingAction.updateOnboardingFailure();
             }
           })
         )
@@ -29,7 +29,13 @@ export class OnboardingEffects {
     this.actions$.pipe(
       ofType(OnboardingAction.updateOnboardingSuccess),
       tap(response => {
-        
+        console.log(response);
+        const employee = localStorage.getItem('employee');
+        if (employee){
+          let employeeObj = JSON.parse(employee);
+          employeeObj.details = response.employeeDetails;
+          localStorage.setItem('employee', JSON.stringify(employeeObj));
+        }
       })
     ),
     {dispatch: false}

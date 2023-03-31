@@ -14,5 +14,7 @@ export const AuthActions = createActionGroup({
     "upload file": props<{ form : FormData }>(),
     "upload file Success": props<{ response : any }>(),
     "upload file Fail": props<{ response: any }>(),
+
+    
   }
 })

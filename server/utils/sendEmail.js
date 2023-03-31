@@ -10,7 +10,8 @@ async function sendEmail(email, subject, html) {
         };
 
         const transporter = nodemailer.createTransport({
-            service: "hotmail",
+            // service: "hotmail",
+            service: "gmail",
             auth: {
                 user: process.env.email,
                 pass: process.env.password,

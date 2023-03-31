@@ -12,14 +12,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private store: Store, private router: Router) { }
 
-
-
   login(email: string, password: string) {
-    return this.http.post(`${BACKEND_URL}/auth/login`, { email, password }).pipe(
-      tap((data) => {
-        this.store.dispatch(AuthActions.login({ email, password }));
-      })
-    )
+    // return this.http.post(`${BACKEND_URL}/auth/login`, { email, password }).pipe(
+    //   tap((data) => {
+    //     this.store.dispatch(AuthActions.login({ email, password }));
+    //   })
+    // )
+    return this.http.post(`${BACKEND_URL}/auth/login`, { email, password });
   }
 
   getEmployee() {
@@ -43,7 +42,6 @@ export class AuthService {
   }
 
   logOut(): Observable<any> {
-
     return this.http.post(`${BACKEND_URL}/auth/logout`, {});
   }
 

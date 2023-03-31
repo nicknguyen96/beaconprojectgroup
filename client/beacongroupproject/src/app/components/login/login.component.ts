@@ -25,13 +25,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const { email, password } = this.loginForm.getRawValue();
-    this.authService.login(email, password).subscribe();
+    this.store.dispatch(AuthActions.login({ email, password }))
+    // this.authService.login(email, password).subscribe();
   }
 
 
   ngOnInit() {
     this.authService.getEmployee();
-    if(this.authService.userIsLoggedIn()) {
+    if (this.authService.userIsLoggedIn()) {
       alert('You are already logged in!');
       this.employee$.subscribe(data => {
         if (data.isHR) {
@@ -40,6 +41,6 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/employee');
         }
       })
-    } 
+    }
   }
 }

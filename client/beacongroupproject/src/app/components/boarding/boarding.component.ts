@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs';
+import { ToPhoneNumberPipe } from 'src/app/pipes/to-phone-number.pipe';
 import { AuthService } from 'src/app/services/auth.service';
 import { OnboardingService } from 'src/app/services/onboarding.service';
 import { OnboardingAction } from 'src/app/store/onboarding/onboarding.actions';
 import { selectEmployee } from 'src/app/store/user/auth.selector';
-import { BACKEND_URL } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-boarding',
@@ -28,7 +28,6 @@ export class BoardingComponent implements OnInit {
   public lastName = new FormControl('', [Validators.required]);
   public preferredName = new FormControl('');
 
-  public email = new FormControl('', [Validators.required]);
   public phoneNumber = new FormControl('', [Validators.required]);
 
   public ssn = new FormControl('', [Validators.required]);
@@ -72,7 +71,15 @@ export class BoardingComponent implements OnInit {
   public emergencyRelationship = new FormControl('', [Validators.required]);
 
 
-  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private onboardingService: OnboardingService, private store: Store, private http: HttpClient) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder,
+    private onboardingService: OnboardingService,
+    private store: Store,
+    private http: HttpClient
+  ) { }
+  employee$ = this.store.select(selectEmployee);
 
   // initialize formgroup
   boardForm: FormGroup = this.fb.group({
@@ -82,8 +89,6 @@ export class BoardingComponent implements OnInit {
     middleName: this.middleName,
     lastName: this.lastName,
     preferredName: this.preferredName,
-
-    email: this.email,
     phoneNumber: this.phoneNumber,
 
     ssn: this.ssn,
@@ -134,10 +139,9 @@ export class BoardingComponent implements OnInit {
 
   image: any;
 
-  selectedFile : File;
+  selectedFile: File;
 
-  public onSelectFile(event : any, fileType : string){
-
+  public onSelectFile(event: any, fileType: string) {
 
     // just to make the image appear in the circle once the user selects it
     const reader = new FileReader();
@@ -172,9 +176,24 @@ export class BoardingComponent implements OnInit {
     }
   }
 
+  private findInvalidControls() {
+    const invalid = [];
+    const controls = this.boardForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    return invalid;
+}
+
   onSubmit(): any {
-    if(this.boardForm.invalid) {
-    return alert("ERROR: There are still some required fields you have not filled out!");
+
+    console.log(this.boardForm)
+    const invalidControl = this.findInvalidControls();
+    console.log(invalidControl)
+    if (this.boardForm.invalid) {
+      return alert("ERROR: There are still some required fields you have not filled out!");
     }
 
     const { firstName, lastName, middleName, preferredName,
@@ -223,7 +242,7 @@ export class BoardingComponent implements OnInit {
         expiration: licenseExpiration,
         picture: licenseFile
       },
-      onBoardingStatus: 'Submitted',
+      onboardingStatus: 'Submitted',
       emergencyContact: {
         firstName: emergencyFirstName,
         lastName: emergencyLastName,
@@ -245,10 +264,7 @@ export class BoardingComponent implements OnInit {
     this.store.dispatch(OnboardingAction.updateOnboarding({ employeeDetails }))
   }
 
-  
   employee: any;
-
-  employee$: Observable<any>;
 
   ngOnInit(): void {
     // it checks if the employee is already approved then it should move to employee main page
@@ -257,7 +273,11 @@ export class BoardingComponent implements OnInit {
     this.store.select(selectEmployee).subscribe(data => {
       this.employee = data
     });
-
+    this.boardForm.valueChanges.pipe(
+      map(form => form.phoneNumber)
+    ).subscribe((phoneNumber: any) => {
+      
+    })
     console.log(this.employee);
   }
 }

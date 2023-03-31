@@ -15,8 +15,8 @@ const corsOptions = {
   origin: "http://localhost:4200",
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
-
+// app.use(cors(corsOptions));
+app.use(cors());  
 
 app.use("/user", employeeDetailRouter);
 app.use("/auth", authRouter);

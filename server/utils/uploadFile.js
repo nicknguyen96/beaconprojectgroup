@@ -34,7 +34,6 @@ async function uploadFile(file) {
             ContentType: file.mimetype
         }
         const command = new PutObjectCommand(params);
-
         const response = await s3.send(command);
         return {
             status: 200,
@@ -60,7 +59,8 @@ async function getFile(filename){
         }
 
         const command = new GetObjectCommand(getObjectParams);
-
+        const response = await s3.send(command);
+        console.log(response);
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
         console.log(url);
         return {status: 200, message:"get file url successful", data: url}

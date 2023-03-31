@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { Employee, EmployeeDetail, Housing } = require("../models");
-
+const hbs = require('handlebars');
+const invitation = require('../views/invitationEmailTemplate');
 const sendEmail = require('../utils/sendEmail');
+const invitationEmail = require("../views/invitationEmailTemplate");
 
 class HrController {
   async sendInvitation(req, res) {
@@ -26,18 +28,8 @@ class HrController {
     const link = `${process.env.FRONTEND_URL}?token=${token}`;
     console.log(link);
     if (isHR) {
-
       const subject = 'Invitation to registration';
-      const html = `
-        <header>
-            Hello ${email}! Welcome to my project management app!
-        </header>
-        <main>
-            <p>Please click <a href=${link}>here</a> to sign up your account.</p>
-            <p>This link will expire in 3 hours.</p>
-        </main>
-    `;
-
+      const html = hbs.compile(invitationEmail)({ email, link });
       const response = await sendEmail(email, subject, html);
       console.log(response);
       if (response.status == 200) {

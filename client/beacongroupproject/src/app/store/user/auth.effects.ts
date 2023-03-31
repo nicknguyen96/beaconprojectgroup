@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import { catchError, of, exhaustMap, map, tap, switchMap, Observable, mergeMap, EMPTY, exhaust } from 'rxjs'
+import { catchError, of, exhaustMap, map, tap} from 'rxjs'
 
 import { AuthService } from 'src/app/services/auth.service'
 import { AuthActions } from './auth.actions'
@@ -19,7 +19,7 @@ export class AuthEffects {
         this.authService.login(action.email, action.password)
           .pipe(
             map((response: any) => {
-              console.log(response);
+              console.log("response", response);
               console.log(response.status);
               if (response.status == 200) {
                 return AuthActions.loginSuccess({ response });
@@ -39,7 +39,7 @@ export class AuthEffects {
       ofType(AuthActions.loginSuccess),
       tap(({ response }) => {
         // saving the user in local storage
-        console.log(response);
+        console.log("response", response);
         localStorage.setItem('token', response.token)
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)

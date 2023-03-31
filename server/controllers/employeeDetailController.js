@@ -17,6 +17,8 @@ class UserController {
     const { employeeid } = req.body;
     console.log(employeeid);
     try {
+      const test = await uploadFile(req.file);
+      console.log("test", test);
       const validType = ["profilePicture", "driversLicense", "i983", "optreceipt", "i20", "optead"];
       const fileType = filename && filename.split("-")[0];
       const email = filename && filename.split("-")[1];
@@ -105,11 +107,8 @@ class UserController {
 
     console.log(employeeDetails);
     try {
-      const employee = await EmployeeDetail.findByIdAndUpdate(employeeDetailsId, employeeDetails, { $new: true });
+      const employee = await EmployeeDetail.findByIdAndUpdate(employeeDetailsId, { $set: employeeDetails }, { $new: true });
 
-      if (employeeDetails.onboardingStatus == 'Never submitted') employee.onboardingStatus = 'Pending';
-      
-      console.log(employee);
 
       return res.json({ status: 200, message: "Employee details have been saved", data: employee });
     } catch (e) {
