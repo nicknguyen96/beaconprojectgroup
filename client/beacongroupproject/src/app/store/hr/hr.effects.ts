@@ -6,6 +6,7 @@ import { exhaustMap, map, tap } from 'rxjs';
 import { HrService } from '../../services/hr.service';
 import { Router } from '@angular/router';
 import { BACKEND_URL } from 'src/app/utils/utils';
+import { loadingAction } from '../loading/loading.action';
 
 @Injectable()
 export class HrEffects {
@@ -16,9 +17,7 @@ export class HrEffects {
             exhaustMap((action) => {
                 return this.hrService.sendInvitationEmail(action.email).pipe(
                     map((data: any) => {
-                        console.log(data);
                         if (data?.status == 200) {
-                            console.log(data);
                             alert('Success! Email has been sent to the target email.');
                             return HrActions.sendemailSuccess({ response: data });
                         } else {
@@ -27,6 +26,20 @@ export class HrEffects {
                     })
                 )
             })
+        )
+    });
+
+    sendEmailSuccess$ = createEffect(() :any => {
+        return this.actions$.pipe(
+            ofType(HrActions.sendemailSuccess),
+            map((action : any) => loadingAction.doneLoading())
+        )
+    });
+
+    sendEmailFail$ = createEffect(() :any => {
+        return this.actions$.pipe(
+            ofType(HrActions.sendemailFail),
+            map((action : any) => loadingAction.doneLoading())
         )
     })
 

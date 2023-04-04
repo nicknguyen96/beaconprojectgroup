@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import { catchError, of, exhaustMap, map, tap} from 'rxjs'
+import { catchError, of, exhaustMap, map, tap, timeout} from 'rxjs'
 
 import { AuthService } from 'src/app/services/auth.service'
 import { AuthActions } from './auth.actions'
-import { OnboardingService } from 'src/app/services/onboarding.service'
 import { EmployeeService } from 'src/app/services/employee.service'
+import { loadingAction } from '../loading/loading.action'
 
 @Injectable()
 
@@ -19,10 +19,8 @@ export class AuthEffects {
         this.authService.login(action.email, action.password)
           .pipe(
             map((response: any) => {
-              console.log("response", response);
-              console.log(response.status);
               if (response.status == 200) {
-                return AuthActions.loginSuccess({ response });
+                return AuthActions.loginSuccess({ response })
               }
               else {
                 return AuthActions.loginFailure({ error: response.message });
@@ -37,9 +35,8 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
-      tap(({ response }) => {
+      map(({ response }) => {
         // saving the user in local storage
-        console.log("response", response);
         localStorage.setItem('token', response.token)
         localStorage.setItem('employee', JSON.stringify(response.employee))
         localStorage.setItem('isHR', response.isHR)
@@ -49,19 +46,20 @@ export class AuthEffects {
         } else {
           this.router.navigateByUrl('/employee')
         }
+        return loadingAction.doneLoading();
       })
-    ), { dispatch: false }
+    )
   )
 
 
   loginFailure$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginFailure),
-      tap(({ error }) => {
+      map(({ error }) => {
         alert('Invalid username and/or password.');
+        return loadingAction.doneLoading();
       })
-    ),
-    { dispatch: false }
+    )
   )
 
   logout$ = createEffect(() => {
@@ -70,7 +68,6 @@ export class AuthEffects {
       exhaustMap((action) => {
         return this.authService.logOut().pipe(
           map((data: any) => {
-            console.log(data);
             if (data?.status == 200) {
               this.deleteLocal();
               this.router.navigateByUrl['/login'];
@@ -95,7 +92,6 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthActions.uploadFile),
       exhaustMap((action) => {
-        console.log(action);
         return this.employeeService.uploadFile(action.form).pipe(
           map((response: any) => {
             if (response.status == 200) {
@@ -113,7 +109,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private router: Router,
-    private onboardingService: OnboardingService,
     private employeeService: EmployeeService,
   ) { }
 }

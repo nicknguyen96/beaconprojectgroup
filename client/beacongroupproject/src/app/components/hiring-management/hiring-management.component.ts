@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { HrService } from 'src/app/services/hr.service';
+import { loadingAction } from 'src/app/store/loading/loading.action';
 import { selectAuthState, selectEmployee } from 'src/app/store/user/auth.selector';
-import { BACKEND_URL } from 'src/app/utils/utils';
 import { HrActions } from '../../store/hr/hr.actions';
 import { employeeList } from '../../store/hr/hr.selector';
 
@@ -39,6 +37,7 @@ export class HiringManagementComponent implements OnInit {
   onSelectOnboardingApplicationList(status: string) {
     console.log(status);
     this.employeeList$.subscribe(employeeList => {
+      console.log(employeeList)
       this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == status);
     })
   }
@@ -46,7 +45,7 @@ export class HiringManagementComponent implements OnInit {
   onInvite() {
     const { email } = this.emailInviteForm.getRawValue();
     console.log(email);
-
+    this.store.dispatch(loadingAction.loading());
     this.store.dispatch(HrActions.sendemail({ email }));
     this.employeeList$.subscribe(employeeList => {
       this.employeeListByCategory = employeeList.filter(employee => employee.user.onboardingStatus == 'Pending');
@@ -54,8 +53,6 @@ export class HiringManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Current User:', this.employee);
-    console.log(this.employee.isHR);
     if (this.employee.isHR == false) {
       this.router.navigateByUrl('/forbidden');
     } 

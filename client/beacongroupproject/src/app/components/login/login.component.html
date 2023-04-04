@@ -10,7 +10,17 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" required formControlName="password">
+                    <div class="password-container">
+                        <input class="form-control" [type]="isShowPassword ? 'text' : 'password'" id="password" name="password" required formControlName="password">
+                        <div *ngIf="isShowPassword; then showPassword; else dontShowPassword"></div>
+                        <ng-template #dontShowPassword>
+                            <img src="/assets/eye-fill.svg" alt="eye-fill" (click)="toggleShowPassword()">
+                        </ng-template>    
+                        <ng-template #showPassword>
+                            <img src="/assets/eye-slash-fill.svg" alt="eye-slash-fill" (click)="toggleShowPassword()">
+                        </ng-template>
+                        
+                    </div>
                 </div>
                 <div class="text-center">
                     <button (click)="onSubmit()" class="btn btn-primary mb-3" style="width:100%">Login</button>

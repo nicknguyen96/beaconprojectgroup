@@ -6,6 +6,7 @@ import { OnboardingService } from './services/onboarding.service';
 import { AuthActions } from './store/user/auth.actions';
 import { selectAuthState } from './store/user/auth.selector';
 import { Router } from '@angular/router';
+import { selectLoading } from './store/loading/loading.selector';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService, private store: Store, private employeeService: EmployeeService) { }
   title = 'beacongroupproject';
-
+  isLoading$ = this.store.select(selectLoading);
   employee : any;
 
   employee$ = this.store.select(selectAuthState).subscribe((data) => {
